@@ -137,7 +137,7 @@ fun PixeLKTopAppBar(
                             .clip(CircleShape)
                     )
                 } else {
-                    // Google "G" person icon placeholder — user will have material icons extended
+
                     Box(
                         modifier = Modifier
                             .size(32.dp)

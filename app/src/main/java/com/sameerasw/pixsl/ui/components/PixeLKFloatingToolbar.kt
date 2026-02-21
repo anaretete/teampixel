@@ -49,11 +49,9 @@ fun PixeLKFloatingToolbar(
     var expanded by remember { mutableStateOf(true) }
     var interactionCount by remember { mutableStateOf(0) }
 
-    // Track which tab was just selected for bump animation
     var bumpingTab by remember { mutableIntStateOf(-1) }
     var bumpKey by remember { mutableIntStateOf(0) }
 
-    // Auto-collapse after 5 seconds
     LaunchedEffect(expanded, interactionCount, currentPage) {
         if (expanded) {
             delay(5000)
@@ -61,7 +59,6 @@ fun PixeLKFloatingToolbar(
         }
     }
 
-    // Reset bump animation after delay
     LaunchedEffect(bumpKey) {
         if (bumpingTab >= 0) {
             delay(200)
@@ -69,12 +66,10 @@ fun PixeLKFloatingToolbar(
         }
     }
 
-    // Expand when the page changes (e.g., via swipe)
     LaunchedEffect(currentPage) {
         if (!expanded) expanded = true
     }
 
-    // Animated values for bouncy feel
     val toolbarScale by animateFloatAsState(
         targetValue = if (expanded) 1f else 0.9f,
         animationSpec = spring(
@@ -97,18 +92,16 @@ fun PixeLKFloatingToolbar(
             toolbarContainerColor = MaterialTheme.colorScheme.primary,
         ),
         content = {
-            // FIXED ORDER LOOP to prevent shifting
             tabs.forEachIndexed { index, tab ->
                 val isSelected = currentPage == index
                 val isBumping = bumpingTab == index
 
-                // Animate scale for non-selected tabs when collapsing/expanding
                 val itemScale by animateFloatAsState(
                     targetValue = when {
-                        isBumping -> 1.28f // Subtle bump animation when selected
+                        isBumping -> 1.28f
                         isSelected -> 1.2f
                         expanded -> 1.2f
-                        else -> 0f // Scale down to 0 when collapsed
+                        else -> 0f
                     },
                     animationSpec = spring(
                         dampingRatio = if (isBumping) Spring.DampingRatioMediumBouncy else Spring.DampingRatioLowBouncy,
@@ -117,14 +110,12 @@ fun PixeLKFloatingToolbar(
                     label = "item_scale_$index"
                 )
 
-                // Animate alpha for smooth fade
                 val itemAlpha by animateFloatAsState(
                     targetValue = if (expanded || isSelected) 1f else 0f,
                     animationSpec = tween(durationMillis = 200),
                     label = "item_alpha_$index"
                 )
 
-                // Animate width for spacing
                 val itemWidth by animateDpAsState(
                     targetValue = if (expanded || isSelected) 48.dp else 0.dp,
                     animationSpec = spring(
@@ -134,7 +125,6 @@ fun PixeLKFloatingToolbar(
                     label = "item_width_$index"
                 )
 
-                // Animate spacer width
                 val spacerWidth by animateDpAsState(
                     targetValue = if (expanded && index < tabs.size - 1) 16.dp else 0.dp,
                     animationSpec = spring(
@@ -144,7 +134,6 @@ fun PixeLKFloatingToolbar(
                     label = "spacer_width_$index"
                 )
 
-                // Always render the button, but animate its visibility
                 if (itemWidth > 0.dp || isSelected) {
                     IconButton(
                         onClick = {
@@ -179,7 +168,7 @@ fun PixeLKFloatingToolbar(
                     ) {
                         Box {
                             Icon(
-                                imageVector = tab.icon, // CHANGED from painterResource since we use ImageVector for these tabs
+                                imageVector = tab.icon,
                                 contentDescription = stringResource(id = tab.title),
                                 tint = if (isSelected) {
                                     MaterialTheme.colorScheme.primary
@@ -195,14 +184,13 @@ fun PixeLKFloatingToolbar(
                                         .align(Alignment.TopEnd)
                                 ) {
                                     drawCircle(
-                                        color = if (isSelected) Color.Red else Color.Red, // Always red for now
+                                        color = if (isSelected) Color.Red else Color.Red,
                                     )
                                 }
                             }
                         }
                     }
 
-                    // Animated spacing between buttons
                     if (index < tabs.size - 1) {
                         Spacer(modifier = Modifier.width(spacerWidth))
                     }
