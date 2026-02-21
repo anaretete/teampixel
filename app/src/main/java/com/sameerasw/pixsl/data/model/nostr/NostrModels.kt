@@ -23,7 +23,17 @@ data class NostrEvent(
     val tags: List<List<String>>,
     val content: String,
     val sig: String
-)
+) {
+    fun getTag(key: String): String? = tags.firstOrNull { it.getOrNull(0) == key }?.getOrNull(1)
+    
+    fun getMediaUrl(): String? {
+        if (kind == 1063 || kind == 94) return getTag("url")
+        // Fallback to regex for common Kind 1 media links
+        return content.split(Regex("\\s+")).find { 
+            it.startsWith("http") && (it.endsWith(".jpg") || it.endsWith(".png") || it.endsWith(".webp") || it.endsWith(".jpeg")) 
+        }
+    }
+}
 
 @Serializable
 data class NostrFilter(

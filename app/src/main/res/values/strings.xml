@@ -17,4 +17,9 @@
     <string name="label_nostr_key_desc">Your decentralized identity key has been generated</string>
     <string name="tab_home">PixeLK</string>
     <string name="tab_community">Community</string>
+    <string name="action_delete">Delete</string>
+    <string name="feat_media_upload_title">Media Upload</string>
+    <string name="requires_following_permissions">%1$s requires the following permissions:</string>
+    <string name="perm_action_grant">Grant</string>
+    <string name="perm_action_enable">Enable</string>
 </resources>

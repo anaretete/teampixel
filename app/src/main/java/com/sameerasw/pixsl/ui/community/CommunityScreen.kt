@@ -12,6 +12,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.sameerasw.pixsl.ui.components.cards.PostCard
+import com.sameerasw.pixsl.ui.components.sheets.ZapAmountSheet
 import com.sameerasw.pixsl.ui.components.sheets.PostQuestionSheet
 import com.sameerasw.pixsl.data.model.nostr.PostWithProfile
 import com.sameerasw.pixsl.ui.components.containers.RoundedCardContainer
@@ -22,9 +23,13 @@ import com.sameerasw.pixsl.viewmodel.CommunityViewModel
 fun CommunityScreen(
     modifier: Modifier = Modifier,
     contentPadding: PaddingValues = PaddingValues(0.dp),
+    currentNostrPubKey: String? = null,
+    onPostClick: (String) -> Unit = {},
     viewModel: CommunityViewModel = viewModel()
 ) {
     val posts by viewModel.posts.collectAsState()
+    val zapTally by viewModel.zapTally.collectAsState()
+    var selectedZapPostId by remember { mutableStateOf<Pair<String, String>?>(null) } // postId, authorPubKey
     var showPostSheet by remember { mutableStateOf(false) }
 
     Scaffold(
@@ -68,7 +73,16 @@ fun CommunityScreen(
                 item {
                     RoundedCardContainer {
                         posts.forEach { post ->
-                            PostCard(post)
+                            PostCard(
+                                post = post,
+                                currentNostrPubKey = currentNostrPubKey,
+                                zapAmount = zapTally[post.event.id] ?: 0L,
+                                onLikeClick = { viewModel.likePost(post.event.id, post.event.pubkey) },
+                                onRepostClick = { viewModel.repostPost(post.event.id, post.event.pubkey) },
+                                onZapClick = { selectedZapPostId = post.event.id to post.event.pubkey },
+                                onReplyClick = { onPostClick(post.event.id) },
+                                onPostClick = { onPostClick(post.event.id) }
+                            )
                         }
                     }
                 }
@@ -76,13 +90,34 @@ fun CommunityScreen(
         }
 
         if (showPostSheet) {
+            val isUploading by viewModel.isUploading.collectAsState()
+            val uploadedImageUrl by viewModel.uploadedImageUrl.collectAsState()
+            
             PostQuestionSheet(
-                onDismiss = { showPostSheet = false },
+                isUploading = isUploading,
+                uploadedImageUrl = uploadedImageUrl,
+                onDismiss = { 
+                    viewModel.clearUploadedMedia()
+                    showPostSheet = false 
+                },
+                onMediaPick = { uri -> viewModel.uploadMedia(uri) },
+                onClearMedia = { viewModel.clearUploadedMedia() },
                 onPost = { content ->
                     viewModel.sendPost(content)
+                    viewModel.clearUploadedMedia()
                     showPostSheet = false
                 }
             )
         }
+    }
+
+    if (selectedZapPostId != null) {
+        ZapAmountSheet(
+            onDismiss = { selectedZapPostId = null },
+            onZap = { amount ->
+                viewModel.zapPost(selectedZapPostId!!.first, selectedZapPostId!!.second, amount)
+                selectedZapPostId = null
+            }
+        )
     }
 }

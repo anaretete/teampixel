@@ -62,7 +62,7 @@ class CommunityRepository(
 
         // Build our subscription filter: Kind 1 (Short Text Note) targeting the hashtag
         val filter = NostrFilter(
-            kinds = listOf(1),
+            kinds = listOf(1, 6, 7, 9735), // Kind 1 (Note), 6 (Repost), 7 (Like), 9735 (Zap Receipt)
             tags = mapOf("t" to listOf(hashtag)),
             limit = 50
         )
@@ -106,28 +106,136 @@ class CommunityRepository(
     }
 
     /**
-     * Publishes a new note to the `#PixeLK` tag.
+     * Subscribes to replies for a specific post.
      */
-    suspend fun publishPost(content: String): Boolean {
-        // Retrieve keys from Secure Storage (SharedPreferences)
-        val prefs = context.getSharedPreferences("pixsl_prefs", Context.MODE_PRIVATE)
-        val privKeyHex = prefs.getString("nostr_private_key", null) ?: return false
+    fun startListeningToReplies(postId: String) {
+        val subId = "replies-$postId-${UUID.randomUUID().toString().take(8)}"
+        val filter = NostrFilter(
+            kinds = listOf(1),
+            tags = mapOf("e" to listOf(postId)),
+            limit = 100
+        )
+        val reqMessage = NostrClientMessage.ReqMessage(subId, listOf(filter))
+        val reqJson = json.encodeToString(NostrClientMessage.serializer(), reqMessage)
+
+        repositoryScope.launch {
+            activeSessions.forEach { session ->
+                if (session.isActive) {
+                    try {
+                        session.send(Frame.Text(reqJson))
+                    } catch (e: Exception) {
+                        Log.e("NostrRelay", "Error requesting replies", e)
+                    }
+                }
+            }
+        }
+    }
+
+    /**
+     * Publishes a new note. If replyToId is provided, it's a thread reply.
+     */
+    suspend fun publishPost(content: String, replyToId: String? = null): Boolean {
+        val keys = getEventKeys() ?: return false
+
+        val postTags = mutableListOf(listOf("t", "PixeLK"))
+        if (replyToId != null) {
+            postTags.add(listOf("e", replyToId, "", "reply"))
+        }
+
+        val event = NostrCrypto.createSignedEvent(
+            content = content,
+            privKeyHex = keys.first,
+            pubKeyHex = keys.second,
+            tags = postTags
+        )
+
+        return broadcastEvent(event)
+    }
+
+    /**
+     * Publishes a Kind 5 deletion event to remove a given post by its event ID.
+     */
+    suspend fun deletePost(eventId: String): Boolean {
+        val keys = getEventKeys() ?: return false
+
+        val event = NostrCrypto.createSignedEvent(
+            content = "Deleted by user",
+            privKeyHex = keys.first,
+            pubKeyHex = keys.second,
+            tags = listOf(listOf("e", eventId)),
+            kind = 5
+        )
+
+        return broadcastEvent(event)
+    }
+
+    /**
+     * Publishes a Kind 7 reaction (Like).
+     */
+    suspend fun likePost(eventId: String, authorPubKey: String): Boolean {
+        val keys = getEventKeys() ?: return false
+        val event = NostrCrypto.createSignedEvent(
+            content = "+",
+            privKeyHex = keys.first,
+            pubKeyHex = keys.second,
+            tags = listOf(listOf("e", eventId), listOf("p", authorPubKey)),
+            kind = 7
+        )
+        return broadcastEvent(event)
+    }
+
+    /**
+     * Publishes a Kind 6 repost.
+     */
+    suspend fun repostPost(eventId: String, authorPubKey: String, content: String = ""): Boolean {
+        val keys = getEventKeys() ?: return false
+        val event = NostrCrypto.createSignedEvent(
+            content = content,
+            privKeyHex = keys.first,
+            pubKeyHex = keys.second,
+            tags = listOf(listOf("e", eventId, "", "mention"), listOf("p", authorPubKey)),
+            kind = 6
+        )
+        return broadcastEvent(event)
+    }
+
+    /**
+     * Publishes a Kind 9734 Zap Request.
+     * Note: This is a simplified version that creates the Zap Request event.
+     * In a real app, this would be followed by a payment via LNURL.
+     */
+    suspend fun zapPost(eventId: String, authorPubKey: String, amount: Long, comment: String = ""): Boolean {
+        val keys = getEventKeys() ?: return false
+        val tags = mutableListOf(
+            listOf("e", eventId),
+            listOf("p", authorPubKey),
+            listOf("relays", relays.first()),
+            listOf("amount", amount.toString())
+        )
         
-        // Derive full byte-array private key to pass to the Native C engine for getting X-only pubkey
+        val event = NostrCrypto.createSignedEvent(
+            content = comment,
+            privKeyHex = keys.first,
+            pubKeyHex = keys.second,
+            tags = tags,
+            kind = 9734
+        )
+        return broadcastEvent(event)
+    }
+
+    private fun getEventKeys(): Pair<String, String>? {
+        val prefs = context.getSharedPreferences("pixsl_prefs", Context.MODE_PRIVATE)
+        val privKeyHex = prefs.getString("nostr_private_key", null) ?: return null
+        
         val privKeyBytes = privKeyHex.chunked(2).map { it.toInt(16).toByte() }.toByteArray()
         val secp = fr.acinq.secp256k1.Secp256k1.get()
         val pubkeyCompressed = secp.pubKeyCompress(secp.pubkeyCreate(privKeyBytes))
         val pubKeyHex = pubkeyCompressed.copyOfRange(1, 33).joinToString("") { "%02x".format(it) }
+        
+        return Pair(privKeyHex, pubKeyHex)
+    }
 
-        // Create and sign the exact NIP-01 Event natively
-        val event = NostrCrypto.createSignedEvent(
-            content = content,
-            privKeyHex = privKeyHex,
-            pubKeyHex = pubKeyHex,
-            tags = listOf(listOf("t", "PixeLK"))
-        )
-
-        // Broadcast to all currently active relay connections
+    private suspend fun broadcastEvent(event: NostrEvent): Boolean {
         val eventMessage = NostrClientMessage.EventMessage(event)
         val eventJson = json.encodeToString(NostrClientMessage.serializer(), eventMessage)
 

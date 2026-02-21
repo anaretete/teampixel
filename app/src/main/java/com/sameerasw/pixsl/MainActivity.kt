@@ -11,6 +11,7 @@ import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.rememberTopAppBarState
+import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
@@ -63,9 +64,10 @@ class MainActivity : ComponentActivity() {
                 val pagerState = rememberPagerState(pageCount = { tabs.size })
                 val view = LocalView.current
 
+                val context = androidx.compose.ui.platform.LocalContext.current
                 val googleSignInAction = supabase.composeAuth.rememberSignInWithGoogle(
                     onResult = { result ->
-                        viewModel.onSignInResult(result, this@MainActivity)
+                        viewModel.onSignInResult(result, context as MainActivity)
                     }
                 )
 
@@ -82,12 +84,8 @@ class MainActivity : ComponentActivity() {
                             scrollBehavior = scrollBehavior,
                             isSignedIn = authState is com.sameerasw.pixsl.data.model.AuthState.SignedIn,
                             avatarUrl = (authState as? com.sameerasw.pixsl.data.model.AuthState.SignedIn)?.avatarUrl,
-                            onSignInClick = {
-                                googleSignInAction.startFlow()
-                            },
-                            onSignOutClick = {
-                                viewModel.signOut()
-                            }
+                            onSignInClick = { googleSignInAction.startFlow() },
+                            onSignOutClick = { viewModel.signOut() }
                         )
                     }
                 ) { innerPadding ->
@@ -123,7 +121,14 @@ class MainActivity : ComponentActivity() {
                                 }
                                 PixeLKTabs.COMMUNITY -> {
                                     CommunityScreen(
-                                        contentPadding = innerPadding
+                                        contentPadding = innerPadding,
+                                        currentNostrPubKey = (authState as? com.sameerasw.pixsl.data.model.AuthState.SignedIn)?.profile?.nostrPubKey,
+                                        onPostClick = { postId ->
+                                            val intent = android.content.Intent(context, com.sameerasw.pixsl.ui.community.PostDetailActivity::class.java).apply {
+                                                putExtra("postId", postId)
+                                            }
+                                            context.startActivity(intent)
+                                        }
                                     )
                                 }
                             }
@@ -134,3 +139,5 @@ class MainActivity : ComponentActivity() {
         }
     }
 }
+
+// Removing previous extracted MainFeedScreen

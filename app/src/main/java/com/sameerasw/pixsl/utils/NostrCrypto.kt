@@ -82,11 +82,10 @@ object NostrCrypto {
         content: String,
         privKeyHex: String,
         pubKeyHex: String,
-        tags: List<List<String>> = emptyList()
+        tags: List<List<String>> = emptyList(),
+        kind: Int = 1
     ): NostrEvent {
         val createdAt = System.currentTimeMillis() / 1000L
-        val kind = 1 // Short Text Note
-
         // 1. Serialize and SHA-256 Hash
         val eventIdHash = calculateEventId(pubKeyHex, createdAt, kind, tags, content)
         val eventIdHex = eventIdHash.toHex()

@@ -15,9 +15,36 @@ import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Bolt
+import androidx.compose.material.icons.filled.CheckCircle
+import androidx.compose.material.icons.outlined.ChatBubbleOutline
+import androidx.compose.material.icons.outlined.FavoriteBorder
+import androidx.compose.material.icons.outlined.Repeat
+import androidx.compose.material.icons.outlined.ElectricBolt
+import androidx.compose.ui.draw.clip
+import com.sameerasw.pixsl.utils.HapticUtil
+import androidx.compose.ui.platform.LocalView
+import coil.compose.AsyncImage
+import com.sameerasw.pixsl.R
+import androidx.compose.ui.res.painterResource
+
 @Composable
-fun PostCard(post: PostWithProfile) {
+fun PostCard(
+    post: PostWithProfile,
+    currentNostrPubKey: String? = null,
+    zapAmount: Long = 0,
+    onLikeClick: (() -> Unit)? = null,
+    onRepostClick: (() -> Unit)? = null,
+    onZapClick: (() -> Unit)? = null,
+    onReplyClick: (() -> Unit)? = null,
+    onPostClick: (() -> Unit)? = null
+) {
+    val view = LocalView.current
     Card(
+        onClick = { onPostClick?.invoke() },
         modifier = Modifier.fillMaxWidth(),
         shape = MaterialTheme.shapes.extraSmall,
         colors = CardDefaults.cardColors(
@@ -39,28 +66,25 @@ fun PostCard(post: PostWithProfile) {
                     )
                     
                     if (post.profile?.isExpert == true) {
-                        Spacer(modifier = Modifier.width(8.dp))
-                        Surface(
-                            color = MaterialTheme.colorScheme.secondaryContainer,
-                            shape = MaterialTheme.shapes.small
-                        ) {
-                            Text(
-                                "Expert",
-                                style = MaterialTheme.typography.labelSmall,
-                                color = MaterialTheme.colorScheme.onSecondaryContainer,
-                                modifier = Modifier.padding(horizontal = 6.dp, vertical = 2.dp)
-                            )
-                        }
+                        Spacer(modifier = Modifier.width(4.dp))
+                        Icon(
+                            imageVector = Icons.Default.CheckCircle,
+                            contentDescription = "Verified",
+                            tint = MaterialTheme.colorScheme.primary,
+                            modifier = Modifier.size(16.dp)
+                        )
                     }
                 }
                 
-                val sdf = SimpleDateFormat("HH:mm", Locale.getDefault())
-                val timeString = sdf.format(Date(post.event.created_at * 1000))
-                Text(
-                    text = timeString,
-                    style = MaterialTheme.typography.labelSmall,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant
-                )
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    val sdf = SimpleDateFormat("HH:mm", Locale.getDefault())
+                    val timeString = sdf.format(Date(post.event.created_at * 1000))
+                    Text(
+                        text = timeString,
+                        style = MaterialTheme.typography.labelSmall,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                    )
+                }
             }
             
             Spacer(modifier = Modifier.height(8.dp))
@@ -70,6 +94,106 @@ fun PostCard(post: PostWithProfile) {
                 style = MaterialTheme.typography.bodyLarge,
                 color = MaterialTheme.colorScheme.onSurface
             )
+            
+            // Media support: use the model helper
+            val imageUrl = post.event.getMediaUrl()
+            if (imageUrl != null) {
+                Spacer(modifier = Modifier.height(12.dp))
+                AsyncImage(
+                    model = imageUrl,
+                    contentDescription = "Post Media",
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .heightIn(max = 400.dp)
+                        .clip(MaterialTheme.shapes.medium)
+                )
+            }
+            
+            Spacer(modifier = Modifier.height(12.dp))
+            
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    IconButton(
+                        onClick = {
+                            HapticUtil.performUIHaptic(view)
+                            onReplyClick?.invoke()
+                        },
+                        modifier = Modifier.size(36.dp)
+                    ) {
+                        Icon(
+                            imageVector = Icons.Outlined.ChatBubbleOutline,
+                            contentDescription = "Reply",
+                            modifier = Modifier.size(20.dp),
+                            tint = MaterialTheme.colorScheme.onSurfaceVariant
+                        )
+                    }
+                }
+                
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    IconButton(
+                        onClick = {
+                            HapticUtil.performUIHaptic(view)
+                            onRepostClick?.invoke()
+                        },
+                        modifier = Modifier.size(36.dp)
+                    ) {
+                        Icon(
+                            imageVector = Icons.Outlined.Repeat,
+                            contentDescription = "Repost",
+                            modifier = Modifier.size(20.dp),
+                            tint = MaterialTheme.colorScheme.onSurfaceVariant
+                        )
+                    }
+                }
+
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    IconButton(
+                        onClick = {
+                            HapticUtil.performUIHaptic(view)
+                            onZapClick?.invoke()
+                        },
+                        modifier = Modifier.size(36.dp)
+                    ) {
+                        Row(verticalAlignment = Alignment.CenterVertically) {
+                            Icon(
+                                imageVector = if (zapAmount > 0) Icons.Default.Bolt else Icons.Outlined.ElectricBolt,
+                                contentDescription = "Zap",
+                                modifier = Modifier.size(20.dp),
+                                tint = if (zapAmount > 0) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurfaceVariant
+                            )
+                            if (zapAmount > 0) {
+                                Text(
+                                    text = zapAmount.toString(),
+                                    style = MaterialTheme.typography.labelSmall,
+                                    color = MaterialTheme.colorScheme.primary,
+                                    modifier = Modifier.padding(start = 2.dp)
+                                )
+                            }
+                        }
+                    }
+                }
+                
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    IconButton(
+                        onClick = {
+                            HapticUtil.performUIHaptic(view)
+                            onLikeClick?.invoke()
+                        },
+                        modifier = Modifier.size(36.dp)
+                    ) {
+                        Icon(
+                            imageVector = Icons.Outlined.FavoriteBorder,
+                            contentDescription = "Like",
+                            modifier = Modifier.size(20.dp),
+                            tint = MaterialTheme.colorScheme.onSurfaceVariant
+                        )
+                    }
+                }
+            }
         }
     }
 }
