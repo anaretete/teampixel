@@ -12,14 +12,17 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.sameerasw.pixsl.data.model.nostr.PostWithProfile
+import com.sameerasw.pixsl.ui.components.containers.RoundedCardContainer
 import com.sameerasw.pixsl.viewmodel.CommunityViewModel
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 
+@OptIn(androidx.compose.material3.ExperimentalMaterial3ExpressiveApi::class)
 @Composable
 fun CommunityScreen(
     modifier: Modifier = Modifier,
+    contentPadding: PaddingValues = PaddingValues(0.dp),
     viewModel: CommunityViewModel = viewModel()
 ) {
     val posts by viewModel.posts.collectAsState()
@@ -27,29 +30,47 @@ fun CommunityScreen(
 
     Scaffold(
         modifier = modifier.fillMaxSize(),
+        containerColor = androidx.compose.ui.graphics.Color.Transparent,
         floatingActionButton = {
-            FloatingActionButton(onClick = { showPostSheet = true }) {
+            FloatingActionButton(
+                onClick = { showPostSheet = true },
+                modifier = Modifier.padding(bottom = contentPadding.calculateBottomPadding() + 48.dp)
+            ) {
                 Icon(Icons.Default.Add, contentDescription = "Post to Community")
             }
         }
-    ) { padding ->
+    ) { localPadding ->
         if (posts.isEmpty()) {
             Box(
-                modifier = Modifier.fillMaxSize().padding(padding),
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(contentPadding)
+                    .padding(localPadding),
                 contentAlignment = Alignment.Center
             ) {
-                Text("Waiting for messages from Nostr relays...", color = MaterialTheme.colorScheme.onSurfaceVariant)
+                Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                    androidx.compose.material3.LoadingIndicator()
+                    Spacer(modifier = Modifier.height(16.dp))
+                    Text("Waiting for messages from Nostr relays...", color = MaterialTheme.colorScheme.onSurfaceVariant)
+                }
             }
         } else {
             LazyColumn(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(padding),
-                contentPadding = PaddingValues(16.dp),
+                modifier = Modifier.fillMaxSize(),
+                contentPadding = PaddingValues(
+                    top = contentPadding.calculateTopPadding() + localPadding.calculateTopPadding() + 16.dp,
+                    bottom = contentPadding.calculateBottomPadding() + localPadding.calculateBottomPadding() + 88.dp,
+                    start = 16.dp,
+                    end = 16.dp
+                ),
                 verticalArrangement = Arrangement.spacedBy(16.dp)
             ) {
-                items(posts, key = { it.event.id }) { post ->
-                    PostCard(post)
+                item {
+                    RoundedCardContainer {
+                        posts.forEach { post ->
+                            PostCard(post)
+                        }
+                    }
                 }
             }
         }
@@ -68,63 +89,61 @@ fun CommunityScreen(
 
 @Composable
 fun PostCard(post: PostWithProfile) {
-    Card(modifier = Modifier.fillMaxWidth()) {
+    Card(
+        modifier = Modifier.fillMaxWidth(),
+        shape = MaterialTheme.shapes.extraSmall,
+        colors = CardDefaults.cardColors(
+            containerColor = MaterialTheme.colorScheme.surfaceBright
+        )
+    ) {
         Column(modifier = Modifier.padding(16.dp)) {
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                val username = post.profile?.username ?: "Anonymous"
-                Row(verticalAlignment = Alignment.CenterVertically) {
-                    Text(
-                        text = username,
-                        style = MaterialTheme.typography.titleMedium,
-                        color = MaterialTheme.colorScheme.primary
-                    )
-                    
-                    if (post.profile?.isExpert == true) {
-                        Spacer(modifier = Modifier.width(8.dp))
-                        Surface(
-                            color = MaterialTheme.colorScheme.secondaryContainer,
-                            shape = MaterialTheme.shapes.small
-                        ) {
-                            Text(
-                                "Expert",
-                                style = MaterialTheme.typography.labelSmall,
-                                color = MaterialTheme.colorScheme.onSecondaryContainer,
-                                modifier = Modifier.padding(horizontal = 6.dp, vertical = 2.dp)
-                            )
-                        }
+            val username = post.profile?.username ?: "Anonymous"
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                Text(
+                    text = username,
+                    style = MaterialTheme.typography.titleMedium,
+                    color = MaterialTheme.colorScheme.primary
+                )
+                
+                if (post.profile?.isExpert == true) {
+                    Spacer(modifier = Modifier.width(8.dp))
+                    Surface(
+                        color = MaterialTheme.colorScheme.secondaryContainer,
+                        shape = MaterialTheme.shapes.small
+                    ) {
+                        Text(
+                            "Expert",
+                            style = MaterialTheme.typography.labelSmall,
+                            color = MaterialTheme.colorScheme.onSecondaryContainer,
+                            modifier = Modifier.padding(horizontal = 6.dp, vertical = 2.dp)
+                        )
                     }
                 }
-                
-                val sdf = SimpleDateFormat("HH:mm", Locale.getDefault())
-                val timeString = sdf.format(Date(post.event.created_at * 1000))
-                Text(
-                    text = timeString,
-                    style = MaterialTheme.typography.labelSmall,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant
-                )
             }
             
-            Spacer(modifier = Modifier.height(8.dp))
-            
+            val sdf = SimpleDateFormat("HH:mm", Locale.getDefault())
+            val timeString = sdf.format(Date(post.event.created_at * 1000))
             Text(
-                text = post.event.content,
-                style = MaterialTheme.typography.bodyLarge,
-                color = MaterialTheme.colorScheme.onSurface
-            )
-            
-            Spacer(modifier = Modifier.height(8.dp))
-            
-            Text(
-                text = "npub...${post.event.pubkey.takeLast(6)}",
+                text = timeString,
                 style = MaterialTheme.typography.labelSmall,
-                color = MaterialTheme.colorScheme.outline
+                color = MaterialTheme.colorScheme.onSurfaceVariant
             )
         }
+        
+        Spacer(modifier = Modifier.height(8.dp))
+        
+        Text(
+            text = post.event.content,
+            style = MaterialTheme.typography.bodyLarge,
+            color = MaterialTheme.colorScheme.onSurface
+        )
     }
+  }
 }
 
 @OptIn(ExperimentalMaterial3Api::class)

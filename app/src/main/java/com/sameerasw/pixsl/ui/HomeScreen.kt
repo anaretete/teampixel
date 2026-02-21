@@ -32,17 +32,28 @@ import com.sameerasw.pixsl.R
 import com.sameerasw.pixsl.data.model.AuthState
 import com.sameerasw.pixsl.ui.components.containers.RoundedCardContainer
 
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
+import androidx.compose.material3.LoadingIndicator
+
+@OptIn(ExperimentalMaterial3ExpressiveApi::class)
 @Composable
 fun HomeScreen(
     authState: AuthState,
     onSignInClick: () -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    contentPadding: PaddingValues = PaddingValues(0.dp)
 ) {
     Column(
         modifier = modifier
             .fillMaxSize()
             .verticalScroll(rememberScrollState())
-            .padding(horizontal = 16.dp, vertical = 8.dp),
+            .padding(
+                top = contentPadding.calculateTopPadding() + 8.dp,
+                bottom = contentPadding.calculateBottomPadding() + 88.dp,
+                start = 16.dp,
+                end = 16.dp
+            ),
         verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
         when (authState) {
@@ -52,7 +63,7 @@ fun HomeScreen(
                     horizontalAlignment = Alignment.CenterHorizontally,
                     verticalArrangement = Arrangement.Center
                 ) {
-                    CircularProgressIndicator()
+                    LoadingIndicator()
                     Spacer(modifier = Modifier.height(12.dp))
                     Text(
                         text = stringResource(R.string.label_loading),
