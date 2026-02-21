@@ -8,7 +8,7 @@ import com.sameerasw.pixsl.data.model.nostr.NostrFilter
 import com.sameerasw.pixsl.data.model.nostr.NostrServerMessage
 import com.sameerasw.pixsl.utils.NostrCrypto
 import io.ktor.client.HttpClient
-import io.ktor.client.engine.android.Android
+import io.ktor.client.engine.okhttp.OkHttp
 import io.ktor.client.plugins.websocket.WebSockets
 import io.ktor.client.plugins.websocket.webSocketSession
 import io.ktor.websocket.Frame
@@ -37,7 +37,7 @@ class CommunityRepository(
         "wss://relay.snort.social"
     )
 
-    private val client = HttpClient(Android) {
+    private val client = HttpClient(OkHttp) {
         install(WebSockets) {
             pingIntervalMillis = 20_000
         }

@@ -17,7 +17,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.sameerasw.pixsl.data.supabase
-import com.sameerasw.pixsl.ui.HomeScreen
+import com.sameerasw.pixsl.ui.community.CommunityScreen
 import com.sameerasw.pixsl.ui.components.PixeLKTopAppBar
 import com.sameerasw.pixsl.ui.theme.PixeLKTheme
 import com.sameerasw.pixsl.utils.HapticUtil
@@ -68,11 +68,7 @@ class MainActivity : ComponentActivity() {
                         )
                     }
                 ) { innerPadding ->
-                    HomeScreen(
-                        authState = authState,
-                        onSignInClick = {
-                            googleSignInAction.startFlow()
-                        },
+                    CommunityScreen(
                         modifier = Modifier.padding(innerPadding)
                     )
                 }
