@@ -60,7 +60,7 @@ class MainActivity : ComponentActivity() {
                             isSignedIn = authState is com.sameerasw.pixsl.data.model.AuthState.SignedIn,
                             avatarUrl = (authState as? com.sameerasw.pixsl.data.model.AuthState.SignedIn)?.avatarUrl,
                             onSignInClick = {
-                                scope.launch { viewModel.signIn(googleSignInAction) }
+                                googleSignInAction.startFlow()
                             },
                             onSignOutClick = {
                                 viewModel.signOut()
@@ -71,7 +71,7 @@ class MainActivity : ComponentActivity() {
                     HomeScreen(
                         authState = authState,
                         onSignInClick = {
-                            scope.launch { viewModel.signIn(googleSignInAction) }
+                            googleSignInAction.startFlow()
                         },
                         modifier = Modifier.padding(innerPadding)
                     )

@@ -1,5 +1,15 @@
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+import java.util.Properties
 
+val localProperties = Properties()
+val localPropertiesFile = rootProject.file("local.properties")
+if (localPropertiesFile.exists()) {
+    localProperties.load(localPropertiesFile.inputStream())
+}
+
+val supabaseUrl = localProperties.getProperty("SUPABASE_URL") ?: ""
+val supabaseAnonKey = localProperties.getProperty("SUPABASE_ANON_KEY") ?: ""
+val googleClientId = localProperties.getProperty("GOOGLE_CLIENT_ID") ?: ""
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.compose)
@@ -36,6 +46,10 @@ android {
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         signingConfig = signingConfigs.getByName("debug")
+
+        buildConfigField("String", "SUPABASE_URL", "\"${supabaseUrl}\"")
+        buildConfigField("String", "SUPABASE_ANON_KEY", "\"${supabaseAnonKey}\"")
+        buildConfigField("String", "GOOGLE_CLIENT_ID", "\"${googleClientId}\"")
     }
 
     buildTypes {
@@ -55,7 +69,13 @@ android {
         compose = true
         buildConfig = true
     }
+    packaging {
+        jniLibs {
+            useLegacyPackaging = true
+        }
+    }
 }
+
 
 dependencies {
     implementation(libs.androidx.core.ktx)
@@ -78,7 +98,7 @@ dependencies {
     // Supabase BOM + modules
     implementation(platform("io.github.jan-tennert.supabase:bom:3.0.0"))
     implementation("io.github.jan-tennert.supabase:postgrest-kt")
-    implementation("io.github.jan-tennert.supabase:gotrue-kt")
+    implementation("io.github.jan-tennert.supabase:auth-kt")
     implementation("io.github.jan-tennert.supabase:compose-auth")
 
     // Ktor engine for Supabase networking
@@ -87,9 +107,14 @@ dependencies {
     // Kotlin Serialization for JSON <-> data class conversion
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.3")
 
-    // Nostr key generation
-    implementation("com.github.cashapp:nostrino:0.0.1")
+    // Fixes Supabase Kotlin failing to save session natively on Android by providing a Context via ContentProvider
+    implementation("com.russhwolf:multiplatform-settings-no-arg:1.1.1")
 
+    // Use the latest 16KB-aligned JNI library
+    implementation("fr.acinq.secp256k1:secp256k1-kmp-jni-android:0.22.0")
+    
+    // Ensure the core KMP library matches the JNI version
+    implementation("fr.acinq.secp256k1:secp256k1-kmp:0.22.0")
     // Material Icons Extended for UI icons
     implementation("androidx.compose.material:material-icons-extended:1.7.0")
 
