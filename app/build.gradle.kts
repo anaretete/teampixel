@@ -4,6 +4,14 @@ plugins {
 }
 
 android {
+    signingConfigs {
+        getByName("debug") {
+            storeFile = file("/Users/sameerasandakelum/Documents/Essentials-key.jks")
+            storePassword = "202231"
+            keyAlias = "key0"
+            keyPassword = "202231"
+        }
+    }
     namespace = "com.sameerasw.pixsl"
     compileSdk {
         version = release(36)
@@ -17,6 +25,7 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        signingConfig = signingConfigs.getByName("debug")
     }
 
     buildTypes {
