@@ -1,10 +1,10 @@
 <resources>
-    <string name="app_name">PixSL</string>
+    <string name="app_name">PixeLK</string>
     <string name="action_sign_in_google">Sign in with Google</string>
     <string name="action_sign_out">Sign out</string>
     <string name="action_profile">Profile</string>
     <string name="action_back">Back</string>
-    <string name="label_welcome">Welcome to PixSL</string>
+    <string name="label_welcome">Welcome to PixeLK</string>
     <string name="label_guest">Guest</string>
     <string name="label_signed_in_as">Signed in as</string>
     <string name="label_home">Home</string>

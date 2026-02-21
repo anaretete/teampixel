@@ -24,7 +24,7 @@ private val LightColorScheme = lightColorScheme(
 )
 
 @Composable
-fun PixSLTheme(
+fun PixeLKTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
     pitchBlackTheme: Boolean = false,
     dynamicColor: Boolean = true,

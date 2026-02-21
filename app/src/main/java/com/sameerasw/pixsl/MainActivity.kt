@@ -18,8 +18,8 @@ import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.sameerasw.pixsl.data.supabase
 import com.sameerasw.pixsl.ui.HomeScreen
-import com.sameerasw.pixsl.ui.components.PixSLTopAppBar
-import com.sameerasw.pixsl.ui.theme.PixSLTheme
+import com.sameerasw.pixsl.ui.components.PixeLKTopAppBar
+import com.sameerasw.pixsl.ui.theme.PixeLKTheme
 import com.sameerasw.pixsl.utils.HapticUtil
 import com.sameerasw.pixsl.viewmodel.MainViewModel
 import io.github.jan.supabase.compose.auth.composable.rememberSignInWithGoogle
@@ -35,7 +35,7 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
 
         setContent {
-            PixSLTheme {
+            PixeLKTheme {
                 val viewModel: MainViewModel = viewModel()
                 val authState by viewModel.authState.collectAsState()
                 val scope = rememberCoroutineScope()
@@ -54,7 +54,7 @@ class MainActivity : ComponentActivity() {
                         .fillMaxSize()
                         .nestedScroll(scrollBehavior.nestedScrollConnection),
                     topBar = {
-                        PixSLTopAppBar(
+                        PixeLKTopAppBar(
                             title = R.string.label_community,
                             scrollBehavior = scrollBehavior,
                             isSignedIn = authState is com.sameerasw.pixsl.data.model.AuthState.SignedIn,

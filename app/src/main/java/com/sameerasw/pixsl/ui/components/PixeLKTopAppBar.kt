@@ -43,7 +43,7 @@ import com.sameerasw.pixsl.utils.HapticUtil
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalMaterial3ExpressiveApi::class)
 @Composable
-fun PixSLTopAppBar(
+fun PixeLKTopAppBar(
     title: Any,
     hasBack: Boolean = false,
     onBackClick: (() -> Unit)? = null,
