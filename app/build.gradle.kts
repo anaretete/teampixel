@@ -101,8 +101,9 @@ dependencies {
     implementation("io.github.jan-tennert.supabase:auth-kt")
     implementation("io.github.jan-tennert.supabase:compose-auth")
 
-    // Ktor engine for Supabase networking
+    // Ktor engine for Supabase networking and Nostr WebSockets
     implementation("io.ktor:ktor-client-android:3.0.0")
+    implementation("io.ktor:ktor-client-websockets:3.0.0")
 
     // Kotlin Serialization for JSON <-> data class conversion
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.3")
