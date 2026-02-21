@@ -6,42 +6,77 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
+import androidx.compose.material3.TopAppBarDefaults
+import androidx.compose.material3.rememberTopAppBarState
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.input.nestedscroll.nestedScroll
+import androidx.lifecycle.viewmodel.compose.viewModel
+import com.sameerasw.pixsl.data.supabase
+import com.sameerasw.pixsl.ui.HomeScreen
+import com.sameerasw.pixsl.ui.components.PixSLTopAppBar
 import com.sameerasw.pixsl.ui.theme.PixSLTheme
+import com.sameerasw.pixsl.utils.HapticUtil
+import com.sameerasw.pixsl.viewmodel.MainViewModel
+import io.github.jan.supabase.compose.auth.composable.rememberSignInWithGoogle
+import io.github.jan.supabase.compose.auth.composeAuth
+import kotlinx.coroutines.launch
 
 class MainActivity : ComponentActivity() {
+
+    @OptIn(ExperimentalMaterial3Api::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        HapticUtil.initialize(this)
         enableEdgeToEdge()
+
         setContent {
             PixSLTheme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Greeting(
-                        name = "Android",
+                val viewModel: MainViewModel = viewModel()
+                val authState by viewModel.authState.collectAsState()
+                val scope = rememberCoroutineScope()
+                val scrollBehavior = TopAppBarDefaults.exitUntilCollapsedScrollBehavior(
+                    rememberTopAppBarState()
+                )
+
+                val googleSignInAction = supabase.composeAuth.rememberSignInWithGoogle(
+                    onResult = { result ->
+                        viewModel.onSignInResult(result, this@MainActivity)
+                    }
+                )
+
+                Scaffold(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .nestedScroll(scrollBehavior.nestedScrollConnection),
+                    topBar = {
+                        PixSLTopAppBar(
+                            title = R.string.label_community,
+                            scrollBehavior = scrollBehavior,
+                            isSignedIn = authState is com.sameerasw.pixsl.data.model.AuthState.SignedIn,
+                            avatarUrl = (authState as? com.sameerasw.pixsl.data.model.AuthState.SignedIn)?.avatarUrl,
+                            onSignInClick = {
+                                scope.launch { viewModel.signIn(googleSignInAction) }
+                            },
+                            onSignOutClick = {
+                                viewModel.signOut()
+                            }
+                        )
+                    }
+                ) { innerPadding ->
+                    HomeScreen(
+                        authState = authState,
+                        onSignInClick = {
+                            scope.launch { viewModel.signIn(googleSignInAction) }
+                        },
                         modifier = Modifier.padding(innerPadding)
                     )
                 }
             }
         }
-    }
-}
-
-@Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
-}
-
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    PixSLTheme {
-        Greeting("Android")
     }
 }

@@ -1,3 +1,18 @@
 <resources>
     <string name="app_name">PixSL</string>
+    <string name="action_sign_in_google">Sign in with Google</string>
+    <string name="action_sign_out">Sign out</string>
+    <string name="action_profile">Profile</string>
+    <string name="action_back">Back</string>
+    <string name="label_welcome">Welcome to PixSL</string>
+    <string name="label_guest">Guest</string>
+    <string name="label_signed_in_as">Signed in as</string>
+    <string name="label_home">Home</string>
+    <string name="label_loading">Loading…</string>
+    <string name="content_desc_settings">Settings</string>
+    <string name="label_community">Pixel Community LK</string>
+    <string name="label_sign_in_prompt">Sign in to connect with the community</string>
+    <string name="label_expert">Expert</string>
+    <string name="label_nostr_key">Nostr Identity</string>
+    <string name="label_nostr_key_desc">Your decentralized identity key has been generated</string>
 </resources>
