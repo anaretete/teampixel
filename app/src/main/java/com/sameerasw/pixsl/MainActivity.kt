@@ -59,6 +59,7 @@ import com.sameerasw.pixsl.ui.theme.PixeLKTheme
 import com.sameerasw.pixsl.utils.HapticUtil
 import com.sameerasw.pixsl.viewmodel.MainViewModel
 import io.github.jan.supabase.compose.auth.composable.rememberSignInWithGoogle
+import com.sameerasw.pixsl.ui.components.sheets.ProfileMenuSheet
 import io.github.jan.supabase.compose.auth.composeAuth
 import kotlinx.coroutines.launch
 
@@ -126,84 +127,11 @@ class MainActivity : ComponentActivity() {
                             )
 
                             if (showProfileMenu && signedInState != null) {
-                                androidx.compose.material3.ModalBottomSheet(
+                                ProfileMenuSheet(
+                                    authState = signedInState,
                                     onDismissRequest = { showProfileMenu = false },
-                                    containerColor = MaterialTheme.colorScheme.surfaceContainerLow,
-                                    tonalElevation = 8.dp
-                                ) {
-                                    Column(
-                                        modifier = Modifier
-                                            .fillMaxWidth()
-                                            .padding(bottom = 32.dp, start = 16.dp, end = 16.dp),
-                                        verticalArrangement = Arrangement.spacedBy(8.dp)
-                                    ) {
-                                        // Header
-                                        Row(
-                                            modifier = Modifier
-                                                .fillMaxWidth()
-                                                .padding(vertical = 16.dp),
-                                            verticalAlignment = Alignment.CenterVertically
-                                        ) {
-                                            com.sameerasw.pixsl.ui.components.PixeLKAvatar(
-                                                avatarUrl = signedInState.avatarUrl,
-                                                username = signedInState.profile?.username,
-                                                isExpert = signedInState.profile?.isExpert ?: false,
-                                                size = 48.dp
-                                            )
-                                            Spacer(modifier = Modifier.width(16.dp))
-                                            Column {
-                                                Text(
-                                                    text = signedInState.profile?.username ?: stringResource(R.string.label_guest),
-                                                    style = MaterialTheme.typography.titleMedium,
-                                                    fontWeight = androidx.compose.ui.text.font.FontWeight.Bold
-                                                )
-                                                if (signedInState.email != null) {
-                                                    Text(
-                                                        text = signedInState.email,
-                                                        style = MaterialTheme.typography.labelSmall,
-                                                        color = MaterialTheme.colorScheme.onSurfaceVariant
-                                                    )
-                                                }
-                                            }
-                                        }
-
-                                        HorizontalDivider(modifier = Modifier.padding(vertical = 8.dp))
-
-                                        // Profile Option
-                                        androidx.compose.material3.ListItem(
-                                            headlineContent = { Text(stringResource(R.string.action_profile)) },
-                                            leadingContent = {
-                                                Icon(
-                                                    imageVector = androidx.compose.material.icons.Icons.Default.Person,
-                                                    contentDescription = null
-                                                )
-                                            },
-                                            modifier = Modifier.clickable { /* Handle profile */ }
-                                        )
-
-                                        // Sign Out Option
-                                        androidx.compose.material3.ListItem(
-                                            headlineContent = { 
-                                                Text(
-                                                    stringResource(R.string.action_sign_out),
-                                                    color = MaterialTheme.colorScheme.error
-                                                ) 
-                                            },
-                                            leadingContent = {
-                                                Icon(
-                                                    imageVector = androidx.compose.material.icons.Icons.AutoMirrored.Filled.ExitToApp,
-                                                    contentDescription = null,
-                                                    tint = MaterialTheme.colorScheme.error
-                                                )
-                                            },
-                                            modifier = Modifier.clickable {
-                                                HapticUtil.performVirtualKeyHaptic(view)
-                                                viewModel.signOut()
-                                                showProfileMenu = false
-                                            }
-                                        )
-                                    }
-                                }
+                                    onSignOutClick = { viewModel.signOut() }
+                                )
                             }
                         }
 
