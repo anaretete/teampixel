@@ -41,7 +41,21 @@ import androidx.compose.runtime.remember
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.statusBarsPadding
-import com.sameerasw.pixsl.utils.DeviceUtils
+import androidx.compose.foundation.layout.statusBarsPadding
+import com.sameerasw.pixsl.utils.DeviceInfo
+
+import androidx.compose.animation.core.FastOutSlowInEasing
+import androidx.compose.animation.core.LinearEasing
+import androidx.compose.animation.core.animateDpAsState
+import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.animation.core.tween
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.graphics.graphicsLayer
+import kotlinx.coroutines.delay
 
 import com.sameerasw.pixsl.ui.components.home.DeviceHeroCard
 import com.sameerasw.pixsl.ui.components.home.DeviceSpecsCard
@@ -51,10 +65,47 @@ import com.sameerasw.pixsl.ui.components.home.SignInPromptCard
 @Composable
 fun HomeScreen(
     authState: AuthState,
+    deviceInfo: DeviceInfo,
+    hasRunStartupAnimation: Boolean,
+    onAnimationRun: () -> Unit,
     onSignInClick: () -> Unit,
     modifier: Modifier = Modifier,
     contentPadding: PaddingValues = PaddingValues(0.dp)
 ) {
+    var isStartupAnimationRunning by remember { mutableStateOf(hasRunStartupAnimation) }
+
+    LaunchedEffect(hasRunStartupAnimation) {
+        if (!hasRunStartupAnimation) {
+            delay(50) // Small delay to ensure layout is ready
+            isStartupAnimationRunning = true
+            onAnimationRun()
+        }
+    }
+
+    val configuration = LocalConfiguration.current
+    val screenHeight = configuration.screenHeightDp.dp
+    // Calculate initial offset to center the 480dp image box
+    // 64dp accounts for status bar and top padding roughly
+    val initialImageOffset = (screenHeight / 2) - 240.dp - 64.dp
+
+    val imageOffset by animateDpAsState(
+        targetValue = if (isStartupAnimationRunning) 0.dp else initialImageOffset,
+        animationSpec = tween(durationMillis = 750, easing = FastOutSlowInEasing),
+        label = "imageOffset"
+    )
+
+    val contentAlpha by animateFloatAsState(
+        targetValue = if (isStartupAnimationRunning) 1f else 0f,
+        animationSpec = tween(durationMillis = 500, delayMillis = 250, easing = LinearEasing),
+        label = "contentAlpha"
+    )
+
+    val contentOffset by animateDpAsState(
+        targetValue = if (isStartupAnimationRunning) 0.dp else 40.dp,
+        animationSpec = tween(durationMillis = 500, delayMillis = 250, easing = FastOutSlowInEasing),
+        label = "contentOffset"
+    )
+
     Column(
         modifier = modifier
             .fillMaxSize()
@@ -68,16 +119,29 @@ fun HomeScreen(
             ),
         verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
-        val context = androidx.compose.ui.platform.LocalContext.current
-        val deviceInfo = remember { DeviceUtils.getDeviceInfo(context) }
-        
-        DeviceHeroCard(deviceInfo = deviceInfo)
+        DeviceHeroCard(
+            deviceInfo = deviceInfo,
+            imageOffset = imageOffset,
+            contentAlpha = contentAlpha,
+            contentOffset = contentOffset
+        )
 
-        DeviceSpecsCard()
+        DeviceSpecsCard(
+            modifier = Modifier.graphicsLayer {
+                alpha = contentAlpha
+                translationY = contentOffset.toPx()
+            }
+        )
 
         if (authState is AuthState.Loading) {
             Box(
-                modifier = Modifier.fillMaxWidth().padding(vertical = 16.dp),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(vertical = 16.dp)
+                    .graphicsLayer {
+                        alpha = contentAlpha
+                        translationY = contentOffset.toPx()
+                    },
                 contentAlignment = Alignment.Center
             ) {
                 LoadingIndicator()
@@ -85,7 +149,13 @@ fun HomeScreen(
         }
 
         if (authState is AuthState.SignedOut) {
-            SignInPromptCard(onSignInClick = onSignInClick)
+            SignInPromptCard(
+                onSignInClick = onSignInClick,
+                modifier = Modifier.graphicsLayer {
+                    alpha = contentAlpha
+                    translationY = contentOffset.toPx()
+                }
+            )
         }
     }
 }

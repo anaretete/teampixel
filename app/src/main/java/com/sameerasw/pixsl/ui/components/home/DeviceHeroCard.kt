@@ -17,9 +17,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.Dp
+import androidx.compose.foundation.layout.offset
 import androidx.compose.ui.unit.dp
 import com.sameerasw.pixsl.R
 import com.sameerasw.pixsl.ui.components.containers.RoundedCardContainer
@@ -31,6 +36,9 @@ import com.sameerasw.pixsl.utils.DeviceUtils
 @Composable
 fun DeviceHeroCard(
     deviceInfo: DeviceInfo,
+    imageOffset: Dp = 0.dp,
+    contentAlpha: Float = 1f,
+    contentOffset: Dp = 0.dp,
     modifier: Modifier = Modifier
 ) {
     Column(
@@ -41,6 +49,7 @@ fun DeviceHeroCard(
     ) {
         Box(
             modifier = Modifier
+                .offset(y = imageOffset)
                 .fillMaxWidth()
                 .height(480.dp)
                 .clip(MaterialTheme.shapes.medium),
@@ -61,6 +70,10 @@ fun DeviceHeroCard(
         // User-set Device Name
         Text(
             text = deviceInfo.deviceName,
+            modifier = Modifier.graphicsLayer {
+                alpha = contentAlpha
+                translationY = contentOffset.toPx()
+            },
             style = MaterialTheme.typography.headlineMedium.copy(
                 fontFamily = com.sameerasw.pixsl.ui.theme.GoogleSansFlexRounded
             ),
@@ -71,6 +84,10 @@ fun DeviceHeroCard(
         // Manufacturer Model
         Text(
             text = "${deviceInfo.manufacturer.replaceFirstChar { it.uppercase() }} ${deviceInfo.model} (${deviceInfo.hardware})",
+            modifier = Modifier.graphicsLayer {
+                alpha = contentAlpha
+                translationY = contentOffset.toPx()
+            },
             style = MaterialTheme.typography.titleMedium,
             color = MaterialTheme.colorScheme.onSurfaceVariant
         )
@@ -80,7 +97,12 @@ fun DeviceHeroCard(
     }
 
     RoundedCardContainer(
-        modifier = modifier.fillMaxWidth(),
+        modifier = modifier
+            .fillMaxWidth()
+            .graphicsLayer {
+                alpha = contentAlpha
+                translationY = contentOffset.toPx()
+            },
     ) {
 
 

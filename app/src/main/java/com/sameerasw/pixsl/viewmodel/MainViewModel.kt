@@ -22,6 +22,8 @@ class MainViewModel : ViewModel() {
     private val _authState = MutableStateFlow<AuthState>(AuthState.Loading)
     val authState: StateFlow<AuthState> = _authState.asStateFlow()
 
+    var hasRunStartupAnimation = false
+
     init {
         checkCurrentSession()
     }

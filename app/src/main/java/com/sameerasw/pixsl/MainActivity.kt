@@ -57,12 +57,13 @@ import com.sameerasw.pixsl.ui.components.PixeLKTopAppBar
 import com.sameerasw.pixsl.ui.components.PixeLKFloatingToolbar
 import com.sameerasw.pixsl.domain.PixeLKTabs
 import com.sameerasw.pixsl.ui.theme.PixeLKTheme
-import com.sameerasw.pixsl.utils.HapticUtil
-import com.sameerasw.pixsl.viewmodel.MainViewModel
-import io.github.jan.supabase.compose.auth.composable.rememberSignInWithGoogle
 import com.sameerasw.pixsl.ui.components.sheets.ProfileMenuSheet
 import io.github.jan.supabase.compose.auth.composeAuth
 import kotlinx.coroutines.launch
+import com.sameerasw.pixsl.utils.DeviceUtils
+import com.sameerasw.pixsl.utils.HapticUtil
+import com.sameerasw.pixsl.viewmodel.MainViewModel
+import io.github.jan.supabase.compose.auth.composable.rememberSignInWithGoogle
 
 class MainActivity : ComponentActivity() {
 
@@ -83,6 +84,7 @@ class MainActivity : ComponentActivity() {
                 var showProfileMenu by remember { mutableStateOf(false) }
 
                 val context = androidx.compose.ui.platform.LocalContext.current
+                val deviceInfo = remember { DeviceUtils.getDeviceInfo(context) }
                 val googleSignInAction = supabase.composeAuth.rememberSignInWithGoogle(
                     onResult = { result ->
                         viewModel.onSignInResult(result, context as MainActivity)
@@ -117,6 +119,7 @@ class MainActivity : ComponentActivity() {
                                 avatarUrl = signedInState?.avatarUrl,
                                 isExpert = signedInState?.profile?.isExpert ?: false,
                                 username = signedInState?.profile?.username,
+                                deviceInfo = deviceInfo,
                                 onProfileClick = {
                                     HapticUtil.performVirtualKeyHaptic(view)
                                     if (signedInState != null) {
@@ -145,6 +148,9 @@ class MainActivity : ComponentActivity() {
                                 PixeLKTabs.HOME -> {
                                     HomeScreen(
                                         authState = authState,
+                                        deviceInfo = deviceInfo,
+                                        hasRunStartupAnimation = viewModel.hasRunStartupAnimation,
+                                        onAnimationRun = { viewModel.hasRunStartupAnimation = true },
                                         onSignInClick = { googleSignInAction.startFlow() },
                                         contentPadding = innerPadding
                                     )

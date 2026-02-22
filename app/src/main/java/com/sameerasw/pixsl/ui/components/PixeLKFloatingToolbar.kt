@@ -40,7 +40,12 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.drawWithCache
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Paint
+import androidx.compose.ui.graphics.PaintingStyle
+import androidx.compose.ui.graphics.drawscope.drawIntoCanvas
+import androidx.compose.ui.graphics.drawscope.translate
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -63,6 +68,7 @@ fun PixeLKFloatingToolbar(
     avatarUrl: String? = null,
     isExpert: Boolean = false,
     username: String? = null,
+    deviceInfo: com.sameerasw.pixsl.utils.DeviceInfo? = null,
     onProfileClick: () -> Unit = {}
 ) {
     val expanded = true
@@ -105,6 +111,7 @@ fun PixeLKFloatingToolbar(
                 tabs.forEachIndexed { index, tab ->
                     val isSelected = currentPage == index
                     val isBumping = bumpingTab == index
+                    val isHomeTab = tab == PixeLKTabs.HOME
 
                     val itemScale by animateFloatAsState(
                         targetValue = if (isBumping) 1.2f else 1f,
@@ -120,6 +127,8 @@ fun PixeLKFloatingToolbar(
                         label = stringResource(id = tab.title),
                         isSelected = isSelected,
                         hasBadge = badges[tab] == true,
+                        isHomeTab = isHomeTab,
+                        deviceInfo = deviceInfo,
                         modifier = Modifier
                             .graphicsLayer {
                                 scaleX = itemScale
@@ -239,6 +248,8 @@ private fun ToolbarItem(
     label: String,
     isSelected: Boolean,
     hasBadge: Boolean,
+    isHomeTab: Boolean = false,
+    deviceInfo: com.sameerasw.pixsl.utils.DeviceInfo? = null,
     modifier: Modifier = Modifier
 ) {
     Row(
@@ -255,13 +266,49 @@ private fun ToolbarItem(
         horizontalArrangement = Arrangement.Center
     ) {
         Box {
-            Icon(
-                imageVector = icon,
-                contentDescription = label,
-                tint = if (isSelected) MaterialTheme.colorScheme.primary
-                else MaterialTheme.colorScheme.background,
-                modifier = Modifier.size(24.dp)
-            )
+            if (isHomeTab && deviceInfo != null) {
+                Icon(
+                    painter = androidx.compose.ui.res.painterResource(id = com.sameerasw.pixsl.utils.DeviceImageMapper.getDeviceDrawable(deviceInfo.model)),
+                    contentDescription = label,
+                    tint = if (isSelected) MaterialTheme.colorScheme.primary
+                    else MaterialTheme.colorScheme.background,
+                    modifier = Modifier
+                        .size(24.dp)
+                        .graphicsLayer {
+                            // Expand the thin strokes slightly for icon visibility
+                            scaleX = 1.1f
+                            scaleY = 1.1f
+                        }
+                        .drawWithCache {
+                            onDrawWithContent {
+                                // Draw the icon slightly shifted in all directions to simulate a stroke
+                                val strokeOffset = 0.5.dp.toPx()
+                                drawContent() 
+                                
+                                translate(left = strokeOffset, top = 0f) {
+                                    this@onDrawWithContent.drawContent()
+                                }
+                                translate(left = -strokeOffset, top = 0f) {
+                                    this@onDrawWithContent.drawContent()
+                                }
+                                translate(left = 0f, top = strokeOffset) {
+                                    this@onDrawWithContent.drawContent()
+                                }
+                                translate(left = 0f, top = -strokeOffset) {
+                                    this@onDrawWithContent.drawContent()
+                                }
+                            }
+                        }
+                )
+            } else {
+                Icon(
+                    imageVector = icon,
+                    contentDescription = label,
+                    tint = if (isSelected) MaterialTheme.colorScheme.primary
+                    else MaterialTheme.colorScheme.background,
+                    modifier = Modifier.size(24.dp)
+                )
+            }
             if (hasBadge) {
                 androidx.compose.foundation.Canvas(
                     modifier = Modifier
