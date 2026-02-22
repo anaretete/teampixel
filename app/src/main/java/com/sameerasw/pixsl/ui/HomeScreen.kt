@@ -40,6 +40,7 @@ import androidx.compose.material3.LoadingIndicator
 import androidx.compose.runtime.remember
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.statusBarsPadding
 import com.sameerasw.pixsl.utils.DeviceUtils
 
 import com.sameerasw.pixsl.ui.components.home.DeviceHeroCard
@@ -58,8 +59,9 @@ fun HomeScreen(
         modifier = modifier
             .fillMaxSize()
             .verticalScroll(rememberScrollState())
+            .statusBarsPadding()
             .padding(
-                top = contentPadding.calculateTopPadding() + 8.dp,
+                top = 0.dp,
                 bottom = contentPadding.calculateBottomPadding() + 88.dp,
                 start = 16.dp,
                 end = 16.dp

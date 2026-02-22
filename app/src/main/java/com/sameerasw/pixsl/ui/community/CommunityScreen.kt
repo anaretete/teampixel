@@ -71,9 +71,11 @@ fun CommunityScreen(
             }
         } else {
             LazyColumn(
-                modifier = Modifier.fillMaxSize(),
+                modifier = Modifier
+                    .fillMaxSize()
+                    .statusBarsPadding(),
                 contentPadding = PaddingValues(
-                    top = contentPadding.calculateTopPadding() + 8.dp,
+                    top = 0.dp,
                     bottom = contentPadding.calculateBottomPadding() + 88.dp,
                     start = 16.dp,
                     end = 16.dp
