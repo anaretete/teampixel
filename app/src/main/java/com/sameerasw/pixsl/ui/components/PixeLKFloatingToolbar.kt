@@ -9,6 +9,8 @@ import androidx.compose.animation.expandHorizontally
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.shrinkHorizontally
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.filled.Share
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
@@ -43,6 +45,7 @@ import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import com.sameerasw.pixsl.R
 import com.sameerasw.pixsl.domain.PixeLKTabs
 import kotlinx.coroutines.delay
 
@@ -154,8 +157,84 @@ fun PixeLKFloatingToolbar(
     )
 }
 
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalMaterial3ExpressiveApi::class)
+@Composable
+fun PixeLKActionToolbar(
+    modifier: Modifier = Modifier,
+    onBackClick: () -> Unit,
+    onShareClick: (() -> Unit)? = null,
+    scrollBehavior: FloatingToolbarScrollBehavior? = null
+) {
+    val expanded = true
+    val view = androidx.compose.ui.platform.LocalView.current
+
+    HorizontalFloatingToolbar(
+        modifier = modifier,
+        expanded = expanded,
+        scrollBehavior = scrollBehavior,
+        colors = FloatingToolbarDefaults.vibrantFloatingToolbarColors(
+            toolbarContentColor = MaterialTheme.colorScheme.onSurface,
+            toolbarContainerColor = MaterialTheme.colorScheme.primary,
+        ),
+        content = {
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.spacedBy(8.dp)
+            ) {
+                // Back Button
+                ToolbarActionButton(
+                    icon = androidx.compose.material.icons.Icons.AutoMirrored.Filled.ArrowBack,
+                    contentDescription = stringResource(R.string.action_back),
+                    onClick = {
+                        com.sameerasw.pixsl.utils.HapticUtil.performUIHaptic(view)
+                        onBackClick()
+                    }
+                )
+
+
+                // Share Button
+                if (onShareClick != null) {
+                    ToolbarActionButton(
+                        icon = androidx.compose.material.icons.Icons.Default.Share,
+                        contentDescription = stringResource(R.string.action_share),
+                        onClick = {
+                            com.sameerasw.pixsl.utils.HapticUtil.performUIHaptic(view)
+                            onShareClick()
+                        }
+                    )
+                }
+            }
+        }
+    )
+}
+
+@Composable
+private fun ToolbarActionButton(
+    icon: androidx.compose.ui.graphics.vector.ImageVector,
+    contentDescription: String?,
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier
+) {
+    Box(
+        modifier = modifier
+            .size(48.dp)
+            .clip(CircleShape)
+            .background(MaterialTheme.colorScheme.background)
+            .clickable { onClick() },
+        contentAlignment = Alignment.Center
+    ) {
+        Icon(
+            imageVector = icon,
+            contentDescription = contentDescription,
+            tint = MaterialTheme.colorScheme.primary,
+            modifier = Modifier.size(24.dp)
+        )
+    }
+}
+
 @Composable
 private fun ToolbarItem(
+// ... (rest of the file)
     icon: androidx.compose.ui.graphics.vector.ImageVector,
     label: String,
     isSelected: Boolean,

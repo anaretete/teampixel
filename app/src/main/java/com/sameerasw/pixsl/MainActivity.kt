@@ -52,6 +52,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.sameerasw.pixsl.data.supabase
 import com.sameerasw.pixsl.ui.HomeScreen
 import com.sameerasw.pixsl.ui.community.CommunityScreen
+import com.sameerasw.pixsl.ui.guides.GuidesScreen
 import com.sameerasw.pixsl.ui.components.PixeLKTopAppBar
 import com.sameerasw.pixsl.ui.components.PixeLKFloatingToolbar
 import com.sameerasw.pixsl.domain.PixeLKTabs
@@ -146,6 +147,20 @@ class MainActivity : ComponentActivity() {
                                         authState = authState,
                                         onSignInClick = { googleSignInAction.startFlow() },
                                         contentPadding = innerPadding
+                                    )
+                                }
+                                PixeLKTabs.GUIDES -> {
+                                    GuidesScreen(
+                                        contentPadding = innerPadding,
+                                        onGuideClick = { guide ->
+                                            val intent = android.content.Intent(context, com.sameerasw.pixsl.ui.guides.ArticleDetailActivity::class.java).apply {
+                                                putExtra("title", guide.title)
+                                                putExtra("content", guide.content)
+                                                putExtra("date", guide.date)
+                                                putExtra("readTime", guide.readTime)
+                                            }
+                                            context.startActivity(intent)
+                                        }
                                     )
                                 }
                                 PixeLKTabs.COMMUNITY -> {

@@ -28,7 +28,10 @@
     <string name="label_device_placeholder">Device Image Placeholder</string>
     <string name="tab_home">PixeLK</string>
     <string name="tab_pixel">Your Pixel</string>
+    <string name="tab_guides">Guides</string>
     <string name="tab_community">Community</string>
+    <string name="label_guides">Pixel Guides &amp; Stories</string>
+    <string name="action_share">Share</string>
     <string name="action_delete">Delete</string>
     <string name="feat_media_upload_title">Media Upload</string>
     <string name="requires_following_permissions">%1$s requires the following permissions:</string>

@@ -33,6 +33,11 @@
             android:label="Thread"
             android:theme="@style/Theme.PixeLK"
             android:windowSoftInputMode="adjustResize" />
+
+        <activity
+            android:name=".ui.guides.ArticleDetailActivity"
+            android:exported="false"
+            android:theme="@style/Theme.PixeLK" />
     </application>
 
 </manifest>
