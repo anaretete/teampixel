@@ -111,7 +111,7 @@ class CommunityRepository(
     fun startListeningToReplies(postId: String) {
         val subId = "replies-$postId-${UUID.randomUUID().toString().take(8)}"
         val filter = NostrFilter(
-            kinds = listOf(1),
+            kinds = listOf(1, 6, 7, 9735),
             tags = mapOf("e" to listOf(postId)),
             limit = 100
         )

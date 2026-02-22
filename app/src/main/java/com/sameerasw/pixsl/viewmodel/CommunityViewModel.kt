@@ -41,6 +41,12 @@ class CommunityViewModel(
     private val _zapTally = MutableStateFlow<Map<String, Long>>(emptyMap())
     val zapTally: StateFlow<Map<String, Long>> = _zapTally.asStateFlow()
 
+    private val _likeTally = MutableStateFlow<Map<String, Int>>(emptyMap())
+    val likeTally: StateFlow<Map<String, Int>> = _likeTally.asStateFlow()
+
+    private val _repostTally = MutableStateFlow<Map<String, Int>>(emptyMap())
+    val repostTally: StateFlow<Map<String, Int>> = _repostTally.asStateFlow()
+
     private val profileCache = mutableMapOf<String, Profile>()
 
     init {
@@ -77,6 +83,41 @@ class CommunityViewModel(
             }
         }
 
+        // 4. Handle Reactions
+        when (event.kind) {
+            7 -> { // Like
+                val targetedEventId = event.getTag("e")
+                if (targetedEventId != null) {
+                    val currentTally = _likeTally.value.toMutableMap()
+                    currentTally[targetedEventId] = (currentTally[targetedEventId] ?: 0) + 1
+                    _likeTally.value = currentTally
+                }
+                return // Don't add to posts/replies
+            }
+            6 -> { // Repost
+                val targetedEventId = event.getTag("e")
+                if (targetedEventId != null) {
+                    val currentTally = _repostTally.value.toMutableMap()
+                    currentTally[targetedEventId] = (currentTally[targetedEventId] ?: 0) + 1
+                    _repostTally.value = currentTally
+                }
+                return // Don't add to posts/replies
+            }
+            9735 -> { // Zap Receipt
+                val targetedEventId = event.getTag("e")
+                val amountTag = event.getTag("amount")?.toLongOrNull() ?: 0L 
+                if (targetedEventId != null) {
+                    val currentTally = _zapTally.value.toMutableMap()
+                    currentTally[targetedEventId] = (currentTally[targetedEventId] ?: 0L) + (amountTag / 1000) // amount is millisats
+                    _zapTally.value = currentTally
+                }
+                return // Don't add to posts/replies
+            }
+        }
+
+        // Only Kind 1 (Note) should reach here for posts/replies
+        if (event.kind != 1) return
+
         val newPost = PostWithProfile(event, profile)
         
         // 3. Check if it's a reply
@@ -101,17 +142,6 @@ class CommunityViewModel(
                 .distinctBy { it.event.id }
                 .sortedByDescending { it.event.created_at }
             _posts.value = updatedList
-        }
-        
-        // 4. Handle Zap Receipts (Kind 9735)
-        if (event.kind == 9735) {
-            val targetedEventId = event.getTag("e")
-            val amountTag = event.getTag("amount")?.toLongOrNull() ?: 0L 
-            if (targetedEventId != null) {
-                val currentTally = _zapTally.value.toMutableMap()
-                currentTally[targetedEventId] = (currentTally[targetedEventId] ?: 0L) + (amountTag / 1000) // amount is millisats
-                _zapTally.value = currentTally
-            }
         }
     }
 

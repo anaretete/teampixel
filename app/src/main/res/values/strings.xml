@@ -22,4 +22,9 @@
     <string name="requires_following_permissions">%1$s requires the following permissions:</string>
     <string name="perm_action_grant">Grant</string>
     <string name="perm_action_enable">Enable</string>
+    <string name="label_reply">Reply</string>
+    <string name="label_repost">Repost</string>
+    <string name="label_zap">Zap</string>
+    <string name="label_like">Like</string>
+    <string name="content_desc_post_media">Post Media</string>
 </resources>

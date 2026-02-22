@@ -36,6 +36,8 @@ fun PostCard(
     post: PostWithProfile,
     currentNostrPubKey: String? = null,
     zapAmount: Long = 0,
+    likeCount: Int = 0,
+    repostCount: Int = 0,
     onLikeClick: (() -> Unit)? = null,
     onRepostClick: (() -> Unit)? = null,
     onZapClick: (() -> Unit)? = null,
@@ -101,7 +103,7 @@ fun PostCard(
                 Spacer(modifier = Modifier.height(12.dp))
                 AsyncImage(
                     model = imageUrl,
-                    contentDescription = "Post Media",
+                    contentDescription = stringResource(R.string.content_desc_post_media),
                     modifier = Modifier
                         .fillMaxWidth()
                         .heightIn(max = 400.dp)
@@ -111,89 +113,114 @@ fun PostCard(
             
             Spacer(modifier = Modifier.height(12.dp))
             
+            // Interaction Row (Right Aligned)
             Row(
                 modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceBetween,
+                horizontalArrangement = Arrangement.End,
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                Row(verticalAlignment = Alignment.CenterVertically) {
-                    IconButton(
-                        onClick = {
-                            HapticUtil.performUIHaptic(view)
-                            onReplyClick?.invoke()
-                        },
-                        modifier = Modifier.size(36.dp)
-                    ) {
-                        Icon(
-                            imageVector = Icons.Outlined.ChatBubbleOutline,
-                            contentDescription = "Reply",
-                            modifier = Modifier.size(20.dp),
-                            tint = MaterialTheme.colorScheme.onSurfaceVariant
-                        )
-                    }
-                }
-                
-                Row(verticalAlignment = Alignment.CenterVertically) {
-                    IconButton(
-                        onClick = {
-                            HapticUtil.performUIHaptic(view)
-                            onRepostClick?.invoke()
-                        },
-                        modifier = Modifier.size(36.dp)
-                    ) {
-                        Icon(
-                            imageVector = Icons.Outlined.Repeat,
-                            contentDescription = "Repost",
-                            modifier = Modifier.size(20.dp),
-                            tint = MaterialTheme.colorScheme.onSurfaceVariant
-                        )
-                    }
+                // Reply
+                IconButton(
+                    onClick = {
+                        HapticUtil.performUIHaptic(view)
+                        onReplyClick?.invoke()
+                    },
+                    modifier = Modifier.size(36.dp)
+                ) {
+                    Icon(
+                        imageVector = Icons.Outlined.ChatBubbleOutline,
+                        contentDescription = stringResource(R.string.label_reply),
+                        modifier = Modifier.size(20.dp),
+                        tint = MaterialTheme.colorScheme.onSurfaceVariant
+                    )
                 }
 
-                Row(verticalAlignment = Alignment.CenterVertically) {
-                    IconButton(
-                        onClick = {
-                            HapticUtil.performUIHaptic(view)
-                            onZapClick?.invoke()
-                        },
-                        modifier = Modifier.size(36.dp)
-                    ) {
-                        Row(verticalAlignment = Alignment.CenterVertically) {
-                            Icon(
-                                imageVector = if (zapAmount > 0) Icons.Default.Bolt else Icons.Outlined.ElectricBolt,
-                                contentDescription = "Zap",
-                                modifier = Modifier.size(20.dp),
-                                tint = if (zapAmount > 0) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurfaceVariant
+                Spacer(modifier = Modifier.width(8.dp))
+
+                // Repost
+                IconButton(
+                    onClick = {
+                        HapticUtil.performUIHaptic(view)
+                        onRepostClick?.invoke()
+                    },
+                    modifier = Modifier.size(36.dp)
+                ) {
+                    Row(verticalAlignment = Alignment.CenterVertically) {
+                        Icon(
+                            imageVector = Icons.Outlined.Repeat,
+                            contentDescription = stringResource(R.string.label_repost),
+                            modifier = Modifier.size(20.dp),
+                            tint = if (repostCount > 0) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurfaceVariant
+                        )
+                        if (repostCount > 0) {
+                            Text(
+                                text = repostCount.toString(),
+                                style = MaterialTheme.typography.labelSmall,
+                                color = if (repostCount > 0) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurfaceVariant,
+                                modifier = Modifier.padding(start = 2.dp)
                             )
-                            if (zapAmount > 0) {
-                                Text(
-                                    text = zapAmount.toString(),
-                                    style = MaterialTheme.typography.labelSmall,
-                                    color = MaterialTheme.colorScheme.primary,
-                                    modifier = Modifier.padding(start = 2.dp)
-                                )
-                            }
                         }
                     }
                 }
-                
-                Row(verticalAlignment = Alignment.CenterVertically) {
-                    IconButton(
-                        onClick = {
-                            HapticUtil.performUIHaptic(view)
-                            onLikeClick?.invoke()
-                        },
-                        modifier = Modifier.size(36.dp)
-                    ) {
+
+                Spacer(modifier = Modifier.width(8.dp))
+
+                // Zap
+                IconButton(
+                    onClick = {
+                        HapticUtil.performUIHaptic(view)
+                        onZapClick?.invoke()
+                    },
+                    modifier = Modifier.size(36.dp)
+                ) {
+                    Row(verticalAlignment = Alignment.CenterVertically) {
+                        Icon(
+                            imageVector = if (zapAmount > 0) Icons.Default.Bolt else Icons.Outlined.ElectricBolt,
+                            contentDescription = stringResource(R.string.label_zap),
+                            modifier = Modifier.size(20.dp),
+                            tint = if (zapAmount > 0) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurfaceVariant
+                        )
+                        if (zapAmount > 0) {
+                            Text(
+                                text = zapAmount.toString(),
+                                style = MaterialTheme.typography.labelSmall,
+                                color = MaterialTheme.colorScheme.primary,
+                                modifier = Modifier.padding(start = 2.dp)
+                            )
+                        }
+                    }
+                }
+
+                Spacer(modifier = Modifier.width(8.dp))
+
+                // Like
+                IconButton(
+                    onClick = {
+                        HapticUtil.performUIHaptic(view)
+                        onLikeClick?.invoke()
+                    },
+                    modifier = Modifier.size(36.dp)
+                ) {
+                    Row(verticalAlignment = Alignment.CenterVertically) {
                         Icon(
                             imageVector = Icons.Outlined.FavoriteBorder,
-                            contentDescription = "Like",
+                            contentDescription = stringResource(R.string.label_like),
                             modifier = Modifier.size(20.dp),
-                            tint = MaterialTheme.colorScheme.onSurfaceVariant
+                            tint = if (likeCount > 0) MaterialTheme.colorScheme.error else MaterialTheme.colorScheme.onSurfaceVariant
                         )
+                        if (likeCount > 0) {
+                            Text(
+                                text = likeCount.toString(),
+                                style = MaterialTheme.typography.labelSmall,
+                                color = MaterialTheme.colorScheme.error,
+                                modifier = Modifier.padding(start = 2.dp)
+                            )
+                        }
                     }
                 }
             }
         }
     }
 }
+
+

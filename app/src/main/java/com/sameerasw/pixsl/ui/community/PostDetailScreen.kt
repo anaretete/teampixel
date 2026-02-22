@@ -29,6 +29,8 @@ fun PostDetailScreen(
     val posts by viewModel.posts.collectAsState()
     val repliesMap by viewModel.replies.collectAsState()
     val zapTally by viewModel.zapTally.collectAsState()
+    val likeTally by viewModel.likeTally.collectAsState()
+    val repostTally by viewModel.repostTally.collectAsState()
     var selectedZapPostId by remember { mutableStateOf<Pair<String, String>?>(null) } // postId, authorPubKey
     var showReplySheet by remember { mutableStateOf(false) }
     
@@ -93,6 +95,8 @@ fun PostDetailScreen(
                             post = parentPost,
                             currentNostrPubKey = currentNostrPubKey,
                             zapAmount = zapTally[parentPost.event.id] ?: 0L,
+                            likeCount = likeTally[parentPost.event.id] ?: 0,
+                            repostCount = repostTally[parentPost.event.id] ?: 0,
                             onLikeClick = { viewModel.likePost(parentPost.event.id, parentPost.event.pubkey) },
                             onRepostClick = { viewModel.repostPost(parentPost.event.id, parentPost.event.pubkey) },
                             onZapClick = { selectedZapPostId = parentPost.event.id to parentPost.event.pubkey },
@@ -113,6 +117,8 @@ fun PostDetailScreen(
                                     post = reply,
                                     currentNostrPubKey = currentNostrPubKey,
                                     zapAmount = zapTally[reply.event.id] ?: 0L,
+                                    likeCount = likeTally[reply.event.id] ?: 0,
+                                    repostCount = repostTally[reply.event.id] ?: 0,
                                     onLikeClick = { viewModel.likePost(reply.event.id, reply.event.pubkey) },
                                     onRepostClick = { viewModel.repostPost(reply.event.id, reply.event.pubkey) },
                                     onZapClick = { selectedZapPostId = reply.event.id to reply.event.pubkey },

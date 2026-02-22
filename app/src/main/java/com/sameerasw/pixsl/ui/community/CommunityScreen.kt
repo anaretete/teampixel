@@ -29,6 +29,8 @@ fun CommunityScreen(
 ) {
     val posts by viewModel.posts.collectAsState()
     val zapTally by viewModel.zapTally.collectAsState()
+    val likeTally by viewModel.likeTally.collectAsState()
+    val repostTally by viewModel.repostTally.collectAsState()
     var selectedZapPostId by remember { mutableStateOf<Pair<String, String>?>(null) } // postId, authorPubKey
     var showPostSheet by remember { mutableStateOf(false) }
 
@@ -77,6 +79,8 @@ fun CommunityScreen(
                                 post = post,
                                 currentNostrPubKey = currentNostrPubKey,
                                 zapAmount = zapTally[post.event.id] ?: 0L,
+                                likeCount = likeTally[post.event.id] ?: 0,
+                                repostCount = repostTally[post.event.id] ?: 0,
                                 onLikeClick = { viewModel.likePost(post.event.id, post.event.pubkey) },
                                 onRepostClick = { viewModel.repostPost(post.event.id, post.event.pubkey) },
                                 onZapClick = { selectedZapPostId = post.event.id to post.event.pubkey },
