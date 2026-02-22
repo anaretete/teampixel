@@ -1,10 +1,10 @@
 <resources>
-    <string name="app_name">PixeLK</string>
+    <string name="app_name">TeamPixel</string>
     <string name="action_sign_in_google">Sign in with Google</string>
     <string name="action_sign_out">Sign out</string>
     <string name="action_profile">Profile</string>
     <string name="action_back">Back</string>
-    <string name="label_welcome">Welcome to PixeLK</string>
+    <string name="label_welcome">Welcome to #TeamPixel</string>
     <string name="label_guest">Guest</string>
     <string name="label_signed_in_as">Signed in as</string>
     <string name="label_home">Home</string>
@@ -26,7 +26,7 @@
     <string name="label_device_storage">Storage</string>
     <string name="label_device_ram">RAM</string>
     <string name="label_device_placeholder">Device Image Placeholder</string>
-    <string name="tab_home">PixeLK</string>
+    <string name="tab_home">#TeamPixel</string>
     <string name="tab_pixel">Your Pixel</string>
     <string name="tab_guides">Guides</string>
     <string name="tab_community">Community</string>
@@ -44,7 +44,7 @@
     <string name="content_desc_post_media">Post Media</string>
     <string name="label_send_zaps">Send Zaps</string>
     <string name="format_sats">%1$d sats</string>
-    <string name="sheet_title_post">Post to #PixeLK</string>
+    <string name="sheet_title_post">Post to #TeamPixel</string>
     <string name="sheet_title_reply">Reply to Thread</string>
     <string name="label_post">Post</string>
     <string name="placeholder_post_hint">Ask the community or share a tip…</string>
