@@ -43,6 +43,7 @@ import androidx.compose.foundation.background
 import com.sameerasw.pixsl.utils.DeviceUtils
 
 import com.sameerasw.pixsl.ui.components.home.DeviceHeroCard
+import com.sameerasw.pixsl.ui.components.home.DeviceSpecsCard
 import com.sameerasw.pixsl.ui.components.home.SignInPromptCard
 
 @OptIn(ExperimentalMaterial3ExpressiveApi::class)
@@ -69,6 +70,8 @@ fun HomeScreen(
         val deviceInfo = remember { DeviceUtils.getDeviceInfo(context) }
         
         DeviceHeroCard(deviceInfo = deviceInfo)
+
+        DeviceSpecsCard()
 
         if (authState is AuthState.Loading) {
             Box(
