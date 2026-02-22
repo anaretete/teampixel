@@ -25,9 +25,15 @@ import com.sameerasw.pixsl.ui.components.sheets.ZapAmountSheet
 fun PostDetailScreen(
     postId: String,
     onNavigateBack: () -> Unit,
+    currentUserId: String? = null,
     currentNostrPubKey: String? = null,
     viewModel: CommunityViewModel = viewModel()
 ) {
+    // Sync identity context whenever it changes
+    LaunchedEffect(currentUserId, currentNostrPubKey) {
+        viewModel.setCurrentUser(currentUserId, currentNostrPubKey)
+    }
+
     val posts by viewModel.posts.collectAsState()
     val repliesMap by viewModel.replies.collectAsState()
     val zapTally by viewModel.zapTally.collectAsState()

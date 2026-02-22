@@ -25,10 +25,16 @@ import com.sameerasw.pixsl.R
 fun CommunityScreen(
     modifier: Modifier = Modifier,
     contentPadding: PaddingValues = PaddingValues(0.dp),
+    currentUserId: String? = null,
     currentNostrPubKey: String? = null,
     onPostClick: (String) -> Unit = {},
     viewModel: CommunityViewModel = viewModel()
 ) {
+    // Sync identity context whenever it changes
+    LaunchedEffect(currentUserId, currentNostrPubKey) {
+        viewModel.setCurrentUser(currentUserId, currentNostrPubKey)
+    }
+
     val posts by viewModel.posts.collectAsState()
     val zapTally by viewModel.zapTally.collectAsState()
     val likeTally by viewModel.likeTally.collectAsState()

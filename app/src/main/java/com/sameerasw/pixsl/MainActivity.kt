@@ -122,6 +122,7 @@ class MainActivity : ComponentActivity() {
                                 PixeLKTabs.COMMUNITY -> {
                                     CommunityScreen(
                                         contentPadding = innerPadding,
+                                        currentUserId = (authState as? com.sameerasw.pixsl.data.model.AuthState.SignedIn)?.profile?.id,
                                         currentNostrPubKey = (authState as? com.sameerasw.pixsl.data.model.AuthState.SignedIn)?.profile?.nostrPubKey,
                                         onPostClick = { postId ->
                                             val intent = android.content.Intent(context, com.sameerasw.pixsl.ui.community.PostDetailActivity::class.java).apply {

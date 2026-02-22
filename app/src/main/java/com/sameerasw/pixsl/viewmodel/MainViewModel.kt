@@ -12,6 +12,7 @@ import io.github.jan.supabase.postgrest.from
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import com.sameerasw.pixsl.utils.NostrCrypto
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.flow.first
 import io.github.jan.supabase.auth.status.SessionStatus
@@ -75,20 +76,37 @@ class MainViewModel : ViewModel() {
 
                     var profile = fetchProfile(user.id)
 
-                    if (profile?.nostrPubKey == null) {
-                        // New user: generate Nostr identity (32-byte private key)
+                    val prefs = context.getSharedPreferences("pixsl_prefs", Context.MODE_PRIVATE)
+                    val scopedKey = "nostr_private_key_${user.id}"
+                    var privKeyHex = prefs.getString(scopedKey, null)
+
+                    // Migration/Recovery: If scoped key is missing, check if we have a legacy key that matches
+                    if (privKeyHex == null && profile?.nostrPubKey != null) {
+                        val legacyKey = prefs.getString("nostr_private_key", null)
+                        if (legacyKey != null) {
+                            val derivedPub = try {
+                                val evenKey = NostrCrypto.getEvenKey(legacyKey)
+                                NostrCrypto.pubKeyFor(evenKey)
+                            } catch (e: Exception) { null }
+                            
+                            if (derivedPub == profile.nostrPubKey) {
+                                privKeyHex = NostrCrypto.getEvenKey(legacyKey)
+                                prefs.edit().putString(scopedKey, privKeyHex).apply()
+                            }
+                        }
+                    }
+
+                    if (privKeyHex == null) {
+                        // Truly missing local key: Generate a new one to enable reactions
                         val privKey = ByteArray(32)
                         java.security.SecureRandom().nextBytes(privKey)
-                        val privKeyHex = privKey.joinToString("") { "%02x".format(it) }
+                        val initialHex = privKey.joinToString("") { "%02x".format(it) }
+                        
+                        // Enforce BIP340 (even y)
+                        privKeyHex = NostrCrypto.getEvenKey(initialHex)
+                        val pubKeyHex = NostrCrypto.pubKeyFor(privKeyHex)
 
-                        // Generate x-only public key for Nostr (Schnorr)
-                        val secp256k1 = fr.acinq.secp256k1.Secp256k1.get()
-                        val compressedPubKey = secp256k1.pubKeyCompress(secp256k1.pubkeyCreate(privKey))
-                        // Nostr strictly uses the 32-byte x-coordinate (bytes 1 through 32 of compressed key)
-                        val pubKeyHex = compressedPubKey.copyOfRange(1, 33).joinToString("") { "%02x".format(it) }
-
-                        val prefs = context.getSharedPreferences("pixsl_prefs", Context.MODE_PRIVATE)
-                        prefs.edit().putString("nostr_private_key", privKeyHex).apply()
+                        prefs.edit().putString(scopedKey, privKeyHex).apply()
 
                         val upsertProfile = Profile(
                             id = user.id,
@@ -98,10 +116,11 @@ class MainViewModel : ViewModel() {
 
                         supabase.from("profiles").upsert(upsertProfile)
                         profile = upsertProfile
+                        android.util.Log.i("MainViewModel", "Generated new Nostr identity for user ${user.id}")
                     }
 
                     _authState.value = AuthState.SignedIn(
-                        profile = profile,
+                        profile = profile ?: Profile(id = user.id),
                         avatarUrl = avatarUrl
                     )
                 } catch (e: Exception) {

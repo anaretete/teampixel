@@ -14,10 +14,12 @@ import io.github.jan.supabase.postgrest.query.Columns
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.debounce
 import android.net.Uri
 import com.sameerasw.pixsl.data.repository.MediaRepository
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import java.util.concurrent.ConcurrentHashMap
 
 class CommunityViewModel(
     application: Application
@@ -50,48 +52,41 @@ class CommunityViewModel(
     private val _currentNostrPubKey = MutableStateFlow<String?>(null)
     val currentNostrPubKey: StateFlow<String?> = _currentNostrPubKey.asStateFlow()
 
+    private var currentUserId: String? = null
     private val profileCache = mutableMapOf<String, Profile>()
+    private val seenEventIds = ConcurrentHashMap.newKeySet<String>()
 
     init {
         repository.startListeningToCommunity("PixeLK")
         
-        // Load current pubkey
-        val keys = repository.getEventKeys()
-        _currentNostrPubKey.value = keys?.second
-
         viewModelScope.launch {
             repository.eventsFlow.collect { event ->
                 handleNewEvent(event)
             }
         }
+
+        // Sync reactions for loaded posts
+        viewModelScope.launch {
+            @OptIn(kotlinx.coroutines.FlowPreview::class)
+            _posts.debounce(1000).collect { currentPosts ->
+                val ids = currentPosts.map { it.event.id }
+                if (ids.isNotEmpty()) {
+                    repository.startListeningToReactions(ids)
+                }
+            }
+        }
+    }
+
+    fun setCurrentUser(userId: String?, pubKey: String?) {
+        currentUserId = userId
+        _currentNostrPubKey.value = pubKey
     }
 
     private suspend fun handleNewEvent(event: NostrEvent) {
-        val pubkey = event.pubkey
-        
-        // 1. Check local cache first
-        var profile = profileCache[pubkey]
-        if (profile == null) {
-            // 2. Fetch from Supabase
-            try {
-                // Query the profiles table where nostr_pubkey matches
-                val fetchedProfiles = supabase.from("profiles")
-                    .select(columns = Columns.ALL) {
-                        filter {
-                            eq("nostr_pubkey", pubkey)
-                        }
-                    }.decodeList<Profile>()
-                
-                profile = fetchedProfiles.firstOrNull()
-                if (profile != null) {
-                    profileCache[pubkey] = profile
-                }
-            } catch (e: Exception) {
-                Log.e("CommunityViewModel", "Failed to fetch profile for $pubkey", e)
-            }
-        }
+        // 1. Deduplicate by event ID
+        if (!seenEventIds.add(event.id)) return
 
-        // 4. Handle Reactions
+        // 2. Handle Reactions FIRST (No profile needed for counts)
         when (event.kind) {
             7 -> { // Like
                 val targetedEventId = event.getTag("e")
@@ -124,6 +119,29 @@ class CommunityViewModel(
                     _zapTally.value = currentTally
                 }
                 return // Don't add to posts/replies
+            }
+        }
+
+        val pubkey = event.pubkey
+        
+        // 2. Fetch profile for main content (Kind 1)
+        var profile = profileCache[pubkey]
+        if (profile == null) {
+            try {
+                // Query the profiles table where nostr_pubkey matches
+                val fetchedProfiles = supabase.from("profiles")
+                    .select(columns = Columns.ALL) {
+                        filter {
+                            eq("nostr_pubkey", pubkey)
+                        }
+                    }.decodeList<Profile>()
+                
+                profile = fetchedProfiles.firstOrNull()
+                if (profile != null) {
+                    profileCache[pubkey] = profile
+                }
+            } catch (e: Exception) {
+                Log.e("CommunityViewModel", "Failed to fetch profile for $pubkey", e)
             }
         }
 
@@ -163,31 +181,31 @@ class CommunityViewModel(
 
     fun sendPost(content: String, replyToId: String? = null) {
         viewModelScope.launch {
-            repository.publishPost(content, replyToId)
+            repository.publishPost(content, replyToId, currentUserId)
         }
     }
 
     fun likePost(eventId: String, authorPubKey: String) {
         viewModelScope.launch {
-            repository.likePost(eventId, authorPubKey)
+            repository.likePost(eventId, authorPubKey, currentUserId)
         }
     }
 
     fun repostPost(eventId: String, authorPubKey: String) {
         viewModelScope.launch {
-            repository.repostPost(eventId, authorPubKey)
+            repository.repostPost(eventId, authorPubKey, "", currentUserId)
         }
     }
 
     fun zapPost(eventId: String, authorPubKey: String, amount: Long, comment: String = "") {
         viewModelScope.launch {
-            repository.zapPost(eventId, authorPubKey, amount, comment)
+            repository.zapPost(eventId, authorPubKey, amount, comment, currentUserId)
         }
     }
 
     fun deletePost(eventId: String) {
         viewModelScope.launch {
-            if (repository.deletePost(eventId)) {
+            if (repository.deletePost(eventId, currentUserId)) {
                 _posts.value = _posts.value.filterNot { it.event.id == eventId }
             }
         }
@@ -208,6 +226,6 @@ class CommunityViewModel(
 
     override fun onCleared() {
         super.onCleared()
-        repository.stopListening()
+        repository.close()
     }
 }

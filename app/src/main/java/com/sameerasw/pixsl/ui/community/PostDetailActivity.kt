@@ -27,6 +27,7 @@ class PostDetailActivity : ComponentActivity() {
                 
                 PostDetailScreen(
                     postId = postId,
+                    currentUserId = (authState as? com.sameerasw.pixsl.data.model.AuthState.SignedIn)?.profile?.id,
                     currentNostrPubKey = (authState as? com.sameerasw.pixsl.data.model.AuthState.SignedIn)?.profile?.nostrPubKey,
                     onNavigateBack = { finish() }
                 )

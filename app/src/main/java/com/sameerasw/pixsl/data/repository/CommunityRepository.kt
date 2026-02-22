@@ -22,6 +22,9 @@ import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.isActive
+import kotlinx.coroutines.cancel
+import java.util.concurrent.CopyOnWriteArrayList
+import java.util.concurrent.ConcurrentHashMap
 import kotlinx.coroutines.launch
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
@@ -44,21 +47,22 @@ class CommunityRepository(
     }
 
     private val json = Json { ignoreUnknownKeys = true }
-    private val activeSessions = mutableListOf<WebSocketSession>()
+    private val activeSessions = CopyOnWriteArrayList<WebSocketSession>()
     private val repositoryScope = CoroutineScope(Dispatchers.IO + Job())
 
     // A shared flow where incoming Nostr events from the relays will be pushed
     private val _eventsFlow = MutableSharedFlow<NostrEvent>(replay = 50)
     val eventsFlow: SharedFlow<NostrEvent> = _eventsFlow.asSharedFlow()
 
-    private var currentSubscriptionId: String? = null
+    private val activeSubIds = ConcurrentHashMap.newKeySet<String>()
+    private var currentReactionsSubId: String? = null
 
     /**
      * Connects to all predefined relays and subscribes to the matching hashtag/kind
      */
     fun startListeningToCommunity(hashtag: String = "PixeLK") {
-        val subId = UUID.randomUUID().toString()
-        currentSubscriptionId = subId
+        val subId = "community-${UUID.randomUUID().toString().take(8)}"
+        activeSubIds.add(subId)
 
         // Build our subscription filter: Kind 1 (Short Text Note) targeting the hashtag
         val filter = NostrFilter(
@@ -85,11 +89,11 @@ class CommunityRepository(
                             val text = frame.readText()
                             try {
                                 val serverMessage = json.decodeFromString(NostrServerMessage.serializer(), text)
-                                if (serverMessage is NostrServerMessage.EventMessage && serverMessage.subscriptionId == subId) {
-                                    // Push valid events to the UI
-                                    _eventsFlow.emit(serverMessage.event)
-                                } else if (serverMessage is NostrServerMessage.NoticeMessage) {
-                                    Log.w("NostrRelay", "Notice securely from $wsUrl: ${serverMessage.message}")
+                                if (serverMessage is NostrServerMessage.EventMessage) {
+                                    // Push valid events to the UI if they belong to our active subscriptions
+                                    if (activeSubIds.contains(serverMessage.subscriptionId)) {
+                                        _eventsFlow.emit(serverMessage.event)
+                                    }
                                 }
                             } catch (e: Exception) {
                                 Log.e("NostrRelay", "Failed to parse message from $wsUrl: $text", e)
@@ -110,12 +114,56 @@ class CommunityRepository(
      */
     fun startListeningToReplies(postId: String) {
         val subId = "replies-$postId-${UUID.randomUUID().toString().take(8)}"
+        activeSubIds.add(subId)
         val filter = NostrFilter(
             kinds = listOf(1, 6, 7, 9735),
             tags = mapOf("e" to listOf(postId)),
             limit = 100
         )
-        val reqMessage = NostrClientMessage.ReqMessage(subId, listOf(filter))
+        sendSubscription(subId, listOf(filter))
+    }
+
+    /**
+     * Subscribes to reactions for a list of event IDs.
+     */
+    fun startListeningToReactions(eventIds: List<String>) {
+        if (eventIds.isEmpty()) return
+        
+        // Close previous reaction subscription if it exists
+        currentReactionsSubId?.let { oldSubId ->
+            closeSubscription(oldSubId)
+        }
+
+        val subId = "reactions-${UUID.randomUUID().toString().take(8)}"
+        currentReactionsSubId = subId
+        activeSubIds.add(subId)
+        val filter = NostrFilter(
+            kinds = listOf(6, 7, 9735),
+            tags = mapOf("e" to eventIds),
+            limit = 500
+        )
+        sendSubscription(subId, listOf(filter))
+    }
+
+    private fun closeSubscription(subId: String) {
+        activeSubIds.remove(subId)
+        val closeMessage = NostrClientMessage.CloseMessage(subId)
+        val closeJson = json.encodeToString(NostrClientMessage.serializer(), closeMessage)
+        repositoryScope.launch {
+            activeSessions.forEach { session ->
+                if (session.isActive) {
+                    try {
+                        session.send(Frame.Text(closeJson))
+                    } catch (e: Exception) {
+                        Log.e("NostrRelay", "Error closing subscription $subId", e)
+                    }
+                }
+            }
+        }
+    }
+
+    private fun sendSubscription(subId: String, filters: List<NostrFilter>) {
+        val reqMessage = NostrClientMessage.ReqMessage(subId, filters)
         val reqJson = json.encodeToString(NostrClientMessage.serializer(), reqMessage)
 
         repositoryScope.launch {
@@ -124,18 +172,43 @@ class CommunityRepository(
                     try {
                         session.send(Frame.Text(reqJson))
                     } catch (e: Exception) {
-                        Log.e("NostrRelay", "Error requesting replies", e)
+                        Log.e("NostrRelay", "Error sending subscription $subId", e)
                     }
                 }
             }
         }
     }
 
+    fun stopAllSubscriptions() {
+        activeSubIds.forEach { subId ->
+            val closeMessage = NostrClientMessage.CloseMessage(subId)
+            val closeJson = json.encodeToString(NostrClientMessage.serializer(), closeMessage)
+            repositoryScope.launch {
+                activeSessions.forEach { session ->
+                    if (session.isActive) {
+                        try {
+                            session.send(Frame.Text(closeJson))
+                        } catch (e: Exception) {
+                            Log.e("NostrRelay", "Error closing subscription $subId", e)
+                        }
+                    }
+                }
+            }
+        }
+        activeSubIds.clear()
+    }
+
+    fun close() {
+        stopAllSubscriptions()
+        repositoryScope.cancel()
+        client.close()
+    }
+
     /**
      * Publishes a new note. If replyToId is provided, it's a thread reply.
      */
-    suspend fun publishPost(content: String, replyToId: String? = null): Boolean {
-        val keys = getEventKeys() ?: return false
+    suspend fun publishPost(content: String, replyToId: String? = null, userId: String? = null): Boolean {
+        val keys = getEventKeys(userId) ?: return false
 
         val postTags = mutableListOf(listOf("t", "PixeLK"))
         if (replyToId != null) {
@@ -155,8 +228,8 @@ class CommunityRepository(
     /**
      * Publishes a Kind 5 deletion event to remove a given post by its event ID.
      */
-    suspend fun deletePost(eventId: String): Boolean {
-        val keys = getEventKeys() ?: return false
+    suspend fun deletePost(eventId: String, userId: String? = null): Boolean {
+        val keys = getEventKeys(userId) ?: return false
 
         val event = NostrCrypto.createSignedEvent(
             content = "Deleted by user",
@@ -172,8 +245,8 @@ class CommunityRepository(
     /**
      * Publishes a Kind 7 reaction (Like).
      */
-    suspend fun likePost(eventId: String, authorPubKey: String): Boolean {
-        val keys = getEventKeys() ?: return false
+    suspend fun likePost(eventId: String, authorPubKey: String, userId: String? = null): Boolean {
+        val keys = getEventKeys(userId) ?: return false
         val event = NostrCrypto.createSignedEvent(
             content = "+",
             privKeyHex = keys.first,
@@ -191,8 +264,8 @@ class CommunityRepository(
     /**
      * Publishes a Kind 6 repost.
      */
-    suspend fun repostPost(eventId: String, authorPubKey: String, content: String = ""): Boolean {
-        val keys = getEventKeys() ?: return false
+    suspend fun repostPost(eventId: String, authorPubKey: String, content: String = "", userId: String? = null): Boolean {
+        val keys = getEventKeys(userId) ?: return false
         val event = NostrCrypto.createSignedEvent(
             content = content,
             privKeyHex = keys.first,
@@ -212,8 +285,8 @@ class CommunityRepository(
      * Note: This is a simplified version that creates the Zap Request event.
      * In a real app, this would be followed by a payment via LNURL.
      */
-    suspend fun zapPost(eventId: String, authorPubKey: String, amount: Long, comment: String = ""): Boolean {
-        val keys = getEventKeys() ?: return false
+    suspend fun zapPost(eventId: String, authorPubKey: String, amount: Long, comment: String = "", userId: String? = null): Boolean {
+        val keys = getEventKeys(userId) ?: return false
         val tags = mutableListOf(
             listOf("e", eventId),
             listOf("p", authorPubKey),
@@ -231,16 +304,28 @@ class CommunityRepository(
         return broadcastEvent(event)
     }
 
-    fun getEventKeys(): Pair<String, String>? {
+    fun getEventKeys(userId: String? = null): Pair<String, String>? {
         val prefs = context.getSharedPreferences("pixsl_prefs", Context.MODE_PRIVATE)
-        val privKeyHex = prefs.getString("nostr_private_key", null) ?: return null
+        val scopedKey = if (userId != null) "nostr_private_key_$userId" else "nostr_private_key"
+        var privKeyHex = prefs.getString(scopedKey, null)
         
-        val privKeyBytes = privKeyHex.chunked(2).map { it.toInt(16).toByte() }.toByteArray()
-        val secp = fr.acinq.secp256k1.Secp256k1.get()
-        val pubkeyCompressed = secp.pubKeyCompress(secp.pubkeyCreate(privKeyBytes))
-        val pubKeyHex = pubkeyCompressed.copyOfRange(1, 33).joinToString("") { "%02x".format(it) }
+        // Fallback for cases where migration hasn't happened yet but we have a user context
+        if (privKeyHex == null && userId != null) {
+            privKeyHex = prefs.getString("nostr_private_key", null)
+        }
+
+        if (privKeyHex == null) return null
         
-        return Pair(privKeyHex, pubKeyHex)
+        return try {
+            val privKeyBytes = privKeyHex.chunked(2).map { it.toInt(16).toByte() }.toByteArray()
+            val secp = fr.acinq.secp256k1.Secp256k1.get()
+            val pubkeyCompressed = secp.pubKeyCompress(secp.pubkeyCreate(privKeyBytes))
+            val pubKeyHex = pubkeyCompressed.copyOfRange(1, 33).joinToString("") { "%02x".format(it) }
+            Pair(privKeyHex, pubKeyHex)
+        } catch (e: Exception) {
+            Log.e("CommunityRepository", "Failed to derive keys", e)
+            null
+        }
     }
 
     private suspend fun broadcastEvent(event: NostrEvent): Boolean {
@@ -262,26 +347,4 @@ class CommunityRepository(
         return broadcastSuccess
     }
 
-    /**
-     * Closes the open WebSockets connections and destroys scope on logout/exit
-     */
-    fun stopListening() {
-        val subId = currentSubscriptionId ?: return
-        val closeMessage = NostrClientMessage.CloseMessage(subId)
-        val closeJson = json.encodeToString(NostrClientMessage.serializer(), closeMessage)
-        
-        repositoryScope.launch {
-            activeSessions.forEach { session ->
-                if (session.isActive) {
-                    try {
-                        session.send(Frame.Text(closeJson))
-                        session.close()
-                    } catch (e: Exception) {
-                        Log.e("NostrRelay", "Error closing session", e)
-                    }
-                }
-            }
-            activeSessions.clear()
-        }
-    }
 }
