@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ExitToApp
 import androidx.compose.material.icons.filled.ChevronRight
+import androidx.compose.material.icons.filled.DarkMode
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
@@ -25,6 +26,8 @@ import com.sameerasw.pixsl.utils.HapticUtil
 @Composable
 fun ProfileMenuSheet(
     authState: AuthState.SignedIn,
+    pitchBlackTheme: Boolean,
+    onPitchBlackThemeChange: (Boolean) -> Unit,
     onDismissRequest: () -> Unit,
     onSignOutClick: () -> Unit
 ) {
@@ -96,6 +99,21 @@ fun ProfileMenuSheet(
                     }
                 )
             }
+
+            // Settings Container
+            RoundedCardContainer(
+                spacing = 2.dp
+            ) {
+                ProfileMenuToggleItem(
+                    icon = Icons.Default.DarkMode,
+                    label = stringResource(R.string.label_pitch_black_theme),
+                    checked = pitchBlackTheme,
+                    onCheckedChange = {
+                        HapticUtil.performVirtualKeyHaptic(view)
+                        onPitchBlackThemeChange(it)
+                    }
+                )
+            }
         }
     }
 }
@@ -142,6 +160,50 @@ private fun ProfileMenuItem(
                 contentDescription = null,
                 tint = MaterialTheme.colorScheme.onSurfaceVariant,
                 modifier = Modifier.size(20.dp)
+            )
+        }
+    }
+}
+
+@Composable
+private fun ProfileMenuToggleItem(
+    icon: ImageVector,
+    label: String,
+    checked: Boolean,
+    onCheckedChange: (Boolean) -> Unit,
+    iconColor: androidx.compose.ui.graphics.Color = MaterialTheme.colorScheme.primary
+) {
+    Card(
+        modifier = Modifier
+            .fillMaxWidth()
+            .clickable { onCheckedChange(!checked) },
+        shape = MaterialTheme.shapes.extraSmall,
+        colors = CardDefaults.cardColors(
+            containerColor = MaterialTheme.colorScheme.surfaceContainerLow
+        )
+    ) {
+        Row(
+            modifier = Modifier
+                .padding(16.dp)
+                .fillMaxWidth(),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.spacedBy(16.dp)
+        ) {
+            Icon(
+                imageVector = icon,
+                contentDescription = null,
+                tint = iconColor,
+                modifier = Modifier.size(24.dp)
+            )
+            Text(
+                text = label,
+                style = MaterialTheme.typography.bodyLarge,
+                fontWeight = FontWeight.SemiBold,
+                modifier = Modifier.weight(1f)
+            )
+            Switch(
+                checked = checked,
+                onCheckedChange = onCheckedChange
             )
         }
     }

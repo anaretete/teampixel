@@ -74,8 +74,10 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
 
         setContent {
-            PixeLKTheme {
-                val viewModel: MainViewModel = viewModel()
+            val viewModel: MainViewModel = androidx.lifecycle.viewmodel.compose.viewModel()
+            val pitchBlackTheme by viewModel.pitchBlackTheme.collectAsState()
+            
+            PixeLKTheme(pitchBlackTheme = pitchBlackTheme) {
                 val authState by viewModel.authState.collectAsState()
                 val tabs = PixeLKTabs.entries
                 val pagerState = rememberPagerState(pageCount = { tabs.size })
@@ -133,6 +135,8 @@ class MainActivity : ComponentActivity() {
                             if (showProfileMenu && signedInState != null) {
                                 ProfileMenuSheet(
                                     authState = signedInState,
+                                    pitchBlackTheme = pitchBlackTheme,
+                                    onPitchBlackThemeChange = { viewModel.setPitchBlackTheme(it) },
                                     onDismissRequest = { showProfileMenu = false },
                                     onSignOutClick = { viewModel.signOut() }
                                 )

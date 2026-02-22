@@ -16,8 +16,14 @@ import com.sameerasw.pixsl.utils.NostrCrypto
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.flow.first
 import io.github.jan.supabase.auth.status.SessionStatus
+import com.russhwolf.settings.Settings
 
 class MainViewModel : ViewModel() {
+
+    private val settings = Settings()
+
+    private val _pitchBlackTheme = MutableStateFlow(settings.getBoolean("pitch_black_theme", false))
+    val pitchBlackTheme: StateFlow<Boolean> = _pitchBlackTheme.asStateFlow()
 
     private val _authState = MutableStateFlow<AuthState>(AuthState.Loading)
     val authState: StateFlow<AuthState> = _authState.asStateFlow()
@@ -26,6 +32,11 @@ class MainViewModel : ViewModel() {
 
     init {
         checkCurrentSession()
+    }
+
+    fun setPitchBlackTheme(enabled: Boolean) {
+        settings.putBoolean("pitch_black_theme", enabled)
+        _pitchBlackTheme.value = enabled
     }
 
     private fun checkCurrentSession() {
