@@ -74,7 +74,12 @@ fun PixeLKTopAppBar(
         }
         if (subtitle != null) {
             Column {
-                Text(resolvedTitle, maxLines = 1, overflow = TextOverflow.Ellipsis)
+                Text(
+                    resolvedTitle,
+                    style = MaterialTheme.typography.titleLargeEmphasized.copy(fontFamily = com.sameerasw.pixsl.ui.theme.GoogleSansFlexWide),
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis
+                )
                 val resolvedSubtitle = when (subtitle) {
                     is Int -> stringResource(id = subtitle)
                     is String -> subtitle
@@ -89,7 +94,12 @@ fun PixeLKTopAppBar(
                 )
             }
         } else {
-            Text(resolvedTitle, maxLines = 1, overflow = TextOverflow.Ellipsis)
+            Text(
+                resolvedTitle,
+                style = MaterialTheme.typography.titleLargeEmphasized.copy(fontFamily = com.sameerasw.pixsl.ui.theme.GoogleSansFlexWide),
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis
+            )
         }
     }
 

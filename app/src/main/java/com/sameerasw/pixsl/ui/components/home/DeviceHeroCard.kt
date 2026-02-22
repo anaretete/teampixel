@@ -60,7 +60,9 @@ fun DeviceHeroCard(
             // User-set Device Name
             Text(
                 text = deviceInfo.deviceName,
-                style = MaterialTheme.typography.headlineMedium,
+                style = MaterialTheme.typography.headlineMedium.copy(
+                    fontFamily = com.sameerasw.pixsl.ui.theme.GoogleSansFlexRounded
+                ),
                 fontWeight = FontWeight.Bold,
                 color = MaterialTheme.colorScheme.onSurface
             )

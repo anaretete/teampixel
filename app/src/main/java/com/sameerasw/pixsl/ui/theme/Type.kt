@@ -1,23 +1,55 @@
 package com.sameerasw.pixsl.ui.theme
 
 import androidx.compose.material3.Typography
-import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.ExperimentalTextApi
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
-import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.unit.sp
+import androidx.compose.ui.text.font.FontVariation
 import com.sameerasw.pixsl.R
 
 val GoogleSansFlex = FontFamily(
-    Font(R.font.google_sans_flex, weight = FontWeight.Normal)
+    Font(R.font.google_sans_flex)
 )
 
-val Typography = Typography(
-    bodyLarge = TextStyle(
-        fontFamily = GoogleSansFlex,
-        fontWeight = FontWeight.Normal,
-        fontSize = 16.sp,
-        lineHeight = 24.sp,
-        letterSpacing = 0.5.sp
+@OptIn(ExperimentalTextApi::class)
+val GoogleSansFlexWide = FontFamily(
+    Font(
+        R.font.google_sans_flex,
+        variationSettings = FontVariation.Settings(
+            FontVariation.Setting("wdth", 400f)
+        )
     )
+)
+
+@OptIn(ExperimentalTextApi::class)
+val GoogleSansFlexRounded = FontFamily(
+    Font(
+        R.font.google_sans_flex,
+        variationSettings = FontVariation.Settings(
+            FontVariation.Setting("ROND", 100f)
+        )
+    )
+)
+
+private val defaultTypography = Typography()
+val Typography = Typography(
+    displayLarge = defaultTypography.displayLarge.copy(fontFamily = GoogleSansFlex),
+    displayMedium = defaultTypography.displayMedium.copy(fontFamily = GoogleSansFlex),
+    displaySmall = defaultTypography.displaySmall.copy(fontFamily = GoogleSansFlex),
+    headlineLarge = defaultTypography.headlineLarge.copy(fontFamily = GoogleSansFlex),
+    headlineMedium = defaultTypography.headlineMedium.copy(fontFamily = GoogleSansFlex),
+    headlineSmall = defaultTypography.headlineSmall.copy(fontFamily = GoogleSansFlex),
+    titleLarge = defaultTypography.titleLarge.copy(fontFamily = GoogleSansFlex),
+    titleMedium = defaultTypography.titleMedium.copy(fontFamily = GoogleSansFlex),
+    titleSmall = defaultTypography.titleSmall.copy(fontFamily = GoogleSansFlex),
+    bodyLarge = defaultTypography.bodyLarge.copy(fontFamily = GoogleSansFlex),
+    bodyMedium = defaultTypography.bodyMedium.copy(fontFamily = GoogleSansFlex),
+    bodySmall = defaultTypography.bodySmall.copy(fontFamily = GoogleSansFlex),
+    labelLarge = defaultTypography.labelLarge.copy(fontFamily = GoogleSansFlex),
+    labelMedium = defaultTypography.labelMedium.copy(fontFamily = GoogleSansFlex),
+    labelSmall = defaultTypography.labelSmall.copy(fontFamily = GoogleSansFlex)
+)
+
+val Typography.titleLargeEmphasized get() = titleLarge.copy(
+    fontWeight = androidx.compose.ui.text.font.FontWeight.Bold
 )
