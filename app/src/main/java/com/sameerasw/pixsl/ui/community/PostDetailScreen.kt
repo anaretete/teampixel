@@ -1,26 +1,50 @@
 package com.sameerasw.pixsl.ui.community
 
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.AddComment
+import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Delete
-import androidx.compose.material3.*
-import androidx.compose.runtime.*
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.FloatingActionButton
+import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import com.sameerasw.pixsl.R
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.sameerasw.pixsl.R
 import com.sameerasw.pixsl.ui.components.cards.PostCard
 import com.sameerasw.pixsl.ui.components.containers.RoundedCardContainer
+import com.sameerasw.pixsl.ui.components.sheets.ZapAmountSheet
 import com.sameerasw.pixsl.viewmodel.CommunityViewModel
 
-import com.sameerasw.pixsl.ui.components.sheets.ZapAmountSheet
-
-@OptIn(ExperimentalMaterial3Api::class, androidx.compose.material3.ExperimentalMaterial3ExpressiveApi::class)
+@OptIn(
+    ExperimentalMaterial3Api::class,
+    androidx.compose.material3.ExperimentalMaterial3ExpressiveApi::class
+)
 @Composable
 fun PostDetailScreen(
     postId: String,
@@ -41,9 +65,9 @@ fun PostDetailScreen(
     val repostTally by viewModel.repostTally.collectAsState()
     var selectedZapPostId by remember { mutableStateOf<Pair<String, String>?>(null) } // postId, authorPubKey
     var showReplySheet by remember { mutableStateOf(false) }
-    
+
     val parentPost = posts.find { it.event.id == postId }
-    
+
     // Auto-fetch replies when screen opens
     LaunchedEffect(postId) {
         viewModel.fetchReplies(postId)
@@ -55,7 +79,10 @@ fun PostDetailScreen(
                 title = { Text(stringResource(R.string.label_thread_title)) },
                 navigationIcon = {
                     IconButton(onClick = onNavigateBack) {
-                        Icon(Icons.Default.ArrowBack, contentDescription = stringResource(R.string.action_back))
+                        Icon(
+                            Icons.Default.ArrowBack,
+                            contentDescription = stringResource(R.string.action_back)
+                        )
                     }
                 },
                 actions = {
@@ -76,17 +103,25 @@ fun PostDetailScreen(
         },
         floatingActionButton = {
             FloatingActionButton(onClick = { showReplySheet = true }) {
-                Icon(Icons.Default.AddComment, contentDescription = stringResource(R.string.label_reply))
+                Icon(
+                    Icons.Default.AddComment,
+                    contentDescription = stringResource(R.string.label_reply)
+                )
             }
         }
     ) { padding ->
         if (parentPost == null) {
-            Box(Modifier.fillMaxSize().padding(padding), contentAlignment = androidx.compose.ui.Alignment.Center) {
+            Box(
+                Modifier
+                    .fillMaxSize()
+                    .padding(padding),
+                contentAlignment = androidx.compose.ui.Alignment.Center
+            ) {
                 androidx.compose.material3.LoadingIndicator()
             }
             return@Scaffold
         }
-        
+
         Column(
             modifier = Modifier
                 .fillMaxSize()
@@ -106,12 +141,26 @@ fun PostDetailScreen(
                             likeCount = likeTally[parentPost.event.id]?.size ?: 0,
                             repostCount = repostTally[parentPost.event.id]?.size ?: 0,
                             isLiked = likeTally[parentPost.event.id]?.contains(currentNostrPubKey) == true,
-                            isReposted = repostTally[parentPost.event.id]?.contains(currentNostrPubKey) == true,
-                            onLikeClick = { viewModel.likePost(parentPost.event.id, parentPost.event.pubkey) },
-                            onRepostClick = { viewModel.repostPost(parentPost.event.id, parentPost.event.pubkey) },
-                            onZapClick = { selectedZapPostId = parentPost.event.id to parentPost.event.pubkey },
+                            isReposted = repostTally[parentPost.event.id]?.contains(
+                                currentNostrPubKey
+                            ) == true,
+                            onLikeClick = {
+                                viewModel.likePost(
+                                    parentPost.event.id,
+                                    parentPost.event.pubkey
+                                )
+                            },
+                            onRepostClick = {
+                                viewModel.repostPost(
+                                    parentPost.event.id,
+                                    parentPost.event.pubkey
+                                )
+                            },
+                            onZapClick = {
+                                selectedZapPostId = parentPost.event.id to parentPost.event.pubkey
+                            },
                             onReplyClick = { showReplySheet = true },
-                            onPostClick = null 
+                            onPostClick = null
                         )
 
                         val postReplies = repliesMap[postId] ?: emptyList()
@@ -130,10 +179,24 @@ fun PostDetailScreen(
                                     likeCount = likeTally[reply.event.id]?.size ?: 0,
                                     repostCount = repostTally[reply.event.id]?.size ?: 0,
                                     isLiked = likeTally[reply.event.id]?.contains(currentNostrPubKey) == true,
-                                    isReposted = repostTally[reply.event.id]?.contains(currentNostrPubKey) == true,
-                                    onLikeClick = { viewModel.likePost(reply.event.id, reply.event.pubkey) },
-                                    onRepostClick = { viewModel.repostPost(reply.event.id, reply.event.pubkey) },
-                                    onZapClick = { selectedZapPostId = reply.event.id to reply.event.pubkey },
+                                    isReposted = repostTally[reply.event.id]?.contains(
+                                        currentNostrPubKey
+                                    ) == true,
+                                    onLikeClick = {
+                                        viewModel.likePost(
+                                            reply.event.id,
+                                            reply.event.pubkey
+                                        )
+                                    },
+                                    onRepostClick = {
+                                        viewModel.repostPost(
+                                            reply.event.id,
+                                            reply.event.pubkey
+                                        )
+                                    },
+                                    onZapClick = {
+                                        selectedZapPostId = reply.event.id to reply.event.pubkey
+                                    },
                                     onReplyClick = { showReplySheet = true },
                                     onPostClick = null
                                 )
@@ -153,9 +216,9 @@ fun PostDetailScreen(
                 actionLabel = stringResource(R.string.label_reply),
                 isUploading = isUploading,
                 uploadedImageUrl = uploadedImageUrl,
-                onDismiss = { 
+                onDismiss = {
                     viewModel.clearUploadedMedia()
-                    showReplySheet = false 
+                    showReplySheet = false
                 },
                 onMediaPick = { uri -> viewModel.uploadMedia(uri) },
                 onClearMedia = { viewModel.clearUploadedMedia() },

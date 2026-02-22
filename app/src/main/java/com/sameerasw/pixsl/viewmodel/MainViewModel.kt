@@ -3,20 +3,20 @@ package com.sameerasw.pixsl.viewmodel
 import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.russhwolf.settings.Settings
 import com.sameerasw.pixsl.data.model.AuthState
 import com.sameerasw.pixsl.data.model.Profile
 import com.sameerasw.pixsl.data.supabase
-import io.github.jan.supabase.compose.auth.composable.NativeSignInResult
+import com.sameerasw.pixsl.utils.NostrCrypto
 import io.github.jan.supabase.auth.auth
+import io.github.jan.supabase.auth.status.SessionStatus
+import io.github.jan.supabase.compose.auth.composable.NativeSignInResult
 import io.github.jan.supabase.postgrest.from
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import com.sameerasw.pixsl.utils.NostrCrypto
-import kotlinx.coroutines.launch
 import kotlinx.coroutines.flow.first
-import io.github.jan.supabase.auth.status.SessionStatus
-import com.russhwolf.settings.Settings
+import kotlinx.coroutines.launch
 
 class MainViewModel : ViewModel() {
 
@@ -48,7 +48,8 @@ class MainViewModel : ViewModel() {
                             val user = supabase.auth.currentUserOrNull()
                             if (user != null) {
                                 val profile = fetchProfile(user.id)
-                                val avatarUrl = user.userMetadata?.get("avatar_url")?.toString()?.trim('"')
+                                val avatarUrl =
+                                    user.userMetadata?.get("avatar_url")?.toString()?.trim('"')
                                 _authState.value = AuthState.SignedIn(
                                     profile = profile ?: Profile(id = user.id),
                                     avatarUrl = avatarUrl,
@@ -62,12 +63,15 @@ class MainViewModel : ViewModel() {
                             _authState.value = AuthState.SignedOut
                         }
                     }
+
                     is SessionStatus.Initializing -> {
                         _authState.value = AuthState.Loading
                     }
+
                     is SessionStatus.NotAuthenticated, is SessionStatus.RefreshFailure -> {
                         _authState.value = AuthState.SignedOut
                     }
+
                     else -> {
                         // For any other unexpected state, assume signed out for safety
                         _authState.value = AuthState.SignedOut
@@ -84,7 +88,7 @@ class MainViewModel : ViewModel() {
                 try {
                     // Wait for the session to become authenticated before querying the user
                     supabase.auth.sessionStatus.first { it is SessionStatus.Authenticated }
-                    
+
                     val user = supabase.auth.currentUserOrNull() ?: return@launch
                     val avatarUrl = user.userMetadata?.get("avatar_url")?.toString()?.trim('"')
 
@@ -101,8 +105,10 @@ class MainViewModel : ViewModel() {
                             val derivedPub = try {
                                 val evenKey = NostrCrypto.getEvenKey(legacyKey)
                                 NostrCrypto.pubKeyFor(evenKey)
-                            } catch (e: Exception) { null }
-                            
+                            } catch (e: Exception) {
+                                null
+                            }
+
                             if (derivedPub == profile.nostrPubKey) {
                                 privKeyHex = NostrCrypto.getEvenKey(legacyKey)
                                 prefs.edit().putString(scopedKey, privKeyHex).apply()
@@ -115,7 +121,7 @@ class MainViewModel : ViewModel() {
                         val privKey = ByteArray(32)
                         java.security.SecureRandom().nextBytes(privKey)
                         val initialHex = privKey.joinToString("") { "%02x".format(it) }
-                        
+
                         // Enforce BIP340 (even y)
                         privKeyHex = NostrCrypto.getEvenKey(initialHex)
                         val pubKeyHex = NostrCrypto.pubKeyFor(privKeyHex)
@@ -130,7 +136,10 @@ class MainViewModel : ViewModel() {
 
                         supabase.from("profiles").upsert(upsertProfile)
                         profile = upsertProfile
-                        android.util.Log.i("MainViewModel", "Generated new Nostr identity for user ${user.id}")
+                        android.util.Log.i(
+                            "MainViewModel",
+                            "Generated new Nostr identity for user ${user.id}"
+                        )
                     }
 
                     _authState.value = AuthState.SignedIn(

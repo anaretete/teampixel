@@ -91,7 +91,10 @@ fun DeviceSpecsCard(
 private fun SpecHeader(title: String) {
     Column(
         modifier = Modifier
-            .background(MaterialTheme.colorScheme.surfaceContainerHighest, shape = Shapes.extraSmall)
+            .background(
+                MaterialTheme.colorScheme.surfaceContainerHighest,
+                shape = Shapes.extraSmall
+            )
             .fillMaxWidth()
             .padding(16.dp)
     ) {
@@ -111,7 +114,10 @@ private fun SpecSection(
 ) {
     Column(
         modifier = Modifier
-            .background(MaterialTheme.colorScheme.surfaceContainerHighest, shape = Shapes.extraSmall)
+            .background(
+                MaterialTheme.colorScheme.surfaceContainerHighest,
+                shape = Shapes.extraSmall
+            )
             .fillMaxWidth()
             .padding(16.dp)
     ) {
@@ -121,9 +127,9 @@ private fun SpecSection(
             fontWeight = FontWeight.Bold,
             color = MaterialTheme.colorScheme.secondary
         )
-        
+
         Spacer(modifier = Modifier.height(8.dp))
-        
+
         specs.forEach { (label, value) ->
             Row(
                 modifier = Modifier

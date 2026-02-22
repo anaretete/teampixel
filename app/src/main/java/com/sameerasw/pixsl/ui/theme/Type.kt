@@ -50,6 +50,7 @@ val Typography = Typography(
     labelSmall = defaultTypography.labelSmall.copy(fontFamily = GoogleSansFlex)
 )
 
-val Typography.titleLargeEmphasized get() = titleLarge.copy(
-    fontWeight = androidx.compose.ui.text.font.FontWeight.Bold
-)
+val Typography.titleLargeEmphasized
+    get() = titleLarge.copy(
+        fontWeight = androidx.compose.ui.text.font.FontWeight.Bold
+    )

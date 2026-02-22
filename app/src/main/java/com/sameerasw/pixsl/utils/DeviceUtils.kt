@@ -6,7 +6,6 @@ import android.os.Build
 import android.os.Environment
 import android.os.StatFs
 import android.provider.Settings
-import java.io.File
 
 data class DeviceInfo(
     val deviceName: String,
@@ -45,7 +44,7 @@ object DeviceUtils {
         val activityManager = context.getSystemService(Context.ACTIVITY_SERVICE) as ActivityManager
         val memoryInfo = ActivityManager.MemoryInfo()
         activityManager.getMemoryInfo(memoryInfo)
-        
+
         return DeviceInfo(
             deviceName = deviceName,
             totalStorage = totalStorage,
@@ -59,6 +58,10 @@ object DeviceUtils {
         if (size <= 0) return "0 B"
         val units = arrayOf("B", "KB", "MB", "GB", "TB")
         val digitGroups = (Math.log10(size.toDouble()) / Math.log10(1024.0)).toInt()
-        return String.format("%.1f %s", size / Math.pow(1024.0, digitGroups.toDouble()), units[digitGroups])
+        return String.format(
+            "%.1f %s",
+            size / Math.pow(1024.0, digitGroups.toDouble()),
+            units[digitGroups]
+        )
     }
 }

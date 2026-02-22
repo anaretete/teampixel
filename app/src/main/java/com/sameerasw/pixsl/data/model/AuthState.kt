@@ -7,5 +7,6 @@ sealed class AuthState {
         val avatarUrl: String?,
         val email: String? = null
     ) : AuthState()
+
     data object SignedOut : AuthState()
 }

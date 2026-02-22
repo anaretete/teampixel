@@ -24,7 +24,7 @@ class PostDetailActivity : ComponentActivity() {
             PixeLKTheme {
                 val mainViewModel: MainViewModel = viewModel()
                 val authState by mainViewModel.authState.collectAsState()
-                
+
                 PostDetailScreen(
                     postId = postId,
                     currentUserId = (authState as? com.sameerasw.pixsl.data.model.AuthState.SignedIn)?.profile?.id,

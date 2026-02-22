@@ -1,75 +1,49 @@
 package com.sameerasw.pixsl
 
-import android.os.Bundle
 import android.animation.ObjectAnimator
+import android.os.Bundle
 import android.util.Log
 import android.view.animation.AnticipateInterpolator
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.core.animation.doOnEnd
-import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.TopAppBarDefaults
-import androidx.compose.material3.rememberTopAppBarState
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.Alignment
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.offset
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
-import androidx.compose.material.icons.automirrored.filled.ExitToApp
-import androidx.compose.material.icons.filled.Person
-import androidx.compose.ui.input.nestedscroll.nestedScroll
-import androidx.compose.material3.FloatingToolbarDefaults
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
 import androidx.compose.material3.FloatingToolbarDefaults.ScreenOffset
-import androidx.compose.material3.FloatingToolbarExitDirection.Companion.Bottom
-import androidx.compose.material3.HorizontalDivider
-import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
+import androidx.compose.material3.Scaffold
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
-import androidx.compose.ui.platform.LocalView
-import androidx.compose.ui.input.nestedscroll.nestedScroll
-import androidx.compose.ui.res.stringResource
-import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.core.animation.doOnEnd
+import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import com.sameerasw.pixsl.data.supabase
+import com.sameerasw.pixsl.domain.PixeLKTabs
 import com.sameerasw.pixsl.ui.HomeScreen
 import com.sameerasw.pixsl.ui.community.CommunityScreen
-import com.sameerasw.pixsl.ui.guides.GuidesScreen
-import com.sameerasw.pixsl.ui.components.PixeLKTopAppBar
 import com.sameerasw.pixsl.ui.components.PixeLKFloatingToolbar
-import com.sameerasw.pixsl.domain.PixeLKTabs
-import com.sameerasw.pixsl.ui.theme.PixeLKTheme
-import com.sameerasw.pixsl.ui.components.sheets.ProfileMenuSheet
-import io.github.jan.supabase.compose.auth.composeAuth
-import kotlinx.coroutines.launch
 import com.sameerasw.pixsl.ui.components.sheets.AboutAppSheet
+import com.sameerasw.pixsl.ui.components.sheets.ProfileMenuSheet
+import com.sameerasw.pixsl.ui.guides.GuidesScreen
+import com.sameerasw.pixsl.ui.theme.PixeLKTheme
 import com.sameerasw.pixsl.utils.DeviceUtils
 import com.sameerasw.pixsl.utils.HapticUtil
 import com.sameerasw.pixsl.viewmodel.MainViewModel
 import io.github.jan.supabase.compose.auth.composable.rememberSignInWithGoogle
+import io.github.jan.supabase.compose.auth.composeAuth
+import kotlinx.coroutines.launch
 
 class MainActivity : ComponentActivity() {
 
@@ -106,10 +80,11 @@ class MainActivity : ComponentActivity() {
                 try {
                     @Suppress("SENSELESS_COMPARISON")
                     if (splashIcon != null) {
-                        val scaleDownX = ObjectAnimator.ofFloat(splashIcon, "scaleX", 1f, 0f).apply {
-                            interpolator = AnticipateInterpolator()
-                            duration = 750
-                        }
+                        val scaleDownX =
+                            ObjectAnimator.ofFloat(splashIcon, "scaleX", 1f, 0f).apply {
+                                interpolator = AnticipateInterpolator()
+                                duration = 750
+                            }
 
                         val scaleDownY =
                             ObjectAnimator.ofFloat(splashIcon, "scaleY", 1f, 0f).apply {
@@ -144,7 +119,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             val viewModel: MainViewModel = androidx.lifecycle.viewmodel.compose.viewModel()
             val pitchBlackTheme by viewModel.pitchBlackTheme.collectAsState()
-            
+
             PixeLKTheme(pitchBlackTheme = pitchBlackTheme) {
                 val authState by viewModel.authState.collectAsState()
                 val tabs = PixeLKTabs.entries
@@ -163,7 +138,12 @@ class MainActivity : ComponentActivity() {
                 )
 
                 Scaffold(
-                    contentWindowInsets = androidx.compose.foundation.layout.WindowInsets(0, 0, 0, 0),
+                    contentWindowInsets = androidx.compose.foundation.layout.WindowInsets(
+                        0,
+                        0,
+                        0,
+                        0
+                    ),
                     modifier = Modifier
                         .fillMaxSize(),
                     containerColor = androidx.compose.material3.MaterialTheme.colorScheme.surfaceContainer,
@@ -174,7 +154,8 @@ class MainActivity : ComponentActivity() {
                     }
 
                     Box(modifier = Modifier.fillMaxSize()) {
-                        val signedInState = authState as? com.sameerasw.pixsl.data.model.AuthState.SignedIn
+                        val signedInState =
+                            authState as? com.sameerasw.pixsl.data.model.AuthState.SignedIn
                         Box(
                             modifier = Modifier
                                 .align(Alignment.BottomCenter)
@@ -215,7 +196,7 @@ class MainActivity : ComponentActivity() {
                                     onSignOutClick = { viewModel.signOut() }
                                 )
                             }
-                            
+
                             if (showAboutSheet) {
                                 AboutAppSheet(
                                     onDismissRequest = { showAboutSheet = false }
@@ -234,16 +215,22 @@ class MainActivity : ComponentActivity() {
                                         authState = authState,
                                         deviceInfo = deviceInfo,
                                         hasRunStartupAnimation = viewModel.hasRunStartupAnimation,
-                                        onAnimationRun = { viewModel.hasRunStartupAnimation = true },
+                                        onAnimationRun = {
+                                            viewModel.hasRunStartupAnimation = true
+                                        },
                                         onSignInClick = { googleSignInAction.startFlow() },
                                         contentPadding = innerPadding
                                     )
                                 }
+
                                 PixeLKTabs.GUIDES -> {
                                     GuidesScreen(
                                         contentPadding = innerPadding,
                                         onGuideClick = { guide ->
-                                            val intent = android.content.Intent(context, com.sameerasw.pixsl.ui.guides.ArticleDetailActivity::class.java).apply {
+                                            val intent = android.content.Intent(
+                                                context,
+                                                com.sameerasw.pixsl.ui.guides.ArticleDetailActivity::class.java
+                                            ).apply {
                                                 putExtra("title", guide.title)
                                                 putExtra("content", guide.content)
                                                 putExtra("date", guide.date)
@@ -253,13 +240,17 @@ class MainActivity : ComponentActivity() {
                                         }
                                     )
                                 }
+
                                 PixeLKTabs.COMMUNITY -> {
                                     CommunityScreen(
                                         contentPadding = innerPadding,
                                         currentUserId = (authState as? com.sameerasw.pixsl.data.model.AuthState.SignedIn)?.profile?.id,
                                         currentNostrPubKey = (authState as? com.sameerasw.pixsl.data.model.AuthState.SignedIn)?.profile?.nostrPubKey,
                                         onPostClick = { postId ->
-                                            val intent = android.content.Intent(context, com.sameerasw.pixsl.ui.community.PostDetailActivity::class.java).apply {
+                                            val intent = android.content.Intent(
+                                                context,
+                                                com.sameerasw.pixsl.ui.community.PostDetailActivity::class.java
+                                            ).apply {
                                                 putExtra("postId", postId)
                                             }
                                             context.startActivity(intent)

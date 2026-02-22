@@ -6,14 +6,16 @@ import android.util.Base64
 import android.util.Log
 import com.sameerasw.pixsl.data.model.nostr.NostrEvent
 import com.sameerasw.pixsl.utils.NostrCrypto
-import io.ktor.client.*
-import io.ktor.client.call.*
-import io.ktor.client.request.*
-import io.ktor.client.request.forms.*
-import io.ktor.client.statement.*
-import io.ktor.http.*
+import io.ktor.client.HttpClient
+import io.ktor.client.request.forms.formData
+import io.ktor.client.request.forms.submitFormWithBinaryData
+import io.ktor.client.request.header
+import io.ktor.client.statement.HttpResponse
+import io.ktor.client.statement.bodyAsText
+import io.ktor.http.Headers
+import io.ktor.http.HttpHeaders
+import io.ktor.http.HttpStatusCode
 import kotlinx.serialization.Serializable
-import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 import java.io.InputStream
 import java.security.MessageDigest
@@ -29,7 +31,8 @@ data class Nip96Response(
 class MediaRepository(private val context: Context) {
     private val client = HttpClient()
     private val json = Json { ignoreUnknownKeys = true }
-    private val uploadServer = "https://void.cat/api/v1/nip96" // Standard NIP-96 endpoint for void.cat
+    private val uploadServer =
+        "https://void.cat/api/v1/nip96" // Standard NIP-96 endpoint for void.cat
 
     suspend fun uploadImage(uri: Uri): String? {
         val keys = getEventKeys() ?: return null
@@ -67,7 +70,10 @@ class MediaRepository(private val context: Context) {
                 val nip96Response = json.decodeFromString<Nip96Response>(body)
                 return nip96Response.url ?: nip96Response.nip94?.getTag("url")
             } else {
-                Log.e("MediaUpload", "Error response: ${response.status} - ${response.bodyAsText()}")
+                Log.e(
+                    "MediaUpload",
+                    "Error response: ${response.status} - ${response.bodyAsText()}"
+                )
             }
         } catch (e: Exception) {
             Log.e("MediaUpload", "Upload failed", e)
@@ -75,13 +81,18 @@ class MediaRepository(private val context: Context) {
         return null
     }
 
-    private fun generateNip98Header(url: String, method: String, payloadHash: String, keys: Pair<String, String>): String {
+    private fun generateNip98Header(
+        url: String,
+        method: String,
+        payloadHash: String,
+        keys: Pair<String, String>
+    ): String {
         val tags = listOf(
             listOf("u", url),
             listOf("method", method),
             listOf("payload", payloadHash)
         )
-        
+
         val event = NostrCrypto.createSignedEvent(
             content = "",
             privKeyHex = keys.first,
@@ -89,7 +100,7 @@ class MediaRepository(private val context: Context) {
             tags = tags,
             kind = 27235
         )
-        
+
         val eventJson = Json.encodeToString(NostrEvent.serializer(), event)
         return Base64.encodeToString(eventJson.toByteArray(), Base64.NO_WRAP)
     }
@@ -103,12 +114,12 @@ class MediaRepository(private val context: Context) {
     private fun getEventKeys(): Pair<String, String>? {
         val prefs = context.getSharedPreferences("pixsl_prefs", Context.MODE_PRIVATE)
         val privKeyHex = prefs.getString("nostr_private_key", null) ?: return null
-        
+
         val privKeyBytes = privKeyHex.chunked(2).map { it.toInt(16).toByte() }.toByteArray()
         val secp = fr.acinq.secp256k1.Secp256k1.get()
         val pubkeyCompressed = secp.pubKeyCompress(secp.pubkeyCreate(privKeyBytes))
         val pubKeyHex = pubkeyCompressed.copyOfRange(1, 33).joinToString("") { "%02x".format(it) }
-        
+
         return Pair(privKeyHex, pubKeyHex)
     }
 }

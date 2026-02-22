@@ -13,22 +13,20 @@ import io.ktor.client.plugins.websocket.WebSockets
 import io.ktor.client.plugins.websocket.webSocketSession
 import io.ktor.websocket.Frame
 import io.ktor.websocket.WebSocketSession
-import io.ktor.websocket.close
 import io.ktor.websocket.readText
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.cancel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.isActive
-import kotlinx.coroutines.cancel
-import java.util.concurrent.CopyOnWriteArrayList
-import java.util.concurrent.ConcurrentHashMap
 import kotlinx.coroutines.launch
-import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 import java.util.UUID
+import java.util.concurrent.ConcurrentHashMap
+import java.util.concurrent.CopyOnWriteArrayList
 
 class CommunityRepository(
     private val context: Context
@@ -66,7 +64,12 @@ class CommunityRepository(
 
         // Build our subscription filter: Kind 1 (Short Text Note) targeting the hashtag
         val filter = NostrFilter(
-            kinds = listOf(1, 6, 7, 9735), // Kind 1 (Note), 6 (Repost), 7 (Like), 9735 (Zap Receipt)
+            kinds = listOf(
+                1,
+                6,
+                7,
+                9735
+            ), // Kind 1 (Note), 6 (Repost), 7 (Like), 9735 (Zap Receipt)
             tags = mapOf("t" to listOf(hashtag)),
             limit = 50
         )
@@ -78,7 +81,7 @@ class CommunityRepository(
                 try {
                     val session = client.webSocketSession(wsUrl)
                     activeSessions.add(session)
-                    
+
                     // Send the REQ JSON to subscribe
                     session.send(Frame.Text(reqJson))
 
@@ -88,7 +91,8 @@ class CommunityRepository(
                         if (frame is Frame.Text) {
                             val text = frame.readText()
                             try {
-                                val serverMessage = json.decodeFromString(NostrServerMessage.serializer(), text)
+                                val serverMessage =
+                                    json.decodeFromString(NostrServerMessage.serializer(), text)
                                 if (serverMessage is NostrServerMessage.EventMessage) {
                                     // Push valid events to the UI if they belong to our active subscriptions
                                     if (activeSubIds.contains(serverMessage.subscriptionId)) {
@@ -128,7 +132,7 @@ class CommunityRepository(
      */
     fun startListeningToReactions(eventIds: List<String>) {
         if (eventIds.isEmpty()) return
-        
+
         // Close previous reaction subscription if it exists
         currentReactionsSubId?.let { oldSubId ->
             closeSubscription(oldSubId)
@@ -207,7 +211,11 @@ class CommunityRepository(
     /**
      * Publishes a new note. If replyToId is provided, it's a thread reply.
      */
-    suspend fun publishPost(content: String, replyToId: String? = null, userId: String? = null): Boolean {
+    suspend fun publishPost(
+        content: String,
+        replyToId: String? = null,
+        userId: String? = null
+    ): Boolean {
         val keys = getEventKeys(userId) ?: return false
 
         val postTags = mutableListOf(listOf("t", "PixeLK"))
@@ -252,7 +260,7 @@ class CommunityRepository(
             privKeyHex = keys.first,
             pubKeyHex = keys.second,
             tags = listOf(
-                listOf("e", eventId), 
+                listOf("e", eventId),
                 listOf("p", authorPubKey),
                 listOf("t", "PixeLK")
             ),
@@ -264,14 +272,19 @@ class CommunityRepository(
     /**
      * Publishes a Kind 6 repost.
      */
-    suspend fun repostPost(eventId: String, authorPubKey: String, content: String = "", userId: String? = null): Boolean {
+    suspend fun repostPost(
+        eventId: String,
+        authorPubKey: String,
+        content: String = "",
+        userId: String? = null
+    ): Boolean {
         val keys = getEventKeys(userId) ?: return false
         val event = NostrCrypto.createSignedEvent(
             content = content,
             privKeyHex = keys.first,
             pubKeyHex = keys.second,
             tags = listOf(
-                listOf("e", eventId, "", "mention"), 
+                listOf("e", eventId, "", "mention"),
                 listOf("p", authorPubKey),
                 listOf("t", "PixeLK")
             ),
@@ -285,7 +298,13 @@ class CommunityRepository(
      * Note: This is a simplified version that creates the Zap Request event.
      * In a real app, this would be followed by a payment via LNURL.
      */
-    suspend fun zapPost(eventId: String, authorPubKey: String, amount: Long, comment: String = "", userId: String? = null): Boolean {
+    suspend fun zapPost(
+        eventId: String,
+        authorPubKey: String,
+        amount: Long,
+        comment: String = "",
+        userId: String? = null
+    ): Boolean {
         val keys = getEventKeys(userId) ?: return false
         val tags = mutableListOf(
             listOf("e", eventId),
@@ -293,7 +312,7 @@ class CommunityRepository(
             listOf("relays", relays.first()),
             listOf("amount", amount.toString())
         )
-        
+
         val event = NostrCrypto.createSignedEvent(
             content = comment,
             privKeyHex = keys.first,
@@ -308,19 +327,20 @@ class CommunityRepository(
         val prefs = context.getSharedPreferences("pixsl_prefs", Context.MODE_PRIVATE)
         val scopedKey = if (userId != null) "nostr_private_key_$userId" else "nostr_private_key"
         var privKeyHex = prefs.getString(scopedKey, null)
-        
+
         // Fallback for cases where migration hasn't happened yet but we have a user context
         if (privKeyHex == null && userId != null) {
             privKeyHex = prefs.getString("nostr_private_key", null)
         }
 
         if (privKeyHex == null) return null
-        
+
         return try {
             val privKeyBytes = privKeyHex.chunked(2).map { it.toInt(16).toByte() }.toByteArray()
             val secp = fr.acinq.secp256k1.Secp256k1.get()
             val pubkeyCompressed = secp.pubKeyCompress(secp.pubkeyCreate(privKeyBytes))
-            val pubKeyHex = pubkeyCompressed.copyOfRange(1, 33).joinToString("") { "%02x".format(it) }
+            val pubKeyHex =
+                pubkeyCompressed.copyOfRange(1, 33).joinToString("") { "%02x".format(it) }
             Pair(privKeyHex, pubKeyHex)
         } catch (e: Exception) {
             Log.e("CommunityRepository", "Failed to derive keys", e)

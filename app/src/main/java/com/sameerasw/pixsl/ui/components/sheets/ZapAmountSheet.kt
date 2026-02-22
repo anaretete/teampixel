@@ -1,17 +1,31 @@
 package com.sameerasw.pixsl.ui.components.sheets
 
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Bolt
-import androidx.compose.material3.*
-import androidx.compose.runtime.*
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.ModalBottomSheet
+import androidx.compose.material3.Text
+import androidx.compose.material3.rememberModalBottomSheetState
+import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalView
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.sameerasw.pixsl.R
-import androidx.compose.ui.res.stringResource
 import com.sameerasw.pixsl.utils.HapticUtil
-import androidx.compose.ui.platform.LocalView
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -41,15 +55,15 @@ fun ZapAmountSheet(
                 tint = MaterialTheme.colorScheme.primary,
                 modifier = Modifier.size(48.dp)
             )
-            
+
             Text(
                 stringResource(R.string.label_send_zaps),
                 style = MaterialTheme.typography.headlineSmall,
                 color = MaterialTheme.colorScheme.onSurface
             )
-            
+
             Spacer(modifier = Modifier.height(24.dp))
-            
+
             Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
                 amounts.chunked(3).forEach { rowAmounts ->
                     Row(

@@ -1,6 +1,7 @@
 package com.sameerasw.pixsl.viewmodel
 
 import android.app.Application
+import android.net.Uri
 import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
@@ -8,6 +9,7 @@ import com.sameerasw.pixsl.data.model.Profile
 import com.sameerasw.pixsl.data.model.nostr.NostrEvent
 import com.sameerasw.pixsl.data.model.nostr.PostWithProfile
 import com.sameerasw.pixsl.data.repository.CommunityRepository
+import com.sameerasw.pixsl.data.repository.MediaRepository
 import com.sameerasw.pixsl.data.supabase
 import io.github.jan.supabase.postgrest.from
 import io.github.jan.supabase.postgrest.query.Columns
@@ -15,9 +17,6 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.debounce
-import android.net.Uri
-import com.sameerasw.pixsl.data.repository.MediaRepository
-import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import java.util.concurrent.ConcurrentHashMap
 
@@ -58,7 +57,7 @@ class CommunityViewModel(
 
     init {
         repository.startListeningToCommunity("PixeLK")
-        
+
         viewModelScope.launch {
             repository.eventsFlow.collect { event ->
                 handleNewEvent(event)
@@ -92,30 +91,35 @@ class CommunityViewModel(
                 val targetedEventId = event.getTag("e")
                 if (targetedEventId != null) {
                     val currentTally = _likeTally.value.toMutableMap()
-                    val currentLikes = currentTally[targetedEventId]?.toMutableSet() ?: mutableSetOf()
+                    val currentLikes =
+                        currentTally[targetedEventId]?.toMutableSet() ?: mutableSetOf()
                     currentLikes.add(event.pubkey)
                     currentTally[targetedEventId] = currentLikes
                     _likeTally.value = currentTally
                 }
                 return // Don't add to posts/replies
             }
+
             6 -> { // Repost
                 val targetedEventId = event.getTag("e")
                 if (targetedEventId != null) {
                     val currentTally = _repostTally.value.toMutableMap()
-                    val currentReposts = currentTally[targetedEventId]?.toMutableSet() ?: mutableSetOf()
+                    val currentReposts =
+                        currentTally[targetedEventId]?.toMutableSet() ?: mutableSetOf()
                     currentReposts.add(event.pubkey)
                     currentTally[targetedEventId] = currentReposts
                     _repostTally.value = currentTally
                 }
                 return // Don't add to posts/replies
             }
+
             9735 -> { // Zap Receipt
                 val targetedEventId = event.getTag("e")
-                val amountTag = event.getTag("amount")?.toLongOrNull() ?: 0L 
+                val amountTag = event.getTag("amount")?.toLongOrNull() ?: 0L
                 if (targetedEventId != null) {
                     val currentTally = _zapTally.value.toMutableMap()
-                    currentTally[targetedEventId] = (currentTally[targetedEventId] ?: 0L) + (amountTag / 1000) // amount is millisats
+                    currentTally[targetedEventId] = (currentTally[targetedEventId]
+                        ?: 0L) + (amountTag / 1000) // amount is millisats
                     _zapTally.value = currentTally
                 }
                 return // Don't add to posts/replies
@@ -123,7 +127,7 @@ class CommunityViewModel(
         }
 
         val pubkey = event.pubkey
-        
+
         // 2. Fetch profile for main content (Kind 1)
         var profile = profileCache[pubkey]
         if (profile == null) {
@@ -135,7 +139,7 @@ class CommunityViewModel(
                             eq("nostr_pubkey", pubkey)
                         }
                     }.decodeList<Profile>()
-                
+
                 profile = fetchedProfiles.firstOrNull()
                 if (profile != null) {
                     profileCache[pubkey] = profile
@@ -149,7 +153,7 @@ class CommunityViewModel(
         if (event.kind != 1) return
 
         val newPost = PostWithProfile(event, profile)
-        
+
         // 3. Check if it's a reply
         val eTag = event.tags.firstOrNull { it.isNotEmpty() && it[0] == "e" }
         val parentId = eTag?.getOrNull(1)
@@ -158,7 +162,7 @@ class CommunityViewModel(
             // Add to replies map
             val currentMap = _replies.value.toMutableMap()
             val currentReplies = currentMap[parentId]?.toMutableList() ?: mutableListOf()
-            
+
             // Avoid duplicates
             if (currentReplies.none { it.event.id == event.id }) {
                 currentReplies.add(newPost)

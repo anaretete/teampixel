@@ -25,12 +25,14 @@ data class NostrEvent(
     val sig: String
 ) {
     fun getTag(key: String): String? = tags.firstOrNull { it.getOrNull(0) == key }?.getOrNull(1)
-    
+
     fun getMediaUrl(): String? {
         if (kind == 1063 || kind == 94) return getTag("url")
         // Fallback to regex for common Kind 1 media links
-        return content.split(Regex("\\s+")).find { 
-            it.startsWith("http") && (it.endsWith(".jpg") || it.endsWith(".png") || it.endsWith(".webp") || it.endsWith(".jpeg")) 
+        return content.split(Regex("\\s+")).find {
+            it.startsWith("http") && (it.endsWith(".jpg") || it.endsWith(".png") || it.endsWith(".webp") || it.endsWith(
+                ".jpeg"
+            ))
         }
     }
 }
@@ -51,7 +53,9 @@ data class NostrFilter(
 @Serializable(with = ClientMessageSerializer::class)
 sealed class NostrClientMessage {
     data class EventMessage(val event: NostrEvent) : NostrClientMessage()
-    data class ReqMessage(val subscriptionId: String, val filters: List<NostrFilter>) : NostrClientMessage()
+    data class ReqMessage(val subscriptionId: String, val filters: List<NostrFilter>) :
+        NostrClientMessage()
+
     data class CloseMessage(val subscriptionId: String) : NostrClientMessage()
 }
 
@@ -59,7 +63,8 @@ object ClientMessageSerializer : KSerializer<NostrClientMessage> {
     override val descriptor: SerialDescriptor = buildClassSerialDescriptor("NostrClientMessage")
 
     override fun serialize(encoder: Encoder, value: NostrClientMessage) {
-        val jsonEncoder = encoder as? JsonEncoder ?: throw IllegalStateException("This class can only be serialized by Json")
+        val jsonEncoder = encoder as? JsonEncoder
+            ?: throw IllegalStateException("This class can only be serialized by Json")
         when (value) {
             is NostrClientMessage.EventMessage -> {
                 val array = buildList {
@@ -68,13 +73,17 @@ object ClientMessageSerializer : KSerializer<NostrClientMessage> {
                 }
                 jsonEncoder.encodeJsonElement(JsonArray(array))
             }
+
             is NostrClientMessage.ReqMessage -> {
                 val array = buildList {
                     add(JsonPrimitive("REQ"))
                     add(JsonPrimitive(value.subscriptionId))
                     // Serialize filters, extracting tag map into top-level # keys
                     value.filters.forEach { filter ->
-                        val filterJson = jsonEncoder.json.encodeToJsonElement(NostrFilter.serializer(), filter).jsonObject.toMutableMap()
+                        val filterJson = jsonEncoder.json.encodeToJsonElement(
+                            NostrFilter.serializer(),
+                            filter
+                        ).jsonObject.toMutableMap()
                         // Convert "tags": {"t": ["PixeLK"]} to "#t": ["PixeLK"]
                         val tagsNode = filterJson.remove("tags")?.jsonObject
                         tagsNode?.forEach { (key, array) ->
@@ -85,6 +94,7 @@ object ClientMessageSerializer : KSerializer<NostrClientMessage> {
                 }
                 jsonEncoder.encodeJsonElement(JsonArray(array))
             }
+
             is NostrClientMessage.CloseMessage -> {
                 val array = buildList {
                     add(JsonPrimitive("CLOSE"))
@@ -102,10 +112,13 @@ object ClientMessageSerializer : KSerializer<NostrClientMessage> {
 
 @Serializable(with = ServerMessageSerializer::class)
 sealed class NostrServerMessage {
-    data class EventMessage(val subscriptionId: String, val event: NostrEvent) : NostrServerMessage()
+    data class EventMessage(val subscriptionId: String, val event: NostrEvent) :
+        NostrServerMessage()
+
     data class EoseMessage(val subscriptionId: String) : NostrServerMessage()
     data class NoticeMessage(val message: String) : NostrServerMessage()
-    data class OkMessage(val eventId: String, val accepted: Boolean, val message: String) : NostrServerMessage()
+    data class OkMessage(val eventId: String, val accepted: Boolean, val message: String) :
+        NostrServerMessage()
 }
 
 object ServerMessageSerializer : KSerializer<NostrServerMessage> {
@@ -116,30 +129,34 @@ object ServerMessageSerializer : KSerializer<NostrServerMessage> {
     }
 
     override fun deserialize(decoder: Decoder): NostrServerMessage {
-        val jsonDecoder = decoder as? JsonDecoder ?: throw IllegalStateException("This class can only be deserialized by Json")
+        val jsonDecoder = decoder as? JsonDecoder
+            ?: throw IllegalStateException("This class can only be deserialized by Json")
         val array = jsonDecoder.decodeJsonElement().jsonArray
-        val type = array[0].toString().trim('"')
-        
-        return when (type) {
+        return when (val type = array[0].toString().trim('"')) {
             "EVENT" -> {
                 val subId = array[1].toString().trim('"')
-                val event = jsonDecoder.json.decodeFromJsonElement(NostrEvent.serializer(), array[2])
+                val event =
+                    jsonDecoder.json.decodeFromJsonElement(NostrEvent.serializer(), array[2])
                 NostrServerMessage.EventMessage(subId, event)
             }
+
             "EOSE" -> {
                 val subId = array[1].toString().trim('"')
                 NostrServerMessage.EoseMessage(subId)
             }
+
             "NOTICE" -> {
                 val msg = array[1].toString().trim('"')
                 NostrServerMessage.NoticeMessage(msg)
             }
+
             "OK" -> {
                 val eventId = array[1].toString().trim('"')
                 val accepted = array[2].toString().toBoolean()
                 val msg = array.getOrNull(3)?.toString()?.trim('"') ?: ""
                 NostrServerMessage.OkMessage(eventId, accepted, msg)
             }
+
             else -> throw IllegalArgumentException("Unknown message type: $type")
         }
     }

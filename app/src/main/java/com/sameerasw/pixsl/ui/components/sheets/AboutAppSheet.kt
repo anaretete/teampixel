@@ -23,7 +23,6 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.OutlinedButton
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -98,7 +97,9 @@ fun AboutAppSheet(
 
             RoundedCardContainer(spacing = 4.dp, modifier = Modifier.fillMaxWidth()) {
                 FlowRow(
-                    modifier = Modifier.fillMaxWidth().padding(16.dp),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(16.dp),
                     horizontalArrangement = Arrangement.Center,
                     verticalArrangement = Arrangement.spacedBy(8.dp),
                     maxItemsInEachRow = 3
@@ -152,7 +153,11 @@ fun AboutAppSheet(
                                 )
                             } catch (e: ActivityNotFoundException) {
                                 Log.w("AboutAppSheet", "No email app available", e)
-                                Toast.makeText(context, R.string.error_no_email_app, Toast.LENGTH_SHORT)
+                                Toast.makeText(
+                                    context,
+                                    R.string.error_no_email_app,
+                                    Toast.LENGTH_SHORT
+                                )
                                     .show()
                             }
                         },
@@ -202,7 +207,7 @@ fun AboutAppSheet(
                     }
                 }
             } // End of card
-            
+
             Text(
                 text = stringResource(R.string.label_other_apps),
                 style = MaterialTheme.typography.titleMedium,
@@ -211,7 +216,9 @@ fun AboutAppSheet(
 
             RoundedCardContainer(spacing = 4.dp, modifier = Modifier.fillMaxWidth()) {
                 FlowRow(
-                    modifier = Modifier.fillMaxWidth().padding(16.dp),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(16.dp),
                     horizontalArrangement = Arrangement.Center,
                     verticalArrangement = Arrangement.spacedBy(8.dp),
                     maxItemsInEachRow = 3

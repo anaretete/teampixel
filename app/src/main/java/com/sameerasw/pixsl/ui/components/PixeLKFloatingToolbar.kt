@@ -4,13 +4,10 @@ import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.spring
-import androidx.compose.animation.core.tween
 import androidx.compose.animation.expandHorizontally
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.shrinkHorizontally
-import androidx.compose.material.icons.automirrored.filled.ArrowBack
-import androidx.compose.material.icons.filled.Share
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
@@ -23,6 +20,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.filled.Share
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
 import androidx.compose.material3.FloatingToolbarDefaults
@@ -42,9 +41,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.drawWithCache
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.Paint
-import androidx.compose.ui.graphics.PaintingStyle
-import androidx.compose.ui.graphics.drawscope.drawIntoCanvas
 import androidx.compose.ui.graphics.drawscope.translate
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.res.stringResource
@@ -144,7 +140,7 @@ fun PixeLKFloatingToolbar(
                             }
                     )
                 }
-                
+
                 // Profile Item
                 Box(
                     modifier = Modifier
@@ -268,7 +264,11 @@ private fun ToolbarItem(
         Box {
             if (isHomeTab && deviceInfo != null) {
                 Icon(
-                    painter = androidx.compose.ui.res.painterResource(id = com.sameerasw.pixsl.utils.DeviceImageMapper.getDeviceDrawable(deviceInfo.model)),
+                    painter = androidx.compose.ui.res.painterResource(
+                        id = com.sameerasw.pixsl.utils.DeviceImageMapper.getDeviceDrawable(
+                            deviceInfo.model
+                        )
+                    ),
                     contentDescription = label,
                     tint = if (isSelected) MaterialTheme.colorScheme.primary
                     else MaterialTheme.colorScheme.background,
@@ -283,8 +283,8 @@ private fun ToolbarItem(
                             onDrawWithContent {
                                 // Draw the icon slightly shifted in all directions to simulate a stroke
                                 val strokeOffset = 0.5.dp.toPx()
-                                drawContent() 
-                                
+                                drawContent()
+
                                 translate(left = strokeOffset, top = 0f) {
                                     this@onDrawWithContent.drawContent()
                                 }

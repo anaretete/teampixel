@@ -2,17 +2,16 @@ package com.sameerasw.pixsl.utils
 
 import com.sameerasw.pixsl.data.model.nostr.NostrEvent
 import fr.acinq.secp256k1.Secp256k1
+import kotlinx.serialization.builtins.serializer
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonArray
 import kotlinx.serialization.json.JsonPrimitive
-import kotlinx.serialization.builtins.serializer
-import kotlinx.serialization.serializer
-import java.security.MessageDigest
 import java.math.BigInteger
+import java.security.MessageDigest
 
 object NostrCrypto {
-    
+
     // We need an exact JSON encoding without unexpected spacing/formatting for the SHA-256 hash
     private val compactJson = Json {
         encodeDefaults = true
@@ -36,7 +35,7 @@ object NostrCrypto {
             add(JsonPrimitive(pubkey))
             add(JsonPrimitive(createdAt))
             add(JsonPrimitive(kind))
-            
+
             // Serialize tags list
             val tagsElement = compactJson.encodeToJsonElement(
                 kotlinx.serialization.builtins.ListSerializer(
@@ -60,10 +59,11 @@ object NostrCrypto {
         val privKey = privKeyHex.chunked(2).map { it.toInt(16).toByte() }.toByteArray()
         val secp = Secp256k1.get()
         val pubKey = secp.pubkeyCreate(privKey)
-        
+
         // If the public key point is odd, we must negate the private key
         return if (secp.pubKeyCompress(pubKey)[0] == 0x03.toByte()) {
-            val n = BigInteger("FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFEBAAEDCE6AF48A03BBFD25E8CD0364141", 16)
+            val n =
+                BigInteger("FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFEBAAEDCE6AF48A03BBFD25E8CD0364141", 16)
             val d = BigInteger(1, privKey)
             val evenD = n.subtract(d).toByteArray()
             // Pad to 32 bytes
@@ -97,12 +97,12 @@ object NostrCrypto {
         // Force valid BIP340 key
         val evenKeyHex = getEvenKey(privKeyHex)
         val privKey = evenKeyHex.chunked(2).map { it.toInt(16).toByte() }.toByteArray()
-        
+
         val secp = Secp256k1.get()
         val signatureBytes = secp.signSchnorr(eventIdHash, privKey, null)
         return signatureBytes.toHex()
     }
-    
+
     /**
      * Helper to convert ByteArray to Hex string
      */
