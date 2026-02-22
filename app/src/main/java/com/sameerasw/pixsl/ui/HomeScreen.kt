@@ -62,7 +62,7 @@ fun HomeScreen(
             .statusBarsPadding()
             .padding(
                 top = 0.dp,
-                bottom = contentPadding.calculateBottomPadding() + 88.dp,
+                bottom = contentPadding.calculateBottomPadding() + 128.dp,
                 start = 16.dp,
                 end = 16.dp
             ),
