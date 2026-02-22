@@ -178,22 +178,19 @@ class MainActivity : ComponentActivity() {
                                 deviceInfo = deviceInfo,
                                 onProfileClick = {
                                     HapticUtil.performVirtualKeyHaptic(view)
-                                    if (signedInState != null) {
-                                        showProfileMenu = true
-                                    } else {
-                                        googleSignInAction.startFlow()
-                                    }
+                                    showProfileMenu = true
                                 }
                             )
 
-                            if (showProfileMenu && signedInState != null) {
+                            if (showProfileMenu) {
                                 ProfileMenuSheet(
-                                    authState = signedInState,
+                                    authState = authState,
                                     pitchBlackTheme = pitchBlackTheme,
                                     onPitchBlackThemeChange = { viewModel.setPitchBlackTheme(it) },
                                     onAboutClick = { showAboutSheet = true },
                                     onDismissRequest = { showProfileMenu = false },
-                                    onSignOutClick = { viewModel.signOut() }
+                                    onSignOutClick = { viewModel.signOut() },
+                                    onSignInClick = { googleSignInAction.startFlow() }
                                 )
                             }
 

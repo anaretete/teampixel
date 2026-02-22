@@ -1,15 +1,11 @@
 package com.sameerasw.pixsl.domain
 
+import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.rounded.LibraryBooks
-import androidx.compose.material.icons.filled.Home
-import androidx.compose.material.icons.rounded.ChatBubble
-import androidx.compose.ui.graphics.vector.ImageVector
 import com.sameerasw.pixsl.R
 
-enum class PixeLKTabs(@StringRes val title: Int, val icon: ImageVector) {
-    HOME(R.string.tab_pixel, Icons.Default.Home),
-    GUIDES(R.string.tab_guides, Icons.AutoMirrored.Rounded.LibraryBooks),
-    COMMUNITY(R.string.tab_community, Icons.Rounded.ChatBubble)
+enum class PixeLKTabs(@StringRes val title: Int, @DrawableRes val icon: Int) {
+    HOME(R.string.tab_pixel, R.drawable.pixel_9), // Unused, we use dynamic device icon
+    GUIDES(R.string.tab_guides, R.drawable.rounded_article_24),
+    COMMUNITY(R.string.tab_community, R.drawable.rounded_forum_24)
 }

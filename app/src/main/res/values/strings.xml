@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">TeamPixel</string>
     <string name="action_sign_in_google">Sign in with Google</string>
+    <string name="action_sign_in">Sign in</string>
     <string name="action_sign_out">Sign out</string>
     <string name="action_profile">Profile</string>
     <string name="action_back">Back</string>

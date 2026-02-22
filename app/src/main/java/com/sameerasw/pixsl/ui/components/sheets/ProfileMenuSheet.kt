@@ -40,12 +40,13 @@ import com.sameerasw.pixsl.utils.HapticUtil
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ProfileMenuSheet(
-    authState: AuthState.SignedIn,
+    authState: AuthState,
     pitchBlackTheme: Boolean,
     onPitchBlackThemeChange: (Boolean) -> Unit,
     onAboutClick: () -> Unit,
     onDismissRequest: () -> Unit,
-    onSignOutClick: () -> Unit
+    onSignOutClick: () -> Unit,
+    onSignInClick: () -> Unit
 ) {
     val view = LocalView.current
 
@@ -59,6 +60,8 @@ fun ProfileMenuSheet(
                 .padding(bottom = 32.dp, start = 16.dp, end = 16.dp),
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
+            val signedInState = authState as? AuthState.SignedIn
+
             // Header Section
             Row(
                 modifier = Modifier
@@ -67,21 +70,21 @@ fun ProfileMenuSheet(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 PixeLKAvatar(
-                    avatarUrl = authState.avatarUrl,
-                    username = authState.profile?.username,
-                    isExpert = authState.profile?.isExpert ?: false,
+                    avatarUrl = signedInState?.avatarUrl,
+                    username = signedInState?.profile?.username,
+                    isExpert = signedInState?.profile?.isExpert ?: false,
                     size = 56.dp
                 )
                 Spacer(modifier = Modifier.width(16.dp))
                 Column {
                     Text(
-                        text = authState.profile?.username ?: stringResource(R.string.label_guest),
+                        text = signedInState?.profile?.username ?: stringResource(R.string.label_guest),
                         style = MaterialTheme.typography.titleLarge,
                         fontWeight = FontWeight.Bold
                     )
-                    if (authState.email != null) {
+                    if (signedInState?.email != null) {
                         Text(
-                            text = authState.email,
+                            text = signedInState.email,
                             style = MaterialTheme.typography.bodyMedium,
                             color = MaterialTheme.colorScheme.onSurfaceVariant
                         )
@@ -93,27 +96,39 @@ fun ProfileMenuSheet(
             RoundedCardContainer(
                 spacing = 2.dp
             ) {
-                ProfileMenuItem(
-                    icon = Icons.Default.Person,
-                    label = stringResource(R.string.action_profile),
-                    onClick = {
-                        HapticUtil.performUIHaptic(view)
-                        // TODO: Navigate to profile
-                        onDismissRequest()
-                    }
-                )
-
-                ProfileMenuItem(
-                    icon = Icons.AutoMirrored.Filled.ExitToApp,
-                    label = stringResource(R.string.action_sign_out),
-                    labelColor = MaterialTheme.colorScheme.error,
-                    iconColor = MaterialTheme.colorScheme.error,
-                    onClick = {
-                        HapticUtil.performVirtualKeyHaptic(view)
-                        onSignOutClick()
-                        onDismissRequest()
-                    }
-                )
+                if (signedInState != null) {
+                    ProfileMenuItem(
+                        icon = Icons.Default.Person,
+                        label = stringResource(R.string.action_profile),
+                        onClick = {
+                            HapticUtil.performUIHaptic(view)
+                            // TODO: Navigate to profile
+                            onDismissRequest()
+                        }
+                    )
+    
+                    ProfileMenuItem(
+                        icon = Icons.AutoMirrored.Filled.ExitToApp,
+                        label = stringResource(R.string.action_sign_out),
+                        labelColor = MaterialTheme.colorScheme.error,
+                        iconColor = MaterialTheme.colorScheme.error,
+                        onClick = {
+                            HapticUtil.performVirtualKeyHaptic(view)
+                            onSignOutClick()
+                            onDismissRequest()
+                        }
+                    )
+                } else {
+                    ProfileMenuItem(
+                        icon = Icons.Default.Person,
+                        label = stringResource(R.string.action_sign_in),
+                        onClick = {
+                            HapticUtil.performUIHaptic(view)
+                            onSignInClick()
+                            onDismissRequest()
+                        }
+                    )
+                }
             }
 
             // Settings Container

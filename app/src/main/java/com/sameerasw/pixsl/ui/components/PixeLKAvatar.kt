@@ -55,11 +55,20 @@ fun PixeLKAvatar(
                 .background(MaterialTheme.colorScheme.primary),
             contentAlignment = Alignment.Center
         ) {
-            Text(
-                text = if (username?.isNotEmpty() == true) username.take(1).uppercase() else "G",
-                style = MaterialTheme.typography.titleMedium,
-                color = MaterialTheme.colorScheme.onPrimary
-            )
+            if (username?.isNotEmpty() == true) {
+                Text(
+                    text = username.take(1).uppercase(),
+                    style = MaterialTheme.typography.titleMedium,
+                    color = MaterialTheme.colorScheme.onPrimary
+                )
+            } else {
+                androidx.compose.material3.Icon(
+                    painter = androidx.compose.ui.res.painterResource(id = R.drawable.rounded_person_24),
+                    contentDescription = null,
+                    tint = MaterialTheme.colorScheme.onPrimary,
+                    modifier = Modifier.size(size * 0.6f)
+                )
+            }
         }
     }
 }

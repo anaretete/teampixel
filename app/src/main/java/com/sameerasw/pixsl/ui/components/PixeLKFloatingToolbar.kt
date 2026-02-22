@@ -119,7 +119,7 @@ fun PixeLKFloatingToolbar(
                     )
 
                     ToolbarItem(
-                        icon = tab.icon,
+                        iconRes = tab.icon,
                         label = stringResource(id = tab.title),
                         isSelected = isSelected,
                         hasBadge = badges[tab] == true,
@@ -240,7 +240,7 @@ private fun ToolbarActionButton(
 @Composable
 private fun ToolbarItem(
 // ... (rest of the file)
-    icon: androidx.compose.ui.graphics.vector.ImageVector,
+    @androidx.annotation.DrawableRes iconRes: Int,
     label: String,
     isSelected: Boolean,
     hasBadge: Boolean,
@@ -302,7 +302,7 @@ private fun ToolbarItem(
                 )
             } else {
                 Icon(
-                    imageVector = icon,
+                    painter = androidx.compose.ui.res.painterResource(id = iconRes),
                     contentDescription = label,
                     tint = if (isSelected) MaterialTheme.colorScheme.primary
                     else MaterialTheme.colorScheme.background,
