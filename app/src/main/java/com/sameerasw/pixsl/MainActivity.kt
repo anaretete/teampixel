@@ -1,9 +1,14 @@
 package com.sameerasw.pixsl
 
 import android.os.Bundle
+import android.animation.ObjectAnimator
+import android.util.Log
+import android.view.animation.AnticipateInterpolator
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.core.animation.doOnEnd
+import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.fillMaxSize
@@ -68,11 +73,80 @@ import io.github.jan.supabase.compose.auth.composable.rememberSignInWithGoogle
 
 class MainActivity : ComponentActivity() {
 
+    private var isAppReady = false
+
     @OptIn(ExperimentalMaterial3Api::class, ExperimentalMaterial3ExpressiveApi::class)
     override fun onCreate(savedInstanceState: Bundle?) {
+        val splashScreen = installSplashScreen()
+
         super.onCreate(savedInstanceState)
         HapticUtil.initialize(this)
         enableEdgeToEdge()
+
+        splashScreen.setKeepOnScreenCondition { !isAppReady }
+
+        splashScreen.setOnExitAnimationListener { splashScreenViewProvider ->
+            try {
+                val splashScreenView = splashScreenViewProvider.view
+                val splashIcon = try {
+                    splashScreenViewProvider.iconView
+                } catch (e: Exception) {
+                    null
+                }
+
+                val fadeOut = ObjectAnimator.ofFloat(splashScreenView, "alpha", 1f, 0f).apply {
+                    interpolator = AnticipateInterpolator()
+                    duration = 750
+                }
+                fadeOut.doOnEnd {
+                    splashScreenViewProvider.remove()
+                    enableEdgeToEdge()
+                }
+
+                try {
+                    @Suppress("SENSELESS_COMPARISON")
+                    if (splashIcon != null) {
+                        val scaleUp = ObjectAnimator.ofFloat(splashIcon, "scaleX", 1f, 0.5f).apply {
+                            interpolator = AnticipateInterpolator()
+                            duration = 750
+                        }
+
+                        val scaleUpY =
+                            ObjectAnimator.ofFloat(splashIcon, "scaleY", 1f, 0.5f).apply {
+                                interpolator = AnticipateInterpolator()
+                                duration = 750
+                            }
+
+                        val rotate360 =
+                            ObjectAnimator.ofFloat(splashIcon, "rotation", 0f, -90f).apply {
+                                interpolator = AnticipateInterpolator()
+                                duration = 750
+                            }
+
+                        scaleUp.start()
+                        scaleUpY.start()
+                        rotate360.start()
+                    } else {
+                        Log.w("SplashScreen", "iconView is null - OEM device detected")
+                    }
+                } catch (e: NullPointerException) {
+                    Log.w(
+                        "SplashScreen",
+                        "NullPointerException on iconView animation - likely OEM device",
+                        e
+                    )
+                }
+
+                fadeOut.start()
+            } catch (e: Exception) {
+                Log.e("SplashScreen", "Exception during splash screen animation", e)
+                try {
+                    splashScreenViewProvider.remove()
+                } catch (e2: Exception) {
+                    Log.e("SplashScreen", "Exception during splash screen removal", e2)
+                }
+            }
+        }
 
         setContent {
             val viewModel: MainViewModel = androidx.lifecycle.viewmodel.compose.viewModel()
@@ -102,6 +176,10 @@ class MainActivity : ComponentActivity() {
                     containerColor = androidx.compose.material3.MaterialTheme.colorScheme.surfaceContainer,
                     topBar = { }
                 ) { innerPadding ->
+                    androidx.compose.runtime.LaunchedEffect(Unit) {
+                        isAppReady = true
+                    }
+
                     Box(modifier = Modifier.fillMaxSize()) {
                         val signedInState = authState as? com.sameerasw.pixsl.data.model.AuthState.SignedIn
                         Box(
