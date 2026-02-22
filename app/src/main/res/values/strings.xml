@@ -27,4 +27,20 @@
     <string name="label_zap">Zap</string>
     <string name="label_like">Like</string>
     <string name="content_desc_post_media">Post Media</string>
+    <string name="label_send_zaps">Send Zaps</string>
+    <string name="format_sats">%1$d sats</string>
+    <string name="sheet_title_post">Post to #PixeLK</string>
+    <string name="sheet_title_reply">Reply to Thread</string>
+    <string name="label_post">Post</string>
+    <string name="placeholder_post_hint">Ask the community or share a tip…</string>
+    <string name="content_desc_preview">Preview</string>
+    <string name="content_desc_remove_media">Remove Media</string>
+    <string name="content_desc_add_media">Add Media</string>
+    <string name="perm_title_media">Media Access</string>
+    <string name="content_desc_add_post">Post to Community</string>
+    <string name="label_waiting_nostr">Waiting for messages from Nostr relays…</string>
+    <string name="label_thread_title">Thread</string>
+    <string name="content_desc_delete_post">Delete Post</string>
+    <string name="label_anonymous">Anonymous</string>
+    <string name="content_desc_verified">Verified</string>
 </resources>

@@ -8,6 +8,8 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import com.sameerasw.pixsl.R
+import androidx.compose.ui.res.stringResource
 import com.sameerasw.pixsl.utils.HapticUtil
 import androidx.compose.ui.platform.LocalView
 
@@ -41,7 +43,7 @@ fun ZapAmountSheet(
             )
             
             Text(
-                "Send Zaps",
+                stringResource(R.string.label_send_zaps),
                 style = MaterialTheme.typography.headlineSmall,
                 color = MaterialTheme.colorScheme.onSurface
             )
@@ -66,7 +68,7 @@ fun ZapAmountSheet(
                                     contentColor = MaterialTheme.colorScheme.onSecondaryContainer
                                 )
                             ) {
-                                Text("$amount")
+                                Text(stringResource(R.string.format_sats, amount))
                             }
                         }
                     }

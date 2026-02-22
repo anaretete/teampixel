@@ -41,16 +41,24 @@ class CommunityViewModel(
     private val _zapTally = MutableStateFlow<Map<String, Long>>(emptyMap())
     val zapTally: StateFlow<Map<String, Long>> = _zapTally.asStateFlow()
 
-    private val _likeTally = MutableStateFlow<Map<String, Int>>(emptyMap())
-    val likeTally: StateFlow<Map<String, Int>> = _likeTally.asStateFlow()
+    private val _likeTally = MutableStateFlow<Map<String, Set<String>>>(emptyMap())
+    val likeTally: StateFlow<Map<String, Set<String>>> = _likeTally.asStateFlow()
 
-    private val _repostTally = MutableStateFlow<Map<String, Int>>(emptyMap())
-    val repostTally: StateFlow<Map<String, Int>> = _repostTally.asStateFlow()
+    private val _repostTally = MutableStateFlow<Map<String, Set<String>>>(emptyMap())
+    val repostTally: StateFlow<Map<String, Set<String>>> = _repostTally.asStateFlow()
+
+    private val _currentNostrPubKey = MutableStateFlow<String?>(null)
+    val currentNostrPubKey: StateFlow<String?> = _currentNostrPubKey.asStateFlow()
 
     private val profileCache = mutableMapOf<String, Profile>()
 
     init {
         repository.startListeningToCommunity("PixeLK")
+        
+        // Load current pubkey
+        val keys = repository.getEventKeys()
+        _currentNostrPubKey.value = keys?.second
+
         viewModelScope.launch {
             repository.eventsFlow.collect { event ->
                 handleNewEvent(event)
@@ -89,7 +97,9 @@ class CommunityViewModel(
                 val targetedEventId = event.getTag("e")
                 if (targetedEventId != null) {
                     val currentTally = _likeTally.value.toMutableMap()
-                    currentTally[targetedEventId] = (currentTally[targetedEventId] ?: 0) + 1
+                    val currentLikes = currentTally[targetedEventId]?.toMutableSet() ?: mutableSetOf()
+                    currentLikes.add(event.pubkey)
+                    currentTally[targetedEventId] = currentLikes
                     _likeTally.value = currentTally
                 }
                 return // Don't add to posts/replies
@@ -98,7 +108,9 @@ class CommunityViewModel(
                 val targetedEventId = event.getTag("e")
                 if (targetedEventId != null) {
                     val currentTally = _repostTally.value.toMutableMap()
-                    currentTally[targetedEventId] = (currentTally[targetedEventId] ?: 0) + 1
+                    val currentReposts = currentTally[targetedEventId]?.toMutableSet() ?: mutableSetOf()
+                    currentReposts.add(event.pubkey)
+                    currentTally[targetedEventId] = currentReposts
                     _repostTally.value = currentTally
                 }
                 return // Don't add to posts/replies

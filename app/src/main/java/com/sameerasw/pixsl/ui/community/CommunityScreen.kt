@@ -9,6 +9,7 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.sameerasw.pixsl.ui.components.cards.PostCard
@@ -17,6 +18,7 @@ import com.sameerasw.pixsl.ui.components.sheets.PostQuestionSheet
 import com.sameerasw.pixsl.data.model.nostr.PostWithProfile
 import com.sameerasw.pixsl.ui.components.containers.RoundedCardContainer
 import com.sameerasw.pixsl.viewmodel.CommunityViewModel
+import com.sameerasw.pixsl.R
 
 @OptIn(androidx.compose.material3.ExperimentalMaterial3ExpressiveApi::class)
 @Composable
@@ -43,7 +45,7 @@ fun CommunityScreen(
                 onClick = { showPostSheet = true },
                 modifier = Modifier.padding(bottom = contentPadding.calculateBottomPadding() + 48.dp)
             ) {
-                Icon(Icons.Default.Add, contentDescription = "Post to Community")
+                Icon(Icons.Default.Add, contentDescription = stringResource(R.string.content_desc_add_post))
             }
         }
     ) { localPadding ->
@@ -58,7 +60,7 @@ fun CommunityScreen(
                 Column(horizontalAlignment = Alignment.CenterHorizontally) {
                     androidx.compose.material3.LoadingIndicator()
                     Spacer(modifier = Modifier.height(16.dp))
-                    Text("Waiting for messages from Nostr relays...", color = MaterialTheme.colorScheme.onSurfaceVariant)
+                    Text(stringResource(R.string.label_waiting_nostr), color = MaterialTheme.colorScheme.onSurfaceVariant)
                 }
             }
         } else {
@@ -79,8 +81,10 @@ fun CommunityScreen(
                                 post = post,
                                 currentNostrPubKey = currentNostrPubKey,
                                 zapAmount = zapTally[post.event.id] ?: 0L,
-                                likeCount = likeTally[post.event.id] ?: 0,
-                                repostCount = repostTally[post.event.id] ?: 0,
+                                likeCount = likeTally[post.event.id]?.size ?: 0,
+                                repostCount = repostTally[post.event.id]?.size ?: 0,
+                                isLiked = likeTally[post.event.id]?.contains(currentNostrPubKey) == true,
+                                isReposted = repostTally[post.event.id]?.contains(currentNostrPubKey) == true,
                                 onLikeClick = { viewModel.likePost(post.event.id, post.event.pubkey) },
                                 onRepostClick = { viewModel.repostPost(post.event.id, post.event.pubkey) },
                                 onZapClick = { selectedZapPostId = post.event.id to post.event.pubkey },

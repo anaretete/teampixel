@@ -21,12 +21,13 @@ import androidx.compose.ui.platform.LocalView
 import coil.compose.AsyncImage
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.stringResource
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun PostQuestionSheet(
-    sheetTitle: String = "Post to #PixeLK",
-    actionLabel: String = "Post",
+    sheetTitle: String? = null,
+    actionLabel: String? = null,
     isUploading: Boolean = false,
     uploadedImageUrl: String? = null,
     onDismiss: () -> Unit,
@@ -67,7 +68,7 @@ fun PostQuestionSheet(
                 .padding(bottom = 32.dp)
         ) {
             Text(
-                sheetTitle,
+                sheetTitle ?: stringResource(R.string.sheet_title_post),
                 style = MaterialTheme.typography.titleLarge,
                 modifier = Modifier.padding(bottom = 16.dp)
             )
@@ -75,7 +76,7 @@ fun PostQuestionSheet(
             OutlinedTextField(
                 value = text,
                 onValueChange = { text = it },
-                label = { Text("Ask the community or share a tip...") },
+                label = { Text(stringResource(R.string.placeholder_post_hint)) },
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(150.dp)
@@ -97,7 +98,7 @@ fun PostQuestionSheet(
                     } else if (uploadedImageUrl != null) {
                         AsyncImage(
                             model = uploadedImageUrl,
-                            contentDescription = "Preview",
+                            contentDescription = stringResource(R.string.content_desc_preview),
                             modifier = Modifier
                                 .fillMaxHeight()
                                 .width(200.dp)
@@ -111,7 +112,7 @@ fun PostQuestionSheet(
                         ) {
                             Icon(
                                 imageVector = Icons.Default.Close,
-                                contentDescription = "Remove Media",
+                                contentDescription = stringResource(R.string.content_desc_remove_media),
                                 tint = MaterialTheme.colorScheme.error
                             )
                         }
@@ -137,7 +138,7 @@ fun PostQuestionSheet(
                 ) {
                     Icon(
                         imageVector = Icons.Outlined.Image,
-                        contentDescription = "Add Media",
+                        contentDescription = stringResource(R.string.content_desc_add_media),
                         tint = MaterialTheme.colorScheme.primary
                     )
                 }
@@ -146,12 +147,13 @@ fun PostQuestionSheet(
 
                 Button(
                     onClick = { 
+                        HapticUtil.performUIHaptic(view)
                         val finalContent = if (uploadedImageUrl != null) "$text\n$uploadedImageUrl" else text
                         if (finalContent.isNotBlank()) onPost(finalContent) 
                     },
                     enabled = (text.isNotBlank() || uploadedImageUrl != null) && !isUploading
                 ) {
-                    Text(actionLabel)
+                    Text(actionLabel ?: stringResource(R.string.label_post))
                 }
             }
 
@@ -162,7 +164,7 @@ fun PostQuestionSheet(
                     permissions = listOf(
                         PermissionItem(
                             icon = Icons.Outlined.PhotoLibrary,
-                            title = "Media Access",
+                            title = stringResource(R.string.perm_title_media),
                             dependentFeatures = listOf(R.string.feat_media_upload_title),
                             isGranted = false,
                             action = {

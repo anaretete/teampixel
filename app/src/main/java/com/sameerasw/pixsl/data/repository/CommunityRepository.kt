@@ -178,7 +178,11 @@ class CommunityRepository(
             content = "+",
             privKeyHex = keys.first,
             pubKeyHex = keys.second,
-            tags = listOf(listOf("e", eventId), listOf("p", authorPubKey)),
+            tags = listOf(
+                listOf("e", eventId), 
+                listOf("p", authorPubKey),
+                listOf("t", "PixeLK")
+            ),
             kind = 7
         )
         return broadcastEvent(event)
@@ -193,7 +197,11 @@ class CommunityRepository(
             content = content,
             privKeyHex = keys.first,
             pubKeyHex = keys.second,
-            tags = listOf(listOf("e", eventId, "", "mention"), listOf("p", authorPubKey)),
+            tags = listOf(
+                listOf("e", eventId, "", "mention"), 
+                listOf("p", authorPubKey),
+                listOf("t", "PixeLK")
+            ),
             kind = 6
         )
         return broadcastEvent(event)
@@ -223,7 +231,7 @@ class CommunityRepository(
         return broadcastEvent(event)
     }
 
-    private fun getEventKeys(): Pair<String, String>? {
+    fun getEventKeys(): Pair<String, String>? {
         val prefs = context.getSharedPreferences("pixsl_prefs", Context.MODE_PRIVATE)
         val privKeyHex = prefs.getString("nostr_private_key", null) ?: return null
         

@@ -20,6 +20,8 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Bolt
 import androidx.compose.material.icons.filled.CheckCircle
+import androidx.compose.material.icons.filled.Favorite
+import androidx.compose.material.icons.filled.Repeat
 import androidx.compose.material.icons.outlined.ChatBubbleOutline
 import androidx.compose.material.icons.outlined.FavoriteBorder
 import androidx.compose.material.icons.outlined.Repeat
@@ -30,6 +32,7 @@ import androidx.compose.ui.platform.LocalView
 import coil.compose.AsyncImage
 import com.sameerasw.pixsl.R
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 
 @Composable
 fun PostCard(
@@ -38,6 +41,8 @@ fun PostCard(
     zapAmount: Long = 0,
     likeCount: Int = 0,
     repostCount: Int = 0,
+    isLiked: Boolean = false,
+    isReposted: Boolean = false,
     onLikeClick: (() -> Unit)? = null,
     onRepostClick: (() -> Unit)? = null,
     onZapClick: (() -> Unit)? = null,
@@ -59,7 +64,7 @@ fun PostCard(
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                val username = post.profile?.username ?: "Anonymous"
+                val username = post.profile?.username ?: stringResource(R.string.label_anonymous)
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     Text(
                         text = username,
@@ -71,7 +76,7 @@ fun PostCard(
                         Spacer(modifier = Modifier.width(4.dp))
                         Icon(
                             imageVector = Icons.Default.CheckCircle,
-                            contentDescription = "Verified",
+                            contentDescription = stringResource(R.string.content_desc_verified),
                             tint = MaterialTheme.colorScheme.primary,
                             modifier = Modifier.size(16.dp)
                         )
@@ -147,16 +152,16 @@ fun PostCard(
                 ) {
                     Row(verticalAlignment = Alignment.CenterVertically) {
                         Icon(
-                            imageVector = Icons.Outlined.Repeat,
+                            imageVector = if (isReposted) Icons.Default.Repeat else Icons.Outlined.Repeat,
                             contentDescription = stringResource(R.string.label_repost),
                             modifier = Modifier.size(20.dp),
-                            tint = if (repostCount > 0) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurfaceVariant
+                            tint = if (isReposted) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurfaceVariant
                         )
                         if (repostCount > 0) {
                             Text(
                                 text = repostCount.toString(),
                                 style = MaterialTheme.typography.labelSmall,
-                                color = if (repostCount > 0) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurfaceVariant,
+                                color = if (isReposted) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurfaceVariant,
                                 modifier = Modifier.padding(start = 2.dp)
                             )
                         }
@@ -203,10 +208,10 @@ fun PostCard(
                 ) {
                     Row(verticalAlignment = Alignment.CenterVertically) {
                         Icon(
-                            imageVector = Icons.Outlined.FavoriteBorder,
+                            imageVector = if (isLiked) Icons.Default.Favorite else Icons.Outlined.FavoriteBorder,
                             contentDescription = stringResource(R.string.label_like),
                             modifier = Modifier.size(20.dp),
-                            tint = if (likeCount > 0) MaterialTheme.colorScheme.error else MaterialTheme.colorScheme.onSurfaceVariant
+                            tint = if (isLiked) MaterialTheme.colorScheme.error else MaterialTheme.colorScheme.onSurfaceVariant
                         )
                         if (likeCount > 0) {
                             Text(

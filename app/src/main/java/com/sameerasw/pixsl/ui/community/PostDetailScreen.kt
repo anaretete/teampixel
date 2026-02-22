@@ -10,7 +10,9 @@ import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import com.sameerasw.pixsl.R
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.sameerasw.pixsl.ui.components.cards.PostCard
 import com.sameerasw.pixsl.ui.components.containers.RoundedCardContainer
@@ -44,10 +46,10 @@ fun PostDetailScreen(
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text("Thread") },
+                title = { Text(stringResource(R.string.label_thread_title)) },
                 navigationIcon = {
                     IconButton(onClick = onNavigateBack) {
-                        Icon(Icons.Default.ArrowBack, contentDescription = "Back")
+                        Icon(Icons.Default.ArrowBack, contentDescription = stringResource(R.string.action_back))
                     }
                 },
                 actions = {
@@ -58,7 +60,7 @@ fun PostDetailScreen(
                         }) {
                             Icon(
                                 imageVector = Icons.Default.Delete,
-                                contentDescription = "Delete Post",
+                                contentDescription = stringResource(R.string.content_desc_delete_post),
                                 tint = MaterialTheme.colorScheme.error
                             )
                         }
@@ -68,7 +70,7 @@ fun PostDetailScreen(
         },
         floatingActionButton = {
             FloatingActionButton(onClick = { showReplySheet = true }) {
-                Icon(Icons.Default.AddComment, contentDescription = "Reply")
+                Icon(Icons.Default.AddComment, contentDescription = stringResource(R.string.label_reply))
             }
         }
     ) { padding ->
@@ -95,8 +97,10 @@ fun PostDetailScreen(
                             post = parentPost,
                             currentNostrPubKey = currentNostrPubKey,
                             zapAmount = zapTally[parentPost.event.id] ?: 0L,
-                            likeCount = likeTally[parentPost.event.id] ?: 0,
-                            repostCount = repostTally[parentPost.event.id] ?: 0,
+                            likeCount = likeTally[parentPost.event.id]?.size ?: 0,
+                            repostCount = repostTally[parentPost.event.id]?.size ?: 0,
+                            isLiked = likeTally[parentPost.event.id]?.contains(currentNostrPubKey) == true,
+                            isReposted = repostTally[parentPost.event.id]?.contains(currentNostrPubKey) == true,
                             onLikeClick = { viewModel.likePost(parentPost.event.id, parentPost.event.pubkey) },
                             onRepostClick = { viewModel.repostPost(parentPost.event.id, parentPost.event.pubkey) },
                             onZapClick = { selectedZapPostId = parentPost.event.id to parentPost.event.pubkey },
@@ -117,8 +121,10 @@ fun PostDetailScreen(
                                     post = reply,
                                     currentNostrPubKey = currentNostrPubKey,
                                     zapAmount = zapTally[reply.event.id] ?: 0L,
-                                    likeCount = likeTally[reply.event.id] ?: 0,
-                                    repostCount = repostTally[reply.event.id] ?: 0,
+                                    likeCount = likeTally[reply.event.id]?.size ?: 0,
+                                    repostCount = repostTally[reply.event.id]?.size ?: 0,
+                                    isLiked = likeTally[reply.event.id]?.contains(currentNostrPubKey) == true,
+                                    isReposted = repostTally[reply.event.id]?.contains(currentNostrPubKey) == true,
                                     onLikeClick = { viewModel.likePost(reply.event.id, reply.event.pubkey) },
                                     onRepostClick = { viewModel.repostPost(reply.event.id, reply.event.pubkey) },
                                     onZapClick = { selectedZapPostId = reply.event.id to reply.event.pubkey },
@@ -137,8 +143,8 @@ fun PostDetailScreen(
             val uploadedImageUrl by viewModel.uploadedImageUrl.collectAsState()
 
             com.sameerasw.pixsl.ui.components.sheets.PostQuestionSheet(
-                sheetTitle = "Reply to Thread",
-                actionLabel = "Reply",
+                sheetTitle = stringResource(R.string.sheet_title_reply),
+                actionLabel = stringResource(R.string.label_reply),
                 isUploading = isUploading,
                 uploadedImageUrl = uploadedImageUrl,
                 onDismiss = { 
