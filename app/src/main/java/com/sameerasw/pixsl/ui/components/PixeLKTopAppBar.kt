@@ -134,38 +134,11 @@ fun PixeLKTopAppBar(
                 ),
                 modifier = Modifier.size(48.dp)
             ) {
-                if (isSignedIn && avatarUrl != null) {
-                    AsyncImage(
-                        model = avatarUrl,
-                        contentDescription = stringResource(R.string.action_profile),
-                        contentScale = ContentScale.Crop,
-                        modifier = Modifier
-                            .size(40.dp)
-                            .then(
-                                if (isExpert) Modifier.border(2.dp, MaterialTheme.colorScheme.primary, CircleShape).padding(2.dp)
-                                else Modifier
-                            )
-                            .clip(CircleShape)
-                    )
-                } else {
-                    Box(
-                        modifier = Modifier
-                            .size(42.dp)
-                            .then(
-                                if (isExpert) Modifier.border(2.dp, MaterialTheme.colorScheme.primary, CircleShape).padding(2.dp)
-                                else Modifier
-                            )
-                            .clip(CircleShape)
-                            .background(MaterialTheme.colorScheme.primary),
-                        contentAlignment = Alignment.Center
-                    ) {
-                        Text(
-                            text = if (username?.isNotEmpty() == true) username.take(1).uppercase() else "G",
-                            style = MaterialTheme.typography.titleMedium,
-                            color = MaterialTheme.colorScheme.onPrimary
-                        )
-                    }
-                }
+                PixeLKAvatar(
+                    avatarUrl = if (isSignedIn) avatarUrl else null,
+                    username = username,
+                    isExpert = isExpert
+                )
             }
 
             if (isSignedIn) {

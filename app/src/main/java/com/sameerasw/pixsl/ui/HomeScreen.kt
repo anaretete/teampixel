@@ -42,6 +42,9 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.background
 import com.sameerasw.pixsl.utils.DeviceUtils
 
+import com.sameerasw.pixsl.ui.components.home.DeviceHeroCard
+import com.sameerasw.pixsl.ui.components.home.SignInPromptCard
+
 @OptIn(ExperimentalMaterial3ExpressiveApi::class)
 @Composable
 fun HomeScreen(
@@ -65,96 +68,7 @@ fun HomeScreen(
         val context = androidx.compose.ui.platform.LocalContext.current
         val deviceInfo = remember { DeviceUtils.getDeviceInfo(context) }
         
-        // Device Hero Card
-        RoundedCardContainer(
-            modifier = Modifier.fillMaxWidth(),
-            containerColor = MaterialTheme.colorScheme.surfaceContainerHighest
-        ) {
-            Column(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(16.dp),
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
-                // Highly scaled Device Image at top (3x)
-                Box(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(480.dp)
-                        .clip(MaterialTheme.shapes.medium)
-                        .background(MaterialTheme.colorScheme.surfaceContainerLow),
-                    contentAlignment = Alignment.Center
-                ) {
-                    Text(
-                        text = "📱",
-                        style = MaterialTheme.typography.displayLarge.copy(
-                            fontSize = MaterialTheme.typography.displayLarge.fontSize * 3
-                        )
-                    )
-                }
-                
-                Spacer(modifier = Modifier.height(24.dp))
-                
-                // User-set Device Name
-                Text(
-                    text = deviceInfo.deviceName,
-                    style = MaterialTheme.typography.headlineMedium,
-                    fontWeight = FontWeight.Bold,
-                    color = MaterialTheme.colorScheme.onSurface
-                )
-                
-                // Manufacturer Model
-                Text(
-                    text = "${deviceInfo.manufacturer.replaceFirstChar { it.uppercase() }} ${deviceInfo.model} (${deviceInfo.hardware})",
-                    style = MaterialTheme.typography.titleMedium,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant
-                )
-                
-                
-                Spacer(modifier = Modifier.height(24.dp))
-                
-                // Android Version: Android 15 (35)
-                Text(
-                    text = "Android ${deviceInfo.androidVersion} (${deviceInfo.sdkInt})",
-                    style = MaterialTheme.typography.labelLarge,
-                    fontWeight = FontWeight.Medium,
-                    color = MaterialTheme.colorScheme.primary
-                )
-                
-                Spacer(modifier = Modifier.height(16.dp))
-                
-                // Storage and Memory Info
-                Row(
-                    modifier = Modifier.fillMaxWidth().padding(bottom = 16.dp),
-                    horizontalArrangement = Arrangement.SpaceEvenly
-                ) {
-                    Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                        Text(
-                            text = stringResource(R.string.label_device_storage),
-                            style = MaterialTheme.typography.labelSmall,
-                            color = MaterialTheme.colorScheme.onSurfaceVariant
-                        )
-                        Text(
-                            text = "${DeviceUtils.formatSize(deviceInfo.availableStorage)} / ${DeviceUtils.formatSize(deviceInfo.totalStorage)}",
-                            style = MaterialTheme.typography.bodyMedium,
-                            fontWeight = FontWeight.SemiBold
-                        )
-                    }
-                    Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                        Text(
-                            text = stringResource(R.string.label_device_ram),
-                            style = MaterialTheme.typography.labelSmall,
-                            color = MaterialTheme.colorScheme.onSurfaceVariant
-                        )
-                        Text(
-                            text = "${DeviceUtils.formatSize(deviceInfo.availableRam)} / ${DeviceUtils.formatSize(deviceInfo.totalRam)}",
-                            style = MaterialTheme.typography.bodyMedium,
-                            fontWeight = FontWeight.SemiBold
-                        )
-                    }
-                }
-            }
-        }
+        DeviceHeroCard(deviceInfo = deviceInfo)
 
         if (authState is AuthState.Loading) {
             Box(
@@ -166,40 +80,7 @@ fun HomeScreen(
         }
 
         if (authState is AuthState.SignedOut) {
-                    Card(
-                        modifier = Modifier.fillMaxWidth(),
-                        colors = CardDefaults.cardColors(
-                            containerColor = MaterialTheme.colorScheme.surfaceContainerHigh
-                        ),
-                        shape = MaterialTheme.shapes.large
-                    ) {
-                        val view = LocalView.current
-                        Column(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(24.dp),
-                            horizontalAlignment = Alignment.CenterHorizontally
-                        ) {
-                            Text(
-                                text = stringResource(R.string.label_welcome),
-                                style = MaterialTheme.typography.headlineSmall,
-                                fontWeight = FontWeight.Bold
-                            )
-                            Spacer(modifier = Modifier.height(8.dp))
-                            Text(
-                                text = stringResource(R.string.label_sign_in_prompt),
-                                style = MaterialTheme.typography.bodyMedium,
-                                color = MaterialTheme.colorScheme.onSurfaceVariant
-                            )
-                            Spacer(modifier = Modifier.height(20.dp))
-                            Button(onClick = {
-                                HapticUtil.performVirtualKeyHaptic(view)
-                                onSignInClick()
-                            }) {
-                                Text(stringResource(R.string.action_sign_in_google))
-                            }
-                        }
-                    }
+            SignInPromptCard(onSignInClick = onSignInClick)
         }
     }
 }
