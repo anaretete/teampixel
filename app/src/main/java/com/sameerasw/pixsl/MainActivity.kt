@@ -59,7 +59,6 @@ class MainActivity : ComponentActivity() {
                 val scrollBehavior = TopAppBarDefaults.exitUntilCollapsedScrollBehavior(
                     rememberTopAppBarState()
                 )
-                val exitAlwaysScrollBehavior = FloatingToolbarDefaults.exitAlwaysScrollBehavior(exitDirection = Bottom)
                 val tabs = PixeLKTabs.entries
                 val pagerState = rememberPagerState(pageCount = { tabs.size })
                 val view = LocalView.current
@@ -75,15 +74,18 @@ class MainActivity : ComponentActivity() {
                     contentWindowInsets = androidx.compose.foundation.layout.WindowInsets(0, 0, 0, 0),
                     modifier = Modifier
                         .fillMaxSize()
-                        .nestedScroll(scrollBehavior.nestedScrollConnection)
-                        .nestedScroll(exitAlwaysScrollBehavior),
+                        .nestedScroll(scrollBehavior.nestedScrollConnection),
                     containerColor = androidx.compose.material3.MaterialTheme.colorScheme.surfaceContainer,
                     topBar = {
+                        val signedInState = authState as? com.sameerasw.pixsl.data.model.AuthState.SignedIn
                         PixeLKTopAppBar(
                             title = tabs[pagerState.currentPage].title,
                             scrollBehavior = scrollBehavior,
-                            isSignedIn = authState is com.sameerasw.pixsl.data.model.AuthState.SignedIn,
-                            avatarUrl = (authState as? com.sameerasw.pixsl.data.model.AuthState.SignedIn)?.avatarUrl,
+                            isSignedIn = signedInState != null,
+                            avatarUrl = signedInState?.avatarUrl,
+                            isExpert = signedInState?.profile?.isExpert ?: false,
+                            username = signedInState?.profile?.username,
+                            email = signedInState?.email,
                             onSignInClick = { googleSignInAction.startFlow() },
                             onSignOutClick = { viewModel.signOut() }
                         )
@@ -103,7 +105,6 @@ class MainActivity : ComponentActivity() {
                                     pagerState.animateScrollToPage(index)
                                 }
                             },
-                            scrollBehavior = exitAlwaysScrollBehavior
                         )
 
                         HorizontalPager(

@@ -31,10 +31,16 @@ import coil.compose.AsyncImage
 import com.sameerasw.pixsl.R
 import com.sameerasw.pixsl.data.model.AuthState
 import com.sameerasw.pixsl.ui.components.containers.RoundedCardContainer
+import com.sameerasw.pixsl.utils.HapticUtil
+import androidx.compose.ui.platform.LocalView
 
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
 import androidx.compose.material3.LoadingIndicator
+import androidx.compose.runtime.remember
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.background
+import com.sameerasw.pixsl.utils.DeviceUtils
 
 @OptIn(ExperimentalMaterial3ExpressiveApi::class)
 @Composable
@@ -56,128 +62,145 @@ fun HomeScreen(
             ),
         verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
-        when (authState) {
-            is AuthState.Loading -> {
-                Column(
-                    modifier = Modifier.fillMaxSize(),
-                    horizontalAlignment = Alignment.CenterHorizontally,
-                    verticalArrangement = Arrangement.Center
+        val context = androidx.compose.ui.platform.LocalContext.current
+        val deviceInfo = remember { DeviceUtils.getDeviceInfo(context) }
+        
+        // Device Hero Card
+        RoundedCardContainer(
+            modifier = Modifier.fillMaxWidth(),
+            containerColor = MaterialTheme.colorScheme.surfaceContainerHighest
+        ) {
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(16.dp),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                // Highly scaled Device Image at top (3x)
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(480.dp)
+                        .clip(MaterialTheme.shapes.medium)
+                        .background(MaterialTheme.colorScheme.surfaceContainerLow),
+                    contentAlignment = Alignment.Center
                 ) {
-                    LoadingIndicator()
-                    Spacer(modifier = Modifier.height(12.dp))
                     Text(
-                        text = stringResource(R.string.label_loading),
-                        style = MaterialTheme.typography.bodyMedium,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                        text = "📱",
+                        style = MaterialTheme.typography.displayLarge.copy(
+                            fontSize = MaterialTheme.typography.displayLarge.fontSize * 3
+                        )
                     )
                 }
-            }
-
-            is AuthState.SignedIn -> {
-                RoundedCardContainer(
-                    modifier = Modifier.fillMaxWidth(),
-                    containerColor = MaterialTheme.colorScheme.surfaceContainerHigh
+                
+                Spacer(modifier = Modifier.height(24.dp))
+                
+                // User-set Device Name
+                Text(
+                    text = deviceInfo.deviceName,
+                    style = MaterialTheme.typography.headlineMedium,
+                    fontWeight = FontWeight.Bold,
+                    color = MaterialTheme.colorScheme.onSurface
+                )
+                
+                // Manufacturer Model
+                Text(
+                    text = "${deviceInfo.manufacturer.replaceFirstChar { it.uppercase() }} ${deviceInfo.model} (${deviceInfo.hardware})",
+                    style = MaterialTheme.typography.titleMedium,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                )
+                
+                
+                Spacer(modifier = Modifier.height(24.dp))
+                
+                // Android Version: Android 15 (35)
+                Text(
+                    text = "Android ${deviceInfo.androidVersion} (${deviceInfo.sdkInt})",
+                    style = MaterialTheme.typography.labelLarge,
+                    fontWeight = FontWeight.Medium,
+                    color = MaterialTheme.colorScheme.primary
+                )
+                
+                Spacer(modifier = Modifier.height(16.dp))
+                
+                // Storage and Memory Info
+                Row(
+                    modifier = Modifier.fillMaxWidth().padding(bottom = 16.dp),
+                    horizontalArrangement = Arrangement.SpaceEvenly
                 ) {
-                    Row(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(16.dp),
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-                        if (authState.avatarUrl != null) {
-                            AsyncImage(
-                                model = authState.avatarUrl,
-                                contentDescription = stringResource(R.string.action_profile),
-                                contentScale = ContentScale.Crop,
-                                modifier = Modifier
-                                    .size(56.dp)
-                                    .clip(CircleShape)
-                            )
-                            Spacer(modifier = Modifier.width(16.dp))
-                        }
-                        Column {
-                            Text(
-                                text = stringResource(R.string.label_signed_in_as),
-                                style = MaterialTheme.typography.labelMedium,
-                                color = MaterialTheme.colorScheme.onSurfaceVariant
-                            )
-                            Text(
-                                text = authState.profile.username ?: stringResource(R.string.label_guest),
-                                style = MaterialTheme.typography.titleMedium,
-                                fontWeight = FontWeight.SemiBold
-                            )
-                            if (authState.profile.isExpert) {
-                                Text(
-                                    text = stringResource(R.string.label_expert),
-                                    style = MaterialTheme.typography.labelSmall,
-                                    color = MaterialTheme.colorScheme.primary
-                                )
-                            }
-                        }
-                    }
-                }
-
-                if (authState.profile.nostrPubKey != null) {
-                    RoundedCardContainer(
-                        modifier = Modifier.fillMaxWidth(),
-                        containerColor = MaterialTheme.colorScheme.surfaceContainerLow
-                    ) {
-                        Column(modifier = Modifier.padding(16.dp)) {
-                            Text(
-                                text = stringResource(R.string.label_nostr_key),
-                                style = MaterialTheme.typography.titleSmall,
-                                fontWeight = FontWeight.Medium
-                            )
-                            Spacer(modifier = Modifier.height(4.dp))
-                            Text(
-                                text = stringResource(R.string.label_nostr_key_desc),
-                                style = MaterialTheme.typography.bodySmall,
-                                color = MaterialTheme.colorScheme.onSurfaceVariant
-                            )
-                            Spacer(modifier = Modifier.height(8.dp))
-                            Text(
-                                text = authState.profile.nostrPubKey,
-                                style = MaterialTheme.typography.bodySmall,
-                                color = MaterialTheme.colorScheme.primary,
-                                maxLines = 1
-                            )
-                        }
-                    }
-                }
-            }
-
-            is AuthState.SignedOut -> {
-                Card(
-                    modifier = Modifier.fillMaxWidth(),
-                    colors = CardDefaults.cardColors(
-                        containerColor = MaterialTheme.colorScheme.surfaceContainerHigh
-                    ),
-                    shape = MaterialTheme.shapes.large
-                ) {
-                    Column(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(24.dp),
-                        horizontalAlignment = Alignment.CenterHorizontally
-                    ) {
+                    Column(horizontalAlignment = Alignment.CenterHorizontally) {
                         Text(
-                            text = stringResource(R.string.label_welcome),
-                            style = MaterialTheme.typography.headlineSmall,
-                            fontWeight = FontWeight.Bold
-                        )
-                        Spacer(modifier = Modifier.height(8.dp))
-                        Text(
-                            text = stringResource(R.string.label_sign_in_prompt),
-                            style = MaterialTheme.typography.bodyMedium,
+                            text = stringResource(R.string.label_device_storage),
+                            style = MaterialTheme.typography.labelSmall,
                             color = MaterialTheme.colorScheme.onSurfaceVariant
                         )
-                        Spacer(modifier = Modifier.height(20.dp))
-                        Button(onClick = onSignInClick) {
-                            Text(stringResource(R.string.action_sign_in_google))
-                        }
+                        Text(
+                            text = "${DeviceUtils.formatSize(deviceInfo.availableStorage)} / ${DeviceUtils.formatSize(deviceInfo.totalStorage)}",
+                            style = MaterialTheme.typography.bodyMedium,
+                            fontWeight = FontWeight.SemiBold
+                        )
+                    }
+                    Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                        Text(
+                            text = stringResource(R.string.label_device_ram),
+                            style = MaterialTheme.typography.labelSmall,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant
+                        )
+                        Text(
+                            text = "${DeviceUtils.formatSize(deviceInfo.availableRam)} / ${DeviceUtils.formatSize(deviceInfo.totalRam)}",
+                            style = MaterialTheme.typography.bodyMedium,
+                            fontWeight = FontWeight.SemiBold
+                        )
                     }
                 }
             }
         }
+
+        if (authState is AuthState.Loading) {
+            Box(
+                modifier = Modifier.fillMaxWidth().padding(vertical = 16.dp),
+                contentAlignment = Alignment.Center
+            ) {
+                LoadingIndicator()
+            }
+        }
+
+        if (authState is AuthState.SignedOut) {
+                    Card(
+                        modifier = Modifier.fillMaxWidth(),
+                        colors = CardDefaults.cardColors(
+                            containerColor = MaterialTheme.colorScheme.surfaceContainerHigh
+                        ),
+                        shape = MaterialTheme.shapes.large
+                    ) {
+                        val view = LocalView.current
+                        Column(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(24.dp),
+                            horizontalAlignment = Alignment.CenterHorizontally
+                        ) {
+                            Text(
+                                text = stringResource(R.string.label_welcome),
+                                style = MaterialTheme.typography.headlineSmall,
+                                fontWeight = FontWeight.Bold
+                            )
+                            Spacer(modifier = Modifier.height(8.dp))
+                            Text(
+                                text = stringResource(R.string.label_sign_in_prompt),
+                                style = MaterialTheme.typography.bodyMedium,
+                                color = MaterialTheme.colorScheme.onSurfaceVariant
+                            )
+                            Spacer(modifier = Modifier.height(20.dp))
+                            Button(onClick = {
+                                HapticUtil.performVirtualKeyHaptic(view)
+                                onSignInClick()
+                            }) {
+                                Text(stringResource(R.string.action_sign_in_google))
+                            }
+                        }
+                    }
+        }
     }
 }
+

@@ -38,7 +38,8 @@ class MainViewModel : ViewModel() {
                                 val avatarUrl = user.userMetadata?.get("avatar_url")?.toString()?.trim('"')
                                 _authState.value = AuthState.SignedIn(
                                     profile = profile ?: Profile(id = user.id),
-                                    avatarUrl = avatarUrl
+                                    avatarUrl = avatarUrl,
+                                    email = user.email
                                 )
                             } else {
                                 _authState.value = AuthState.SignedOut
@@ -121,7 +122,8 @@ class MainViewModel : ViewModel() {
 
                     _authState.value = AuthState.SignedIn(
                         profile = profile ?: Profile(id = user.id),
-                        avatarUrl = avatarUrl
+                        avatarUrl = avatarUrl,
+                        email = user.email
                     )
                 } catch (e: Exception) {
                     android.util.Log.e("MainViewModel", "onSignInResult failed", e)

@@ -43,21 +43,14 @@ fun PixeLKFloatingToolbar(
     currentPage: Int,
     tabs: List<PixeLKTabs>,
     onTabSelected: (Int) -> Unit,
-    scrollBehavior: FloatingToolbarScrollBehavior,
+    scrollBehavior: FloatingToolbarScrollBehavior? = null,
     badges: Map<PixeLKTabs, Boolean> = emptyMap()
 ) {
-    var expanded by remember { mutableStateOf(true) }
-    var interactionCount by remember { mutableStateOf(0) }
-
+    // Always expanded as per user preference
+    val expanded = true
+    var interactionCount by remember { mutableIntStateOf(0) }
     var bumpingTab by remember { mutableIntStateOf(-1) }
     var bumpKey by remember { mutableIntStateOf(0) }
-
-    LaunchedEffect(expanded, interactionCount, currentPage) {
-        if (expanded) {
-            delay(5000)
-            expanded = false
-        }
-    }
 
     LaunchedEffect(bumpKey) {
         if (bumpingTab >= 0) {
@@ -66,9 +59,6 @@ fun PixeLKFloatingToolbar(
         }
     }
 
-    LaunchedEffect(currentPage) {
-        if (!expanded) expanded = true
-    }
 
     val toolbarScale by animateFloatAsState(
         targetValue = if (expanded) 1f else 0.9f,
@@ -138,13 +128,9 @@ fun PixeLKFloatingToolbar(
                     IconButton(
                         onClick = {
                             interactionCount++
-                            if (!expanded) {
-                                expanded = true
-                            } else {
-                                bumpingTab = index
-                                bumpKey++
-                                onTabSelected(index)
-                            }
+                            bumpingTab = index
+                            bumpKey++
+                            onTabSelected(index)
                         },
                         modifier = Modifier
                             .width(itemWidth)

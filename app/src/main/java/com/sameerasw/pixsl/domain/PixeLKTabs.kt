@@ -8,6 +8,6 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import com.sameerasw.pixsl.R
 
 enum class PixeLKTabs(@StringRes val title: Int, val icon: ImageVector) {
-    HOME(R.string.tab_home, Icons.Default.Home),
+    HOME(R.string.tab_pixel, Icons.Default.Home),
     COMMUNITY(R.string.tab_community, Icons.Rounded.ChatBubble)
 }

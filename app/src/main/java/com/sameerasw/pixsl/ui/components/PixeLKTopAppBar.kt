@@ -12,6 +12,10 @@ import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.automirrored.filled.ExitToApp
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
+import com.sameerasw.pixsl.ui.components.menus.SegmentedDropdownMenu
+import com.sameerasw.pixsl.ui.components.menus.SegmentedDropdownMenuItem
+import androidx.compose.foundation.border
+import androidx.compose.material.icons.filled.Person
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
 import androidx.compose.material3.Icon
@@ -53,6 +57,9 @@ fun PixeLKTopAppBar(
     containerColor: Color = MaterialTheme.colorScheme.surfaceContainer,
     avatarUrl: String? = null,
     isSignedIn: Boolean = false,
+    isExpert: Boolean = false,
+    username: String? = null,
+    email: String? = null,
     onSignInClick: (() -> Unit)? = null,
     onSignOutClick: (() -> Unit)? = null,
     actions: @Composable RowScope.() -> Unit = {}
@@ -133,21 +140,28 @@ fun PixeLKTopAppBar(
                         contentDescription = stringResource(R.string.action_profile),
                         contentScale = ContentScale.Crop,
                         modifier = Modifier
-                            .size(32.dp)
+                            .size(40.dp)
+                            .then(
+                                if (isExpert) Modifier.border(2.dp, MaterialTheme.colorScheme.primary, CircleShape).padding(2.dp)
+                                else Modifier
+                            )
                             .clip(CircleShape)
                     )
                 } else {
-
                     Box(
                         modifier = Modifier
-                            .size(32.dp)
+                            .size(42.dp)
+                            .then(
+                                if (isExpert) Modifier.border(2.dp, MaterialTheme.colorScheme.primary, CircleShape).padding(2.dp)
+                                else Modifier
+                            )
                             .clip(CircleShape)
                             .background(MaterialTheme.colorScheme.primary),
                         contentAlignment = Alignment.Center
                     ) {
                         Text(
-                            text = "G",
-                            style = MaterialTheme.typography.labelLarge,
+                            text = if (username?.isNotEmpty() == true) username.take(1).uppercase() else "G",
+                            style = MaterialTheme.typography.titleMedium,
                             color = MaterialTheme.colorScheme.onPrimary
                         )
                     }
@@ -155,11 +169,37 @@ fun PixeLKTopAppBar(
             }
 
             if (isSignedIn) {
-                DropdownMenu(
+                SegmentedDropdownMenu(
                     expanded = showProfileMenu,
                     onDismissRequest = { showProfileMenu = false }
                 ) {
-                    DropdownMenuItem(
+                    SegmentedDropdownMenuItem(
+                        text = {
+                            Column {
+                                Text(
+                                    text = username ?: stringResource(R.string.label_guest),
+                                    style = MaterialTheme.typography.titleSmall,
+                                    fontWeight = androidx.compose.ui.text.font.FontWeight.Bold
+                                )
+                                if (email != null) {
+                                    Text(
+                                        text = email,
+                                        style = MaterialTheme.typography.labelSmall,
+                                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                                    )
+                                }
+                            }
+                        },
+                        onClick = { },
+                        leadingIcon = {
+                            Icon(
+                                imageVector = Icons.Default.Person,
+                                contentDescription = null,
+                                modifier = Modifier.size(24.dp)
+                            )
+                        }
+                    )
+                    SegmentedDropdownMenuItem(
                         text = { Text(stringResource(R.string.action_sign_out)) },
                         onClick = {
                             HapticUtil.performVirtualKeyHaptic(view)
@@ -169,7 +209,8 @@ fun PixeLKTopAppBar(
                         leadingIcon = {
                             Icon(
                                 imageVector = Icons.AutoMirrored.Filled.ExitToApp,
-                                contentDescription = null
+                                contentDescription = null,
+                                modifier = Modifier.size(24.dp)
                             )
                         }
                     )
