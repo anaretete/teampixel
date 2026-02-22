@@ -57,6 +57,22 @@
     <string name="label_thread_title">Thread</string>
     <string name="content_desc_delete_post">Delete Post</string>
     <string name="label_anonymous">Anonymous</string>
-    <string name="content_desc_verified">Verified</string>
     <string name="label_pitch_black_theme">Pitch black theme</string>
+    <string name="label_about">About</string>
+    <string name="app_description">An open-source companion app for your Pixel.</string>
+    <string name="app_developer_name">sameerasw.com</string>
+    <string name="developed_by_format">Developed by %1$s</string>
+    <string name="action_website">Website</string>
+    <string name="action_view_on_github">GitHub</string>
+    <string name="action_contact">Contact</string>
+    <string name="action_telegram">Telegram</string>
+    <string name="action_support">Support</string>
+    <string name="send_email_chooser_title">Send Email</string>
+    <string name="error_no_email_app">No email app found</string>
+    <string name="label_other_apps">Other apps</string>
+    <string name="app_airsync">AirSync</string>
+    <string name="app_zenzero">ZenZero</string>
+    <string name="app_canvas">Canvas</string>
+    <string name="app_tasks">Tasks</string>
+    <string name="app_zero">Zero</string>
 </resources>

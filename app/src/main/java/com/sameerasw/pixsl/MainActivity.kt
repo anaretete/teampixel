@@ -60,6 +60,7 @@ import com.sameerasw.pixsl.ui.theme.PixeLKTheme
 import com.sameerasw.pixsl.ui.components.sheets.ProfileMenuSheet
 import io.github.jan.supabase.compose.auth.composeAuth
 import kotlinx.coroutines.launch
+import com.sameerasw.pixsl.ui.components.sheets.AboutAppSheet
 import com.sameerasw.pixsl.utils.DeviceUtils
 import com.sameerasw.pixsl.utils.HapticUtil
 import com.sameerasw.pixsl.viewmodel.MainViewModel
@@ -84,6 +85,7 @@ class MainActivity : ComponentActivity() {
                 val view = LocalView.current
                 val scope = rememberCoroutineScope()
                 var showProfileMenu by remember { mutableStateOf(false) }
+                var showAboutSheet by remember { mutableStateOf(false) }
 
                 val context = androidx.compose.ui.platform.LocalContext.current
                 val deviceInfo = remember { DeviceUtils.getDeviceInfo(context) }
@@ -137,8 +139,15 @@ class MainActivity : ComponentActivity() {
                                     authState = signedInState,
                                     pitchBlackTheme = pitchBlackTheme,
                                     onPitchBlackThemeChange = { viewModel.setPitchBlackTheme(it) },
+                                    onAboutClick = { showAboutSheet = true },
                                     onDismissRequest = { showProfileMenu = false },
                                     onSignOutClick = { viewModel.signOut() }
+                                )
+                            }
+                            
+                            if (showAboutSheet) {
+                                AboutAppSheet(
+                                    onDismissRequest = { showAboutSheet = false }
                                 )
                             }
                         }

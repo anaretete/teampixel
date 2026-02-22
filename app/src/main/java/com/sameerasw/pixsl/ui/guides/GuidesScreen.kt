@@ -86,13 +86,13 @@ fun GuidesScreen(
             ),
         verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
-        Text(
-            text = stringResource(R.string.label_guides),
-            style = MaterialTheme.typography.headlineSmall,
-            fontWeight = FontWeight.Bold,
-            color = MaterialTheme.colorScheme.onSurface,
-            modifier = Modifier.padding(vertical = 8.dp)
-        )
+//        Text(
+//            text = stringResource(R.string.label_guides),
+//            style = MaterialTheme.typography.headlineSmall,
+//            fontWeight = FontWeight.Bold,
+//            color = MaterialTheme.colorScheme.onSurface,
+//            modifier = Modifier.padding(vertical = 8.dp)
+//        )
 
         RoundedCardContainer {
             guides.forEach { guide ->

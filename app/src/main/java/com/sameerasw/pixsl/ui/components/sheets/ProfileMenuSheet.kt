@@ -6,6 +6,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ExitToApp
 import androidx.compose.material.icons.filled.ChevronRight
 import androidx.compose.material.icons.filled.DarkMode
+import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
@@ -28,6 +29,7 @@ fun ProfileMenuSheet(
     authState: AuthState.SignedIn,
     pitchBlackTheme: Boolean,
     onPitchBlackThemeChange: (Boolean) -> Unit,
+    onAboutClick: () -> Unit,
     onDismissRequest: () -> Unit,
     onSignOutClick: () -> Unit
 ) {
@@ -111,6 +113,16 @@ fun ProfileMenuSheet(
                     onCheckedChange = {
                         HapticUtil.performVirtualKeyHaptic(view)
                         onPitchBlackThemeChange(it)
+                    }
+                )
+                
+                ProfileMenuItem(
+                    icon = Icons.Default.Info,
+                    label = stringResource(R.string.label_about),
+                    onClick = {
+                        HapticUtil.performUIHaptic(view)
+                        onDismissRequest() // Close profile sheet
+                        onAboutClick()     // Open about sheet
                     }
                 )
             }

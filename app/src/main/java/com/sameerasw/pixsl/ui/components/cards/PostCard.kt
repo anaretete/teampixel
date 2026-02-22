@@ -76,7 +76,7 @@ fun PostCard(
                         Spacer(modifier = Modifier.width(4.dp))
                         Icon(
                             imageVector = Icons.Default.CheckCircle,
-                            contentDescription = stringResource(R.string.content_desc_verified),
+                            contentDescription = stringResource(R.string.label_expert),
                             tint = MaterialTheme.colorScheme.primary,
                             modifier = Modifier.size(16.dp)
                         )
