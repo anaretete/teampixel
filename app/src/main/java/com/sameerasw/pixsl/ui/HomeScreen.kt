@@ -76,7 +76,7 @@ fun HomeScreen(
 
     LaunchedEffect(hasRunStartupAnimation) {
         if (!hasRunStartupAnimation) {
-            delay(50) // Small delay to ensure layout is ready
+            delay(600) // Wait for splash screen exit animation to finish
             isStartupAnimationRunning = true
             onAnimationRun()
         }

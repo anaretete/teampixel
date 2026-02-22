@@ -106,26 +106,19 @@ class MainActivity : ComponentActivity() {
                 try {
                     @Suppress("SENSELESS_COMPARISON")
                     if (splashIcon != null) {
-                        val scaleUp = ObjectAnimator.ofFloat(splashIcon, "scaleX", 1f, 0.5f).apply {
+                        val scaleDownX = ObjectAnimator.ofFloat(splashIcon, "scaleX", 1f, 0f).apply {
                             interpolator = AnticipateInterpolator()
                             duration = 750
                         }
 
-                        val scaleUpY =
-                            ObjectAnimator.ofFloat(splashIcon, "scaleY", 1f, 0.5f).apply {
+                        val scaleDownY =
+                            ObjectAnimator.ofFloat(splashIcon, "scaleY", 1f, 0f).apply {
                                 interpolator = AnticipateInterpolator()
                                 duration = 750
                             }
 
-                        val rotate360 =
-                            ObjectAnimator.ofFloat(splashIcon, "rotation", 0f, -90f).apply {
-                                interpolator = AnticipateInterpolator()
-                                duration = 750
-                            }
-
-                        scaleUp.start()
-                        scaleUpY.start()
-                        rotate360.start()
+                        scaleDownX.start()
+                        scaleDownY.start()
                     } else {
                         Log.w("SplashScreen", "iconView is null - OEM device detected")
                     }
