@@ -155,6 +155,15 @@ class MainActivity : ComponentActivity() {
                         viewModel.loadDeviceSpecs(context)
                     }
 
+                    var isFirstPageLoad by remember { mutableStateOf(true) }
+                    androidx.compose.runtime.LaunchedEffect(pagerState.currentPage) {
+                        if (isFirstPageLoad) {
+                            isFirstPageLoad = false
+                        } else {
+                            HapticUtil.performLightHaptic(view)
+                        }
+                    }
+
                     Box(modifier = Modifier.fillMaxSize()) {
                         val signedInState =
                             authState as? com.sameerasw.pixsl.data.model.AuthState.SignedIn

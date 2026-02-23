@@ -79,7 +79,7 @@ fun AboutAppSheet(
                 contentScale = ContentScale.Crop,
                 modifier = Modifier
                     .size(120.dp)
-                    .clip(RoundedCornerShape(16.dp))
+                    .clip(RoundedCornerShape(32.dp))
                     .background(MaterialTheme.colorScheme.primary)
                     .combinedClickable(
                         onClick = {},
@@ -223,6 +223,22 @@ fun AboutAppSheet(
                     verticalArrangement = Arrangement.spacedBy(8.dp),
                     maxItemsInEachRow = 3
                 ) {
+                    OutlinedButton(
+                        onClick = {
+                            val websiteUrl = "https://github.com/sameerasw/essentials"
+                            val intent = Intent(Intent.ACTION_VIEW, websiteUrl.toUri())
+                            context.startActivity(intent)
+                        },
+                        modifier = Modifier.padding(horizontal = 4.dp)
+                    ) {
+                        Icon(
+                            painter = painterResource(id = R.drawable.app_essentials),
+                            contentDescription = null,
+                            modifier = Modifier.size(18.dp)
+                        )
+                        Spacer(modifier = Modifier.width(8.dp))
+                        Text(stringResource(R.string.app_essentials))
+                    }
 
                     OutlinedButton(
                         onClick = {

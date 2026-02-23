@@ -21,10 +21,11 @@ class PostDetailActivity : ComponentActivity() {
         }
 
         setContent {
-            PixeLKTheme {
-                val mainViewModel: MainViewModel = viewModel()
-                val authState by mainViewModel.authState.collectAsState()
+            val mainViewModel: MainViewModel = viewModel()
+            val authState by mainViewModel.authState.collectAsState()
+            val pitchBlackTheme by mainViewModel.pitchBlackTheme.collectAsState()
 
+            PixeLKTheme(pitchBlackTheme = pitchBlackTheme) {
                 PostDetailScreen(
                     postId = postId,
                     currentUserId = (authState as? com.sameerasw.pixsl.data.model.AuthState.SignedIn)?.profile?.id,
