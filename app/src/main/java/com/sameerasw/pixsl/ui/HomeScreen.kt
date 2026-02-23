@@ -27,11 +27,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.sameerasw.pixsl.data.model.AuthState
 import com.sameerasw.pixsl.ui.components.home.DeviceHeroCard
 import com.sameerasw.pixsl.ui.components.home.DeviceSpecsCard
 import com.sameerasw.pixsl.ui.components.home.SignInPromptCard
+import com.sameerasw.pixsl.ui.theme.PixeLKTheme
 import com.sameerasw.pixsl.utils.DeviceInfo
 import kotlinx.coroutines.delay
 
@@ -138,3 +140,34 @@ fun HomeScreen(
     }
 }
 
+// preview
+@Preview(showBackground = true)
+@Composable
+fun HomeScreenPreview() {
+    PixeLKTheme {
+        HomeScreen(
+            authState = AuthState.SignedOut,
+            deviceInfo = DeviceInfo(
+                model = "Pixel 8 Pro",
+                manufacturer = "Google",
+                deviceName = "Pixel 8 Pro",
+                brand = "Google",
+                device = "Pixel 8 Pro",
+                hardware = "shiba",
+                product = "Pixel 8 Pro",
+                androidVersion = "16",
+                sdkInt = 36,
+                board = "shiba",
+                display = "Pixel 8 Pro",
+                fingerprint = "Pixel 8 Pro",
+                totalStorage = 256000000000L,
+                availableStorage = 256000000000L,
+                totalRam = 12000000000L,
+                availableRam = 12000000000L,
+            ),
+            hasRunStartupAnimation = true,
+            onAnimationRun = {},
+            onSignInClick = {}
+        )
+    }
+}
