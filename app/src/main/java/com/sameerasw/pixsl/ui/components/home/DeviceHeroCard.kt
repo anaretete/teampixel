@@ -1,5 +1,6 @@
 package com.sameerasw.pixsl.ui.components.home
 
+import DeviceInfo
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -19,6 +20,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -28,9 +30,6 @@ import androidx.compose.ui.unit.dp
 import com.sameerasw.pixsl.R
 import com.sameerasw.pixsl.ui.components.containers.RoundedCardContainer
 import com.sameerasw.pixsl.ui.theme.Shapes
-import com.sameerasw.pixsl.utils.DeviceImageMapper
-import com.sameerasw.pixsl.utils.DeviceInfo
-import com.sameerasw.pixsl.utils.DeviceUtils
 
 @Composable
 fun DeviceHeroCard(
@@ -121,23 +120,53 @@ fun DeviceHeroCard(
                 horizontalArrangement = Arrangement.spacedBy(16.dp)
             ) {
                 Icon(
-                    painter = painterResource(id = R.drawable.rounded_android_24),
+                    painter = painterResource(id = DeviceImageMapper.getAndroidLogo(deviceInfo)),
                     contentDescription = null,
-                    tint = MaterialTheme.colorScheme.primary,
-                    modifier = Modifier.size(32.dp)
+                    tint = Color.Unspecified,
+                    modifier = Modifier.size(56.dp)
                 )
                 Column(horizontalAlignment = Alignment.Start) {
-                    Text(
-                        text = "Android ${deviceInfo.androidVersion} (${DeviceUtils.getOSName(deviceInfo.sdkInt, deviceInfo.osCodename)})",
-                        style = MaterialTheme.typography.bodyLarge,
-                        fontWeight = FontWeight.Bold,
-                        color = MaterialTheme.colorScheme.primary
-                    )
+                    Row(verticalAlignment = Alignment.CenterVertically) {
+                        Text(
+                            text = "Android ${deviceInfo.androidVersion} (${DeviceUtils.getOSName(deviceInfo.sdkInt, deviceInfo.osCodename)})",
+                            style = MaterialTheme.typography.bodyLarge,
+                            fontWeight = FontWeight.Bold,
+                            color = MaterialTheme.colorScheme.primary
+                        )
+                        if (deviceInfo.buildTag.isNotEmpty()) {
+                            Spacer(modifier = Modifier.size(8.dp))
+                            Box(
+                                modifier = Modifier
+                                    .background(
+                                        MaterialTheme.colorScheme.primary,
+                                        shape = MaterialTheme.shapes.large
+                                    )
+                                    .padding(horizontal = 6.dp, vertical = 2.dp)
+                            ) {
+                                Text(
+                                    text = when {
+                                        deviceInfo.buildTag.lowercase().contains("beta") -> "BETA"
+                                        deviceInfo.buildTag.lowercase().contains("canary") -> "CANARY"
+                                        else -> deviceInfo.buildTag
+                                    },
+                                    style = MaterialTheme.typography.labelSmall,
+                                    fontWeight = FontWeight.Bold,
+                                    color = MaterialTheme.colorScheme.onPrimary
+                                )
+                            }
+                        }
+                    }
                     Text(
                         text = "API ${deviceInfo.sdkInt} • Patch: ${DeviceUtils.formatSecurityPatch(deviceInfo.securityPatch)}",
                         style = MaterialTheme.typography.labelMedium,
                         fontWeight = FontWeight.Medium,
                         color = MaterialTheme.colorScheme.onSurfaceVariant
+                    )
+                    Text(
+                        text = "Build: ${deviceInfo.display}",
+                        style = MaterialTheme.typography.labelSmall,
+                        fontWeight = FontWeight.Normal,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.8f)
                     )
                 }
             }

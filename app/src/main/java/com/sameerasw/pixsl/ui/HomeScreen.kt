@@ -1,5 +1,6 @@
 package com.sameerasw.pixsl.ui
 
+import DeviceInfo
 import androidx.compose.animation.core.FastOutSlowInEasing
 import androidx.compose.animation.core.LinearEasing
 import androidx.compose.animation.core.animateDpAsState
@@ -34,7 +35,6 @@ import com.sameerasw.pixsl.ui.components.home.DeviceHeroCard
 import com.sameerasw.pixsl.ui.components.home.DeviceSpecsCard
 import com.sameerasw.pixsl.ui.components.home.SignInPromptCard
 import com.sameerasw.pixsl.ui.theme.PixeLKTheme
-import com.sameerasw.pixsl.utils.DeviceInfo
 import kotlinx.coroutines.delay
 
 @OptIn(ExperimentalMaterial3ExpressiveApi::class)

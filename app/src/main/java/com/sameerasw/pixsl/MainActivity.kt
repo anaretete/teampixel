@@ -38,7 +38,6 @@ import com.sameerasw.pixsl.ui.components.sheets.AboutAppSheet
 import com.sameerasw.pixsl.ui.components.sheets.ProfileMenuSheet
 import com.sameerasw.pixsl.ui.guides.GuidesScreen
 import com.sameerasw.pixsl.ui.theme.PixeLKTheme
-import com.sameerasw.pixsl.utils.DeviceUtils
 import com.sameerasw.pixsl.utils.HapticUtil
 import com.sameerasw.pixsl.viewmodel.MainViewModel
 import io.github.jan.supabase.compose.auth.composable.rememberSignInWithGoogle

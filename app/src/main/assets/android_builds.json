@@ -1,0 +1,520 @@
+[
+  {
+    "build_id": "CP21.260116.011.a1",
+    "tag": "android-17-beta-1",
+    "version": "Android 17 Beta 1",
+    "devices": "",
+    "patch": "2026-02-05"
+  },
+  {
+    "build_id": "CP21.260116.011.b1",
+    "tag": "android-17-beta-1",
+    "version": "Android 17 Beta 1",
+    "devices": "",
+    "patch": "2026-02-05"
+  },
+  {
+    "build_id": "CP11.251209.007",
+    "tag": "android-16-qpr3-beta",
+    "version": "Android 16 QPR3 Beta",
+    "devices": "",
+    "patch": "2026-01-05"
+  },
+  {
+    "build_id": "BP41.250725.006",
+    "tag": "android-16-qpr2-beta",
+    "version": "Android 16 QPR2 Beta",
+    "devices": "",
+    "patch": "2025-08-05"
+  },
+  {
+    "build_id": "BP31.250610.009",
+    "tag": "android-16-qpr1-beta",
+    "version": "Android 16 QPR1 Beta",
+    "devices": "",
+    "patch": "2025-08-05"
+  },
+  {
+    "build_id": "BP4A.251205.006",
+    "tag": "android-16.0.0_r4",
+    "version": "Android16",
+    "devices": "",
+    "patch": "2025-12-05"
+  },
+  {
+    "build_id": "BP3A.250905.014",
+    "tag": "android-16.0.0_r3",
+    "version": "Android16",
+    "devices": "",
+    "patch": "2025-09-05"
+  },
+  {
+    "build_id": "14367590",
+    "tag": "android-security-16.0.0_r3",
+    "version": "Android16",
+    "devices": "",
+    "patch": "2025-08-05"
+  },
+  {
+    "build_id": "14094968",
+    "tag": "android-security-16.0.0_r2",
+    "version": "Android16",
+    "devices": "",
+    "patch": "2025-08-05"
+  },
+  {
+    "build_id": "13943552",
+    "tag": "android-security-16.0.0_r1",
+    "version": "Android16",
+    "devices": "",
+    "patch": "2025-08-05"
+  },
+  {
+    "build_id": "BP2A.250605.031.A3",
+    "tag": "android-16.0.0_r2",
+    "version": "Android16",
+    "devices": "",
+    "patch": "2025-06-05"
+  },
+  {
+    "build_id": "BP2A.250605.031.A2",
+    "tag": "android-16.0.0_r1",
+    "version": "Android16",
+    "devices": "",
+    "patch": "2025-06-05"
+  },
+  {
+    "build_id": "BP1A.250505.005.D1",
+    "tag": "android-15.0.0_r36",
+    "version": "Android15",
+    "devices": "Pixel 9, Pixel 9 Pro, Pixel 9 Pro Fold, Pixel 9 Pro XL",
+    "patch": "2025-05-05"
+  },
+  {
+    "build_id": "BP1A.250505.005.C1",
+    "tag": "android-15.0.0_r35",
+    "version": "Android15",
+    "devices": "Pixel 9, Pixel 9 Pro, Pixel 9 Pro Fold, Pixel 9 Pro XL",
+    "patch": "2025-05-05"
+  },
+  {
+    "build_id": "BP1A.250505.005.B1",
+    "tag": "android-15.0.0_r34",
+    "version": "Android15",
+    "devices": "Pixel 7, Pixel 7 Pro, Pixel 7a, Pixel 8, Pixel 8 Pro, Pixel 8a, Pixel Fold",
+    "patch": "2025-05-05"
+  },
+  {
+    "build_id": "BP1A.250505.005.A1",
+    "tag": "android-15.0.0_r33",
+    "version": "Android15",
+    "devices": "Pixel 9, Pixel 9 Pro, Pixel 9 Pro Fold, Pixel 9 Pro XL",
+    "patch": "2025-05-05"
+  },
+  {
+    "build_id": "BP1A.250505.005",
+    "tag": "android-15.0.0_r32",
+    "version": "Android15",
+    "devices": "Pixel 6, Pixel 6 Pro, Pixel 6a, Pixel 9, Pixel 9 Pro, Pixel 9 Pro Fold, Pixel 9 Pro XL, Pixel Tablet",
+    "patch": "2025-05-05"
+  },
+  {
+    "build_id": "BD4A.250505.003",
+    "tag": "android-15.0.0_r31",
+    "version": "Android15",
+    "devices": "Pixel 9a",
+    "patch": "2025-05-05"
+  },
+  {
+    "build_id": "BP1A.250405.007.D1",
+    "tag": "android-15.0.0_r30",
+    "version": "Android15",
+    "devices": "Pixel 9, Pixel 9 Pro, Pixel 9 Pro Fold, Pixel 9 Pro XL",
+    "patch": "2025-04-05"
+  },
+  {
+    "build_id": "BP1A.250405.007.C1",
+    "tag": "android-15.0.0_r29",
+    "version": "Android15",
+    "devices": "Pixel 9, Pixel 9 Pro, Pixel 9 Pro Fold, Pixel 9 Pro XL",
+    "patch": "2025-04-05"
+  },
+  {
+    "build_id": "BP1A.250405.007.B1",
+    "tag": "android-15.0.0_r28",
+    "version": "Android15",
+    "devices": "Pixel 7, Pixel 7a, Pixel 7 Pro, Pixel 8, Pixel 8a, Pixel 8 Pro, Pixel Fold",
+    "patch": "2025-04-05"
+  },
+  {
+    "build_id": "BP1A.250405.007.A1",
+    "tag": "android-15.0.0_r27",
+    "version": "Android15",
+    "devices": "Pixel 9, Pixel 9 Pro, Pixel 9 Pro Fold, Pixel 9 Pro XL",
+    "patch": "2025-04-05"
+  },
+  {
+    "build_id": "BP1A.250405.007",
+    "tag": "android-15.0.0_r26",
+    "version": "Android15",
+    "devices": "Pixel 6, Pixel 6a, Pixel 6 Pro, Pixel 9, Pixel 9 Pro, Pixel 9 Pro Fold, Pixel 9 Pro XL, Pixel Tablet",
+    "patch": "2025-04-05"
+  },
+  {
+    "build_id": "BD4A.250405.003",
+    "tag": "android-15.0.0_r25",
+    "version": "Android15",
+    "devices": "Pixel 9a",
+    "patch": "2025-02-05"
+  },
+  {
+    "build_id": "BD4A.240925.111",
+    "tag": "android-15.0.0_r24",
+    "version": "Android15",
+    "devices": "Pixel 9a",
+    "patch": "2025-01-05"
+  },
+  {
+    "build_id": "BP1A.250305.020.T2",
+    "tag": "android-15.0.0_r23",
+    "version": "Android15",
+    "devices": "Pixel Tablet",
+    "patch": "2025-03-05"
+  },
+  {
+    "build_id": "BP1A.250305.020.A2",
+    "tag": "android-15.0.0_r22",
+    "version": "Android15",
+    "devices": "Pixel 9, Pixel 9 Pro, Pixel 9 Pro Fold, Pixel 9 Pro XL",
+    "patch": "2025-03-05"
+  },
+  {
+    "build_id": "BP1A.250305.020",
+    "tag": "android-15.0.0_r21",
+    "version": "Android15",
+    "devices": "Pixel 9, Pixel 9 Pro, Pixel 9 Pro Fold, Pixel 9 Pro XL",
+    "patch": "2025-03-05"
+  },
+  {
+    "build_id": "BP1A.250305.019",
+    "tag": "android-15.0.0_r20",
+    "version": "Android15",
+    "devices": "Pixel 6, Pixel 6 Pro, Pixel 6a, Pixel 7, Pixel 7 Pro, Pixel 7a, Pixel 8, Pixel 8 Pro, Pixel 8a, Pixel Fold",
+    "patch": "2025-03-05"
+  },
+  {
+    "build_id": "AP4A.250205.002.C1",
+    "tag": "android-15.0.0_r17",
+    "version": "Android15",
+    "devices": "Pixel 9, Pixel 9 Pro, Pixel 9 Pro Fold, Pixel 9 Pro XL",
+    "patch": "2025-02-05"
+  },
+  {
+    "build_id": "AP4A.250205.002.B2",
+    "tag": "android-15.0.0_r16",
+    "version": "Android15",
+    "devices": "Pixel 7, Pixel 7 Pro, Pixel 7a, Pixel 8, Pixel 8 Pro, Pixel 8a, Pixel 9, Pixel 9 Pro, Pixel 9 Pro Fold, Pixel 9 Pro XL, Pixel Fold",
+    "patch": "2025-02-05"
+  },
+  {
+    "build_id": "AP4A.250205.002.A1",
+    "tag": "android-15.0.0_r15",
+    "version": "Android15",
+    "devices": "Pixel 6, Pixel 6 Pro, Pixel 6a",
+    "patch": "2025-02-05"
+  },
+  {
+    "build_id": "AP4A.250205.002",
+    "tag": "android-15.0.0_r14",
+    "version": "Android15",
+    "devices": "Pixel 6, Pixel 6 Pro, Pixel 6a, Pixel 7, Pixel 7 Pro, Pixel 7a, Pixel 8, Pixel 8 Pro, Pixel 8a, Pixel 9, Pixel 9 Pro, Pixel 9 Pro Fold, Pixel 9 Pro XL, Pixel Fold, Pixel Tablet",
+    "patch": "2025-02-05"
+  },
+  {
+    "build_id": "AP4A.250105.002.C1",
+    "tag": "android-15.0.0_r13",
+    "version": "Android15",
+    "devices": "Pixel 9, Pixel 9 Pro, Pixel 9 Pro Fold, Pixel 9 Pro XL",
+    "patch": "2025-01-05"
+  },
+  {
+    "build_id": "AP4A.250105.002.B1",
+    "tag": "android-15.0.0_r12",
+    "version": "Android15",
+    "devices": "Pixel 7, Pixel 7a, Pixel 7 Pro, Pixel 8, Pixel 8a, Pixel 8 Pro, Pixel 9, Pixel 9 Pro, Pixel 9 Pro Fold, Pixel 9 Pro XL, Pixel Fold",
+    "patch": "2025-01-05"
+  },
+  {
+    "build_id": "AP4A.250105.002.A1",
+    "tag": "android-15.0.0_r11",
+    "version": "Android15",
+    "devices": "Pixel 6, Pixel 6a, Pixel 6 Pro",
+    "patch": "2025-01-05"
+  },
+  {
+    "build_id": "AP4A.250105.002",
+    "tag": "android-15.0.0_r10",
+    "version": "Android15",
+    "devices": "Pixel 6, Pixel 6a, Pixel 6 Pro, Pixel 7, Pixel 7 a, Pixel 7 Pro, Pixel 8, Pixel 8a, Pixel 8 Pro, Pixel 9, Pixel 9 Pro, Pixel 9 Pro Fold, Pixel 9 Pro XL, Pixel Fold, Pixel Tablet",
+    "patch": "2025-01-05"
+  },
+  {
+    "build_id": "AP4A.241205.013.C1",
+    "tag": "android-15.0.0_r9",
+    "version": "Android15",
+    "devices": "Pixel 7, Pixel 7 Pro, Pixel 7a, Pixel 8, Pixel 8 Pro, Pixel 8a, Pixel 9, Pixel 9 Pro, Pixel 9 Pro Fold, Pixel 9 Pro XL, Pixel Fold",
+    "patch": "2024-12-05"
+  },
+  {
+    "build_id": "AP4A.241205.013.B1",
+    "tag": "android-15.0.0_r8",
+    "version": "Android15",
+    "devices": "Pixel 7, Pixel 7 Pro, Pixel 7a, Pixel 8, Pixel 8 Pro, Pixel 8a, Pixel 9, Pixel 9 Pro, Pixel 9 Pro Fold, Pixel 9 Pro XL, Pixel Fold",
+    "patch": "2024-12-05"
+  },
+  {
+    "build_id": "AP4A.241205.013.A2",
+    "tag": "android-15.0.0_r7",
+    "version": "Android15",
+    "devices": "Pixel 6, Pixel 6 Pro, Pixel 6a",
+    "patch": "2024-12-05"
+  },
+  {
+    "build_id": "AP4A.241205.013",
+    "tag": "android-15.0.0_r6",
+    "version": "Android15",
+    "devices": "Pixel 6, Pixel 6 Pro, Pixel 6a, Pixel 7, Pixel 7 Pro, Pixel 7a, Pixel 8, Pixel 8 Pro, Pixel 8a, Pixel 9, Pixel 9 Pro, Pixel 9 Pro Fold, Pixel 9 Pro XL, Pixel Fold, Pixel Tablet",
+    "patch": "2024-12-05"
+  },
+  {
+    "build_id": "AP3A.241105.008",
+    "tag": "android-15.0.0_r5",
+    "version": "Android15",
+    "devices": "Pixel 9, Pixel 9 Pro, Pixel 9 Pro Fold, Pixel 9 Pro XL",
+    "patch": "2024-11-05"
+  },
+  {
+    "build_id": "AP3A.241105.007",
+    "tag": "android-15.0.0_r4",
+    "version": "Android15",
+    "devices": "Pixel 6, Pixel 6a, Pixel 6 Pro, Pixel 7, Pixel 7a, Pixel 7 Pro, Pixel 8, Pixel 8a, Pixel 8 Pro, Pixel Fold, Pixel Tablet",
+    "patch": "2024-11-05"
+  },
+  {
+    "build_id": "AP3A.241005.015.A2",
+    "tag": "android-15.0.0_r3",
+    "version": "Android15",
+    "devices": "Pixel 6, Pixel 6 Pro, Pixel 6a, Pixel 7, Pixel 7 Pro, Pixel 7a, Pixel 8, Pixel 8 Pro, Pixel 8a, Pixel 9, Pixel 9 Pro, Pixel 9 Pro Fold, Pixel 9 Pro XL, Pixel Fold",
+    "patch": "2024-10-05"
+  },
+  {
+    "build_id": "AP3A.241005.015",
+    "tag": "android-15.0.0_r2",
+    "version": "Android15",
+    "devices": "Pixel 6, Pixel 6 Pro, Pixel 6a, Pixel 7, Pixel 7 Pro, Pixel 7a, Pixel 8, Pixel 8 Pro, Pixel 8a, Pixel 9, Pixel 9 Pro, Pixel 9 Pro Fold, Pixel 9 Pro XL, Pixel Fold, Pixel Tablet",
+    "patch": "2024-10-05"
+  },
+  {
+    "build_id": "AP3A.240905.015.A2",
+    "tag": "android-15.0.0_r1",
+    "version": "Android15",
+    "devices": "",
+    "patch": "2024-09-05"
+  },
+  {
+    "build_id": "AP2A.240805.005.S4",
+    "tag": "android-14.0.0_r75",
+    "version": "Android14",
+    "devices": "Pixel 5a (5G)",
+    "patch": "2024-08-05"
+  },
+  {
+    "build_id": "AD1A.240905.004",
+    "tag": "android-14.0.0_r74",
+    "version": "Android14",
+    "devices": "Pixel 9, Pixel 9 Pro, Pixel 9 Pro Fold, Pixel 9 Pro XL",
+    "patch": "2024-09-05"
+  },
+  {
+    "build_id": "AP2A.240905.003.F1",
+    "tag": "android-14.0.0_r73",
+    "version": "Android14",
+    "devices": "Pixel 6, Pixel 6a, Pixel 6 Pro",
+    "patch": "2024-09-05"
+  },
+  {
+    "build_id": "AP2A.240905.003.E1",
+    "tag": "android-14.0.0_r72",
+    "version": "Android14",
+    "devices": "Pixel 8a",
+    "patch": "2024-09-05"
+  },
+  {
+    "build_id": "AP2A.240905.003.D1",
+    "tag": "android-14.0.0_r71",
+    "version": "Android14",
+    "devices": "Pixel 8, Pixel 8 Pro",
+    "patch": "2024-09-05"
+  },
+  {
+    "build_id": "AP2A.240905.003.C1",
+    "tag": "android-14.0.0_r70",
+    "version": "Android14",
+    "devices": "Pixel 8a",
+    "patch": "2024-09-05"
+  },
+  {
+    "build_id": "AP2A.240905.003.B1",
+    "tag": "android-14.0.0_r69",
+    "version": "Android14",
+    "devices": "Pixel 8, Pixel 8 Pro",
+    "patch": "2024-09-05"
+  },
+  {
+    "build_id": "AP2A.240905.003.A1",
+    "tag": "android-14.0.0_r68",
+    "version": "Android14",
+    "devices": "Pixel 8a",
+    "patch": "2024-09-05"
+  },
+  {
+    "build_id": "AP2A.240905.003",
+    "tag": "android-14.0.0_r67",
+    "version": "Android14",
+    "devices": "Pixel 7, Pixel 7a, Pixel 7 Pro, Pixel 8, Pixel 8 Pro, Pixel Fold, Pixel Tablet",
+    "patch": "2024-09-05"
+  },
+  {
+    "build_id": "AD1A.240530.047",
+    "tag": "android-14.0.0_r66",
+    "version": "Android14",
+    "devices": "Pixel 9, Pixel 9 Pro, Pixel 9 Pro XL, Pixel 9 Pro Fold",
+    "patch": "2024-08-05"
+  },
+  {
+    "build_id": "AD1A.240530.030",
+    "tag": "android-14.0.0_r62",
+    "version": "Android14",
+    "devices": "Pixel 9, Pixel 9 Pro, Pixel 9 Pro XL, Pixel 9 Pro Fold",
+    "patch": "2024-07-05"
+  },
+  {
+    "build_id": "AP2A.240805.005",
+    "tag": "android-14.0.0_r55",
+    "version": "Android14",
+    "devices": "Pixel 5a (5G), Pixel 7, Pixel 7 Pro, Pixel 7a, Pixel 8, Pixel 8 Pro, Pixel Fold, Pixel Tablet",
+    "patch": "2024-08-05"
+  },
+  {
+    "build_id": "AP2A.240705.005",
+    "tag": "android-14.0.0_r53",
+    "version": "Android14",
+    "devices": "Pixel 8, Pixel 8a, Pixel 8 Pro",
+    "patch": "2024-07-05"
+  },
+  {
+    "build_id": "AP2A.240605.024",
+    "tag": "android-14.0.0_r50",
+    "version": "Android14",
+    "devices": "Pixel 5a (5G), Pixel 6, Pixel 6 Pro, Pixel 6a, Pixel 7, Pixel 7 Pro, Pixel 7a, Pixel Tablet, Pixel Fold, Pixel 8, Pixel 8 Pro, Pixel 8a",
+    "patch": "2024-06-05"
+  },
+  {
+    "build_id": "UD2A.240505.001",
+    "tag": "android-14.0.0_r41",
+    "version": "Android14",
+    "devices": "Pixel 8a",
+    "patch": "2024-05-05"
+  },
+  {
+    "build_id": "AP1A.240505.005",
+    "tag": "android-14.0.0_r35",
+    "version": "Android14",
+    "devices": "Pixel 7, Pixel 7a, Pixel 7 Pro, Pixel 8, Pixel 8 Pro, Pixel Fold",
+    "patch": "2024-05-05"
+  },
+  {
+    "build_id": "AP1A.240505.004",
+    "tag": "android-14.0.0_r34",
+    "version": "Android14",
+    "devices": "Pixel 5a (5G), Pixel 6, Pixel 6a, Pixel 6 Pro, Pixel 7, Pixel 7a, Pixel 7 Pro, Pixel 8, Pixel 8 Pro, Pixel Fold, Pixel Tablet",
+    "patch": "2024-05-05"
+  },
+  {
+    "build_id": "AP1A.240405.002",
+    "tag": "android-14.0.0_r30",
+    "version": "Android14",
+    "devices": "Pixel 5a (5G), Pixel 6, Pixel 6a, Pixel 6 Pro, Pixel 7, Pixel 7a, Pixel 7 Pro, Pixel 8, Pixel 8 Pro, Pixel Tablet",
+    "patch": "2024-04-05"
+  },
+  {
+    "build_id": "AP1A.240305.019.A1",
+    "tag": "android-14.0.0_r29",
+    "version": "Android14",
+    "devices": "Pixel 5a (5G), Pixel 6, Pixel 6a, Pixel 6 Pro, Pixel 7, Pixel 7a, Pixel 7 Pro, Pixel 8, Pixel 8 Pro, Pixel Fold, Pixel Tablet",
+    "patch": "2024-03-05"
+  },
+  {
+    "build_id": "UQ1A.240205.004",
+    "tag": "android-14.0.0_r25",
+    "version": "Android14",
+    "devices": "Pixel 8, Pixel 8 Pro",
+    "patch": "2024-02-05"
+  },
+  {
+    "build_id": "UQ1A.240105.004",
+    "tag": "android-14.0.0_r20",
+    "version": "Android14",
+    "devices": "Pixel 7, Pixel 7a, Pixel 7 Pro, Pixel 8, Pixel 8 Pro, Pixel Fold",
+    "patch": "2024-01-05"
+  },
+  {
+    "build_id": "UQ1A.231205.015",
+    "tag": "android-14.0.0_r17",
+    "version": "Android14",
+    "devices": "Pixel 6, Pixel 6 Pro, Pixel 6a, Pixel 7, Pixel 7 Pro, Pixel 7a, Pixel 8, Pixel 8 Pro, Pixel Fold, Pixel Tablet",
+    "patch": "2023-12-05"
+  },
+  {
+    "build_id": "UP1A.231105.003",
+    "tag": "android-14.0.0_r14",
+    "version": "Android14",
+    "devices": "Pixel 6, Pixel 6a, Pixel 6 Pro, Pixel 7, Pixel 7a, Pixel 7 Pro, Pixel Fold, Pixel Tablet",
+    "patch": "2023-11-01"
+  },
+  {
+    "build_id": "UD1A.231105.004",
+    "tag": "android-14.0.0_r12",
+    "version": "Android14",
+    "devices": "Pixel 8, Pixel 8 Pro",
+    "patch": "2023-11-05"
+  },
+  {
+    "build_id": "UD1A.230803.022",
+    "tag": "android-14.0.0_r3",
+    "version": "Android14",
+    "devices": "Pixel 8 Pro",
+    "patch": "2023-09-05"
+  },
+  {
+    "build_id": "UP1A.231005.007",
+    "tag": "android-14.0.0_r1",
+    "version": "Android14",
+    "devices": "Pixel 4a (5G), Pixel 5, Pixel 5a (5G), Pixel 6, Pixel 6 Pro, Pixel 6a, Pixel 7, Pixel 7 Pro, Pixel 7a, Pixel Fold, Pixel Tablet",
+    "patch": "2023-10-05"
+  },
+  {
+    "build_id": "TQ3A.230901.001",
+    "tag": "android-13.0.0_r67",
+    "version": "Android13",
+    "devices": "Pixel 4a (5G), Pixel 4a, Pixel 5, Pixel 5a (5G), Pixel 6 Pro, Pixel 6, Pixel 6a, Pixel 7 Pro, Pixel 7, Pixel 7a",
+    "patch": "2023-09-01"
+  },
+  {
+    "build_id": "TQ3A.230805.001",
+    "tag": "android-13.0.0_r67",
+    "version": "Android13",
+    "devices": "Pixel 4a (5G), Pixel 4a, Pixel 5, Pixel 5a (5G), Pixel 6 Pro, Pixel 6, Pixel 6a, Pixel 7 Pro, Pixel 7, Pixel 7a",
+    "patch": "2023-08-05"
+  }
+]

@@ -1,11 +1,12 @@
-package com.sameerasw.pixsl.utils
-
 import android.app.ActivityManager
 import android.content.Context
 import android.os.Build
 import android.os.Environment
 import android.os.StatFs
 import android.provider.Settings
+import org.json.JSONArray
+import java.io.InputStream
+import java.nio.charset.Charset
 
 data class DeviceInfo(
     val deviceName: String,
@@ -25,7 +26,9 @@ data class DeviceInfo(
     val totalRam: Long,
     val availableRam: Long,
     val securityPatch: String = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) Build.VERSION.SECURITY_PATCH else "Unknown",
-    val osCodename: String = Build.VERSION.CODENAME
+    val osCodename: String = Build.VERSION.CODENAME,
+    val buildTag: String = "",
+    val supportedDevices: String = ""
 )
 
 object DeviceUtils {
@@ -47,15 +50,82 @@ object DeviceUtils {
         val memoryInfo = ActivityManager.MemoryInfo()
         activityManager.getMemoryInfo(memoryInfo)
 
+        val buildId = Build.DISPLAY
+        val buildInfo = findBuildInfo(context, buildId) ?: getBetaDetailsFromPrefix(buildId)
+
+        val deviceSecurityPatch = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) Build.VERSION.SECURITY_PATCH else "Unknown"
+        val deviceOsCodename = Build.VERSION.CODENAME
+        val matchedVersion = buildInfo?.optString("version")
+
+        val androidVersion = matchedVersion?.let {
+            if (it.startsWith("Android ")) {
+                val v = it.removePrefix("Android ").substringBefore(" ")
+                if (v.firstOrNull()?.isDigit() == true) v else null
+            } else null
+        } ?: Build.VERSION.RELEASE
+
         return DeviceInfo(
             deviceName = deviceName,
             totalStorage = totalStorage,
             availableStorage = availableStorage,
             totalRam = memoryInfo.totalMem,
             availableRam = memoryInfo.availMem,
-            securityPatch = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) Build.VERSION.SECURITY_PATCH else "Unknown",
-            osCodename = Build.VERSION.CODENAME
+            androidVersion = androidVersion,
+            securityPatch = buildInfo?.optString("patch")?.takeIf { it.isNotBlank() } ?: deviceSecurityPatch,
+            osCodename = matchedVersion?.takeIf { it.isNotBlank() } ?: deviceOsCodename,
+            buildTag = buildInfo?.optString("tag") ?: "",
+            supportedDevices = buildInfo?.optString("devices") ?: ""
         )
+    }
+
+    private fun getBetaDetailsFromPrefix(buildId: String): org.json.JSONObject? {
+        val build = buildId.uppercase()
+        val details = org.json.JSONObject()
+        return when {
+            build.startsWith("UPB") || build.startsWith("U1B") -> {
+                details.put("version", "Android 15 Beta")
+                details.put("tag", "Beta Prefix")
+                details
+            }
+            build.startsWith("AP11") || build.startsWith("AP21") || build.startsWith("AP31") -> {
+                details.put("version", "Android 16 Beta")
+                details.put("tag", "Beta Prefix")
+                details
+            }
+            build.startsWith("BP") -> {
+                // Check if it's likely a QPR beta based on the request (BPxx)
+                details.put("version", "Android 16 QPR Beta")
+                details.put("tag", "Platform/QPR Beta")
+                details
+            }
+            build.startsWith("CP") -> {
+                details.put("version", "Android 17 Beta")
+                details.put("tag", "Developer Beta")
+                details
+            }
+            build.startsWith("ZP") -> {
+                details.put("version", "Android Canary")
+                details.put("tag", "Canary Build")
+                details
+            }
+            else -> null
+        }
+    }
+
+    private fun findBuildInfo(context: Context, buildId: String): org.json.JSONObject? {
+        return try {
+            val jsonString = context.assets.open("android_builds.json").bufferedReader().use { it.readText() }
+            val jsonArray = JSONArray(jsonString)
+            for (i in 0 until jsonArray.length()) {
+                val obj = jsonArray.getJSONObject(i)
+                if (obj.getString("build_id").equals(buildId, ignoreCase = true)) {
+                    return obj
+                }
+            }
+            null
+        } catch (e: Exception) {
+            null
+        }
     }
 
     fun formatSize(size: Long): String {
@@ -70,7 +140,12 @@ object DeviceUtils {
     }
 
     fun getOSName(sdkInt: Int, defaultCodename: String): String {
-        return when (sdkInt) {
+        // Try to determine by version string first (most accurate for betas)
+        val name = defaultCodename.lowercase()
+        if (name.contains("17") || name.contains("cinnamon")) return "CinnamonBun"
+        if (name.contains("16") || name.contains("baklava")) return "Baklava"
+
+        val dessert = when (sdkInt) {
             37 -> "CinnamonBun"
             36 -> "Baklava"
             35 -> "Vanilla Ice Cream"
@@ -83,8 +158,17 @@ object DeviceUtils {
             28 -> "Pie"
             27 -> "Oreo"
             26 -> "Oreo"
-            else -> defaultCodename.takeIf { it != "REL" } ?: "Android"
+            else -> null
         }
+
+        if (dessert != null) return dessert
+
+        // If SDK mapping fails, try to use the provided codename
+        if (defaultCodename.contains("Beta") || defaultCodename.contains("Canary") || defaultCodename.contains("QPR")) {
+             return defaultCodename
+        }
+
+        return defaultCodename.takeIf { it != "REL" } ?: "Android"
     }
 
     fun formatHardwareSize(sizeBytes: Long): String {

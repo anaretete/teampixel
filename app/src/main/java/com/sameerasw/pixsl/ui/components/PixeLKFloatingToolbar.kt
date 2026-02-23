@@ -1,5 +1,6 @@
 package com.sameerasw.pixsl.ui.components
 
+import DeviceInfo
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.animateFloatAsState
@@ -64,7 +65,7 @@ fun PixeLKFloatingToolbar(
     avatarUrl: String? = null,
     isExpert: Boolean = false,
     username: String? = null,
-    deviceInfo: com.sameerasw.pixsl.utils.DeviceInfo? = null,
+    deviceInfo: DeviceInfo? = null,
     onProfileClick: () -> Unit = {}
 ) {
     val expanded = true
@@ -245,7 +246,7 @@ private fun ToolbarItem(
     isSelected: Boolean,
     hasBadge: Boolean,
     isHomeTab: Boolean = false,
-    deviceInfo: com.sameerasw.pixsl.utils.DeviceInfo? = null,
+    deviceInfo: DeviceInfo? = null,
     modifier: Modifier = Modifier
 ) {
     Row(
@@ -265,7 +266,7 @@ private fun ToolbarItem(
             if (isHomeTab && deviceInfo != null) {
                 Icon(
                     painter = androidx.compose.ui.res.painterResource(
-                        id = com.sameerasw.pixsl.utils.DeviceImageMapper.getDeviceDrawable(
+                        id = DeviceImageMapper.getDeviceDrawable(
                             deviceInfo.model
                         )
                     ),
