@@ -1,6 +1,8 @@
 package com.sameerasw.pixsl.ui.components.home
 
+import DeviceImageMapper
 import DeviceInfo
+import DeviceUtils
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -11,9 +13,11 @@ import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.pager.HorizontalPager
+import androidx.compose.foundation.pager.rememberPagerState
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -29,9 +33,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.pager.HorizontalPager
-import androidx.compose.foundation.pager.rememberPagerState
 import coil.compose.AsyncImage
 import com.sameerasw.pixsl.R
 import com.sameerasw.pixsl.data.model.DeviceSpecs
@@ -80,7 +81,11 @@ fun DeviceHeroCard(
                     if (page == 0) {
                         // stylized vector
                         Icon(
-                            painter = painterResource(id = DeviceImageMapper.getDeviceDrawable(deviceInfo.model)),
+                            painter = painterResource(
+                                id = DeviceImageMapper.getDeviceDrawable(
+                                    deviceInfo.model
+                                )
+                            ),
                             contentDescription = null,
                             tint = MaterialTheme.colorScheme.primary,
                             modifier = Modifier
@@ -112,9 +117,9 @@ fun DeviceHeroCard(
                     horizontalArrangement = Arrangement.spacedBy(8.dp)
                 ) {
                     repeat(pageCount) { iteration ->
-                        val color = if (pagerState.currentPage == iteration) 
-                            MaterialTheme.colorScheme.primary 
-                        else 
+                        val color = if (pagerState.currentPage == iteration)
+                            MaterialTheme.colorScheme.primary
+                        else
                             MaterialTheme.colorScheme.primary.copy(alpha = 0.2f)
                         Box(
                             modifier = Modifier
@@ -192,14 +197,19 @@ fun DeviceHeroCard(
                 Column(horizontalAlignment = Alignment.Start) {
                     Row(verticalAlignment = Alignment.CenterVertically) {
                         Text(
-                            text = "Android ${deviceInfo.androidVersion} (${DeviceUtils.getOSName(deviceInfo.sdkInt, deviceInfo.osCodename)})",
+                            text = "Android ${deviceInfo.androidVersion} (${
+                                DeviceUtils.getOSName(
+                                    deviceInfo.sdkInt,
+                                    deviceInfo.osCodename
+                                )
+                            })",
                             style = MaterialTheme.typography.bodyLarge,
                             fontWeight = FontWeight.Bold,
                             color = MaterialTheme.colorScheme.primary
                         )
                         val isBeta = deviceInfo.buildTag.lowercase().contains("beta")
                         val isCanary = deviceInfo.buildTag.lowercase().contains("canary")
-                        
+
                         if (isBeta || isCanary) {
                             Spacer(modifier = Modifier.size(8.dp))
                             Box(
@@ -220,7 +230,11 @@ fun DeviceHeroCard(
                         }
                     }
                     Text(
-                        text = "API ${deviceInfo.sdkInt} • Patch: ${DeviceUtils.formatSecurityPatch(deviceInfo.securityPatch)}",
+                        text = "API ${deviceInfo.sdkInt} • Patch: ${
+                            DeviceUtils.formatSecurityPatch(
+                                deviceInfo.securityPatch
+                            )
+                        }",
                         style = MaterialTheme.typography.labelMedium,
                         fontWeight = FontWeight.Medium,
                         color = MaterialTheme.colorScheme.onSurfaceVariant
@@ -276,7 +290,7 @@ fun DeviceHeroCard(
                         )
                     }
                 }
-                
+
                 // Memory Section
                 Row(
                     verticalAlignment = Alignment.CenterVertically,

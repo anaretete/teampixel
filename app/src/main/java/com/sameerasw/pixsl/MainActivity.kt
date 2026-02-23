@@ -1,5 +1,6 @@
 package com.sameerasw.pixsl
 
+import DeviceUtils
 import android.animation.ObjectAnimator
 import android.os.Bundle
 import android.util.Log

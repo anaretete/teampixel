@@ -1,5 +1,6 @@
 package com.sameerasw.pixsl.ui.components
 
+import DeviceImageMapper
 import DeviceInfo
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.Spring

@@ -5,8 +5,6 @@ import android.os.Environment
 import android.os.StatFs
 import android.provider.Settings
 import org.json.JSONArray
-import java.io.InputStream
-import java.nio.charset.Charset
 
 data class DeviceInfo(
     val deviceName: String,
@@ -53,7 +51,8 @@ object DeviceUtils {
         val buildId = Build.DISPLAY
         val buildInfo = findBuildInfo(context, buildId) ?: getBetaDetailsFromPrefix(buildId)
 
-        val deviceSecurityPatch = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) Build.VERSION.SECURITY_PATCH else "Unknown"
+        val deviceSecurityPatch =
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) Build.VERSION.SECURITY_PATCH else "Unknown"
         val deviceOsCodename = Build.VERSION.CODENAME
         val matchedVersion = buildInfo?.optString("version")
 
@@ -71,7 +70,8 @@ object DeviceUtils {
             totalRam = memoryInfo.totalMem,
             availableRam = memoryInfo.availMem,
             androidVersion = androidVersion,
-            securityPatch = buildInfo?.optString("patch")?.takeIf { it.isNotBlank() } ?: deviceSecurityPatch,
+            securityPatch = buildInfo?.optString("patch")?.takeIf { it.isNotBlank() }
+                ?: deviceSecurityPatch,
             osCodename = matchedVersion?.takeIf { it.isNotBlank() } ?: deviceOsCodename,
             buildTag = buildInfo?.optString("tag") ?: "",
             supportedDevices = buildInfo?.optString("devices") ?: ""
@@ -87,34 +87,40 @@ object DeviceUtils {
                 details.put("tag", "Beta Prefix")
                 details
             }
+
             build.startsWith("AP11") || build.startsWith("AP21") || build.startsWith("AP31") -> {
                 details.put("version", "Android 16 Beta")
                 details.put("tag", "Beta Prefix")
                 details
             }
+
             build.startsWith("BP") -> {
                 // Check if it's likely a QPR beta based on the request (BPxx)
                 details.put("version", "Android 16 QPR Beta")
                 details.put("tag", "Platform/QPR Beta")
                 details
             }
+
             build.startsWith("CP") -> {
                 details.put("version", "Android 17 Beta")
                 details.put("tag", "Developer Beta")
                 details
             }
+
             build.startsWith("ZP") -> {
                 details.put("version", "Android Canary")
                 details.put("tag", "Canary Build")
                 details
             }
+
             else -> null
         }
     }
 
     private fun findBuildInfo(context: Context, buildId: String): org.json.JSONObject? {
         return try {
-            val jsonString = context.assets.open("android_builds.json").bufferedReader().use { it.readText() }
+            val jsonString =
+                context.assets.open("android_builds.json").bufferedReader().use { it.readText() }
             val jsonArray = JSONArray(jsonString)
             for (i in 0 until jsonArray.length()) {
                 val obj = jsonArray.getJSONObject(i)
@@ -164,8 +170,11 @@ object DeviceUtils {
         if (dessert != null) return dessert
 
         // If SDK mapping fails, try to use the provided codename
-        if (defaultCodename.contains("Beta") || defaultCodename.contains("Canary") || defaultCodename.contains("QPR")) {
-             return defaultCodename
+        if (defaultCodename.contains("Beta") || defaultCodename.contains("Canary") || defaultCodename.contains(
+                "QPR"
+            )
+        ) {
+            return defaultCodename
         }
 
         return defaultCodename.takeIf { it != "REL" } ?: "Android"
@@ -174,13 +183,14 @@ object DeviceUtils {
     fun formatHardwareSize(sizeBytes: Long): String {
         if (sizeBytes <= 0) return "Unknown"
         val rawGb = sizeBytes / (1024.0 * 1024.0 * 1024.0)
-        
+
         // Known standard hardware sizes in GB
-        val standardSizes = listOf(1, 2, 3, 4, 6, 8, 10, 12, 16, 18, 24, 32, 64, 128, 256, 512, 1024, 2048)
-        
+        val standardSizes =
+            listOf(1, 2, 3, 4, 6, 8, 10, 12, 16, 18, 24, 32, 64, 128, 256, 512, 1024, 2048)
+
         // Find the closest standard size that is greater than or equal to our raw GB (allowing a 10% delta for OS reservations)
         val roundedGb = standardSizes.firstOrNull { it >= rawGb * 0.9 } ?: Math.ceil(rawGb).toInt()
-        
+
         return if (roundedGb >= 1024 && roundedGb % 1024 == 0) {
             "${roundedGb / 1024} TB"
         } else {
@@ -192,7 +202,8 @@ object DeviceUtils {
         if (patchString == "Unknown" || patchString.isBlank()) return patchString
         return try {
             val parser = java.text.SimpleDateFormat("yyyy-MM-dd", java.util.Locale.getDefault())
-            val formatter = java.text.SimpleDateFormat("d MMMM, yyyy", java.util.Locale.getDefault())
+            val formatter =
+                java.text.SimpleDateFormat("d MMMM, yyyy", java.util.Locale.getDefault())
             val date = parser.parse(patchString)
             if (date != null) formatter.format(date) else patchString
         } catch (e: Exception) {

@@ -78,7 +78,8 @@ fun ProfileMenuSheet(
                 Spacer(modifier = Modifier.width(16.dp))
                 Column {
                     Text(
-                        text = signedInState?.profile?.username ?: stringResource(R.string.label_guest),
+                        text = signedInState?.profile?.username
+                            ?: stringResource(R.string.label_guest),
                         style = MaterialTheme.typography.titleLarge,
                         fontWeight = FontWeight.Bold
                     )
@@ -106,7 +107,7 @@ fun ProfileMenuSheet(
                             onDismissRequest()
                         }
                     )
-    
+
                     ProfileMenuItem(
                         icon = Icons.AutoMirrored.Filled.ExitToApp,
                         label = stringResource(R.string.action_sign_out),

@@ -1,4 +1,3 @@
-import DeviceInfo
 import com.sameerasw.pixsl.R
 
 object DeviceImageMapper {
@@ -44,7 +43,7 @@ object DeviceImageMapper {
     fun getAndroidLogo(deviceInfo: DeviceInfo): Int {
         val osName = deviceInfo.osCodename.lowercase()
         val sdk = deviceInfo.sdkInt
-        
+
         return when {
             osName.contains("android 17") || osName.contains("cinnamonbun") || sdk >= 37 -> R.drawable.android17
             osName.contains("android 16") || osName.contains("baklava") || sdk >= 36 -> R.drawable.android16

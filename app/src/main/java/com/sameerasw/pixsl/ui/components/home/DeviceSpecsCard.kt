@@ -52,10 +52,10 @@ fun DeviceSpecsCard(
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
-            .background(
-                MaterialTheme.colorScheme.surfaceContainerHighest,
-                shape = Shapes.extraSmall
-            )
+                    .background(
+                        MaterialTheme.colorScheme.surfaceContainerHighest,
+                        shape = Shapes.extraSmall
+                    )
                     .padding(32.dp),
                 contentAlignment = androidx.compose.ui.Alignment.Center
             ) {
