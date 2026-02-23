@@ -5,18 +5,24 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.russhwolf.settings.Settings
 import com.sameerasw.pixsl.data.model.AuthState
+import com.sameerasw.pixsl.data.model.DeviceSpecs
 import com.sameerasw.pixsl.data.model.Profile
 import com.sameerasw.pixsl.data.supabase
+import com.sameerasw.pixsl.utils.GSMArenaService
 import com.sameerasw.pixsl.utils.NostrCrypto
 import io.github.jan.supabase.auth.auth
 import io.github.jan.supabase.auth.status.SessionStatus
 import io.github.jan.supabase.compose.auth.composable.NativeSignInResult
 import io.github.jan.supabase.postgrest.from
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import kotlinx.serialization.encodeToString
+import kotlinx.serialization.json.Json
 
 class MainViewModel : ViewModel() {
 
@@ -27,6 +33,12 @@ class MainViewModel : ViewModel() {
 
     private val _authState = MutableStateFlow<AuthState>(AuthState.Loading)
     val authState: StateFlow<AuthState> = _authState.asStateFlow()
+
+    private val _deviceSpecs = MutableStateFlow<DeviceSpecs?>(null)
+    val deviceSpecs: StateFlow<DeviceSpecs?> = _deviceSpecs.asStateFlow()
+
+    private val _isSpecsLoading = MutableStateFlow(false)
+    val isSpecsLoading: StateFlow<Boolean> = _isSpecsLoading.asStateFlow()
 
     var hasRunStartupAnimation = false
 
@@ -176,6 +188,31 @@ class MainViewModel : ViewModel() {
                 .decodeSingleOrNull<Profile>()
         } catch (e: Exception) {
             null
+        }
+    }
+
+    fun loadDeviceSpecs(context: Context) {
+        val cachedSpecsJson = settings.getStringOrNull("cached_device_specs")
+        if (cachedSpecsJson != null) {
+            try {
+                _deviceSpecs.value = Json.decodeFromString<DeviceSpecs>(cachedSpecsJson)
+                return
+            } catch (e: Exception) {
+                settings.remove("cached_device_specs")
+            }
+        }
+
+        viewModelScope.launch {
+            _isSpecsLoading.value = true
+            val deviceInfo = DeviceUtils.getDeviceInfo(context)
+            val specs = withContext(Dispatchers.IO) {
+                GSMArenaService.fetchSpecs(deviceInfo.brand, deviceInfo.model)
+            }
+            if (specs != null) {
+                _deviceSpecs.value = specs
+                settings.putString("cached_device_specs", Json.encodeToString(specs))
+            }
+            _isSpecsLoading.value = false
         }
     }
 }

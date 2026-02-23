@@ -1,6 +1,8 @@
 package com.sameerasw.pixsl.ui.components.home
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -12,13 +14,17 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.sameerasw.pixsl.ui.components.containers.RoundedCardContainer
 import com.sameerasw.pixsl.ui.theme.Shapes
+import com.sameerasw.pixsl.ui.theme.shimmer
 
 @Composable
 fun DeviceSpecsCard(
+    deviceSpecs: com.sameerasw.pixsl.data.model.DeviceSpecs?,
+    isLoading: Boolean,
     modifier: Modifier = Modifier
 ) {
     RoundedCardContainer(
@@ -27,63 +33,82 @@ fun DeviceSpecsCard(
         // Section Header
         SpecHeader("Device Specifications")
 
-        // Network
-        SpecSection(
-            title = "Network",
-            specs = listOf(
-                "Technology" to "GSM / HSPA / LTE / 5G",
-                "Speed" to "HSPA, LTE, 5G"
+        if (isLoading) {
+            repeat(5) {
+                LoadingSpecSection()
+            }
+        } else if (deviceSpecs != null) {
+            deviceSpecs.detailSpec.forEach { category ->
+                SpecSection(
+                    title = category.category,
+                    specs = category.specifications.map { it.name to it.value }
+                )
+            }
+
+            SpecFooter()
+
+        } else {
+            // Fallback or empty state
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(32.dp),
+                contentAlignment = androidx.compose.ui.Alignment.Center
+            ) {
+                Text(
+                    text = "Specifications unavailable",
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                )
+            }
+        }
+    }
+}
+
+@Composable
+private fun LoadingSpecSection() {
+    Column(
+        modifier = Modifier
+            .background(
+                MaterialTheme.colorScheme.surfaceContainerHighest,
+                shape = Shapes.extraSmall
             )
+            .fillMaxWidth()
+            .padding(16.dp)
+    ) {
+        Box(
+            modifier = Modifier
+                .width(100.dp)
+                .height(16.dp)
+                .clip(Shapes.extraSmall)
+                .shimmer()
         )
 
-        // Display
-        SpecSection(
-            title = "Display",
-            specs = listOf(
-                "Type" to "LTPO OLED, 120Hz, HDR10+, 2000 nits",
-                "Size" to "6.7 inches, 110.6 cm²",
-                "Resolution" to "1344 x 2992 pixels, 20:9 ratio"
-            )
-        )
+        Spacer(modifier = Modifier.height(12.dp))
 
-        // Platform
-        SpecSection(
-            title = "Platform",
-            specs = listOf(
-                "OS" to "Android 15",
-                "Chipset" to "Google Tensor G4 (4 nm)",
-                "CPU" to "Octa-core",
-                "GPU" to "Mali-G715 MC7"
-            )
-        )
-
-        // Memory
-        SpecSection(
-            title = "Memory",
-            specs = listOf(
-                "Internal" to "128GB 12GB RAM, 256GB 12GB RAM, 512GB 12GB RAM",
-                "Card slot" to "No"
-            )
-        )
-
-        // Main Camera
-        SpecSection(
-            title = "Main Camera",
-            specs = listOf(
-                "Triple" to "50 MP, f/1.7, 25mm (wide)\n48 MP, f/2.8, 113mm (telephoto)\n48 MP, f/2.2, 123˚ (ultrawide)",
-                "Features" to "Dual-LED flash, Pixel Shift, Ultra-HDR, panorama",
-                "Video" to "4K@30/60fps, 1080p@24/30/60/120/240fps"
-            )
-        )
-
-        // Battery
-        SpecSection(
-            title = "Battery",
-            specs = listOf(
-                "Type" to "Li-Ion 5060 mAh, non-removable",
-                "Charging" to "30W wired, PD3.0, 50% in 30 min"
-            )
-        )
+        repeat(3) {
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(vertical = 4.dp)
+            ) {
+                Box(
+                    modifier = Modifier
+                        .width(80.dp)
+                        .height(12.dp)
+                        .clip(Shapes.extraSmall)
+                        .shimmer()
+                )
+                Spacer(modifier = Modifier.width(16.dp))
+                Box(
+                    modifier = Modifier
+                        .weight(1f)
+                        .height(12.dp)
+                        .clip(Shapes.extraSmall)
+                        .shimmer()
+                )
+            }
+        }
     }
 }
 
@@ -103,6 +128,41 @@ private fun SpecHeader(title: String) {
             style = MaterialTheme.typography.titleMedium,
             fontWeight = FontWeight.Bold,
             color = MaterialTheme.colorScheme.primary
+        )
+    }
+}
+
+
+@Composable
+private fun SpecFooter() {
+    Row(
+        modifier = Modifier
+            .background(
+                MaterialTheme.colorScheme.surfaceContainerHighest,
+                shape = Shapes.extraSmall
+            )
+            .fillMaxWidth()
+            .padding(16.dp),
+    ) {
+        Text(
+            text = "Powered by",
+            style = MaterialTheme.typography.titleMedium,
+            fontWeight = FontWeight.Bold,
+            color = MaterialTheme.colorScheme.primary
+        )
+
+        val uriHandler = androidx.compose.ui.platform.LocalUriHandler.current
+        Text(
+            text = "GSMArena.com",
+            style = MaterialTheme.typography.titleMedium.copy(
+                color = MaterialTheme.colorScheme.primary,
+                textDecoration = androidx.compose.ui.text.style.TextDecoration.Underline
+            ),
+            modifier = Modifier
+                .padding(start = 8.dp)
+                .clickable {
+                    uriHandler.openUri("https://www.gsmarena.com")
+                }
         )
     }
 }

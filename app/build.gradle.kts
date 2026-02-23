@@ -123,6 +123,9 @@ dependencies {
     // Material Icons Extended for UI icons
     implementation("androidx.compose.material:material-icons-extended:1.7.0")
 
+    // JSoup for HTML scraping
+    implementation("org.jsoup:jsoup:1.17.2")
+
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)

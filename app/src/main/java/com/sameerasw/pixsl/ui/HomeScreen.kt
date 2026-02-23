@@ -42,6 +42,8 @@ import kotlinx.coroutines.delay
 fun HomeScreen(
     authState: AuthState,
     deviceInfo: DeviceInfo,
+    deviceSpecs: com.sameerasw.pixsl.data.model.DeviceSpecs?,
+    isSpecsLoading: Boolean,
     hasRunStartupAnimation: Boolean,
     onAnimationRun: () -> Unit,
     onSignInClick: () -> Unit,
@@ -107,6 +109,8 @@ fun HomeScreen(
         )
 
         DeviceSpecsCard(
+            deviceSpecs = deviceSpecs,
+            isLoading = isSpecsLoading,
             modifier = Modifier.graphicsLayer {
                 alpha = contentAlpha
                 translationY = contentOffset.toPx()
@@ -167,6 +171,8 @@ fun HomeScreenPreview() {
                 osCodename = "Vanilla Ice Cream",
                 securityPatch = "2024-05-05"
             ),
+            deviceSpecs = null,
+            isSpecsLoading = false,
             hasRunStartupAnimation = true,
             onAnimationRun = {},
             onSignInClick = {}

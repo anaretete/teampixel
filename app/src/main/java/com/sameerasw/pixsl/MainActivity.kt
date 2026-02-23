@@ -121,6 +121,8 @@ class MainActivity : ComponentActivity() {
 
             PixeLKTheme(pitchBlackTheme = pitchBlackTheme) {
                 val authState by viewModel.authState.collectAsState()
+                val deviceSpecs by viewModel.deviceSpecs.collectAsState()
+                val isSpecsLoading by viewModel.isSpecsLoading.collectAsState()
                 val tabs = PixeLKTabs.entries
                 val pagerState = rememberPagerState(pageCount = { tabs.size })
                 val view = LocalView.current
@@ -150,6 +152,7 @@ class MainActivity : ComponentActivity() {
                 ) { innerPadding ->
                     androidx.compose.runtime.LaunchedEffect(Unit) {
                         isAppReady = true
+                        viewModel.loadDeviceSpecs(context)
                     }
 
                     Box(modifier = Modifier.fillMaxSize()) {
@@ -210,6 +213,8 @@ class MainActivity : ComponentActivity() {
                                     HomeScreen(
                                         authState = authState,
                                         deviceInfo = deviceInfo,
+                                        deviceSpecs = deviceSpecs,
+                                        isSpecsLoading = isSpecsLoading,
                                         hasRunStartupAnimation = viewModel.hasRunStartupAnimation,
                                         onAnimationRun = {
                                             viewModel.hasRunStartupAnimation = true
