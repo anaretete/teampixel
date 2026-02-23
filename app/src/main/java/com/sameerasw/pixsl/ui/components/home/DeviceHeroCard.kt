@@ -34,9 +34,9 @@ import com.sameerasw.pixsl.ui.theme.Shapes
 @Composable
 fun DeviceHeroCard(
     deviceInfo: DeviceInfo,
-    imageOffset: Dp = 0.dp,
-    contentAlpha: Float = 1f,
-    contentOffset: Dp = 0.dp,
+    imageOffset: () -> Dp = { 0.dp },
+    contentAlpha: () -> Float = { 1f },
+    contentOffset: () -> Dp = { 0.dp },
     modifier: Modifier = Modifier
 ) {
     Column(
@@ -47,7 +47,9 @@ fun DeviceHeroCard(
     ) {
         Box(
             modifier = Modifier
-                .offset(y = imageOffset)
+                .graphicsLayer {
+                    translationY = imageOffset().toPx()
+                }
                 .fillMaxWidth()
                 .height(480.dp)
                 .clip(MaterialTheme.shapes.medium),
@@ -69,8 +71,8 @@ fun DeviceHeroCard(
         Text(
             text = deviceInfo.deviceName,
             modifier = Modifier.graphicsLayer {
-                alpha = contentAlpha
-                translationY = contentOffset.toPx()
+                alpha = contentAlpha()
+                translationY = contentOffset().toPx()
             },
             style = MaterialTheme.typography.headlineMedium.copy(
                 fontFamily = com.sameerasw.pixsl.ui.theme.GoogleSansFlexRounded
@@ -83,8 +85,8 @@ fun DeviceHeroCard(
         Text(
             text = "${deviceInfo.manufacturer.replaceFirstChar { it.uppercase() }} ${deviceInfo.model} (${deviceInfo.hardware})",
             modifier = Modifier.graphicsLayer {
-                alpha = contentAlpha
-                translationY = contentOffset.toPx()
+                alpha = contentAlpha()
+                translationY = contentOffset().toPx()
             },
             style = MaterialTheme.typography.titleMedium,
             color = MaterialTheme.colorScheme.onSurfaceVariant
@@ -98,8 +100,8 @@ fun DeviceHeroCard(
         modifier = modifier
             .fillMaxWidth()
             .graphicsLayer {
-                alpha = contentAlpha
-                translationY = contentOffset.toPx()
+                alpha = contentAlpha()
+                translationY = contentOffset().toPx()
             },
     ) {
 

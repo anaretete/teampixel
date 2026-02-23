@@ -6,13 +6,14 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.composed
+import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 
 fun Modifier.shimmer(): Modifier = composed {
     val transition = rememberInfiniteTransition(label = "shimmer")
-    val translateAnim by transition.animateFloat(
+    val translateAnim = transition.animateFloat(
         initialValue = 0f,
         targetValue = 1000f,
         animationSpec = infiniteRepeatable(
@@ -25,17 +26,26 @@ fun Modifier.shimmer(): Modifier = composed {
         label = "shimmer_translate"
     )
 
-    val shimmerColors = listOf(
-        MaterialTheme.colorScheme.surfaceContainerHighest,
-        MaterialTheme.colorScheme.surfaceContainerHigh,
-        MaterialTheme.colorScheme.surfaceContainerHighest,
-    )
+    val shimmerColors = remember {
+        listOf(
+            Color.Unspecified,
+            Color.Unspecified,
+            Color.Unspecified,
+        )
+    }.let {
+        listOf(
+            MaterialTheme.colorScheme.surfaceContainerHighest,
+            MaterialTheme.colorScheme.surfaceContainerHigh,
+            MaterialTheme.colorScheme.surfaceContainerHighest,
+        )
+    }
 
-    val brush = Brush.linearGradient(
-        colors = shimmerColors,
-        start = Offset.Zero,
-        end = Offset(x = translateAnim, y = translateAnim)
-    )
-
-    background(brush)
+    this.drawBehind {
+        val brush = Brush.linearGradient(
+            colors = shimmerColors,
+            start = Offset(translateAnim.value - 500f, translateAnim.value - 500f),
+            end = Offset(translateAnim.value, translateAnim.value)
+        )
+        drawRect(brush)
+    }
 }

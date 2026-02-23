@@ -66,23 +66,23 @@ fun HomeScreen(
     // 64dp accounts for status bar and top padding roughly
     val initialImageOffset = (screenHeight / 2) - 240.dp - 64.dp
 
-    val imageOffset by animateDpAsState(
+    val imageOffsetState = animateDpAsState(
         targetValue = if (isStartupAnimationRunning) 0.dp else initialImageOffset,
-        animationSpec = tween(durationMillis = 750, easing = FastOutSlowInEasing),
+        animationSpec = tween(durationMillis = 850, easing = FastOutSlowInEasing),
         label = "imageOffset"
     )
 
-    val contentAlpha by animateFloatAsState(
+    val contentAlphaState = animateFloatAsState(
         targetValue = if (isStartupAnimationRunning) 1f else 0f,
-        animationSpec = tween(durationMillis = 500, delayMillis = 250, easing = LinearEasing),
+        animationSpec = tween(durationMillis = 750, delayMillis = 350, easing = LinearEasing),
         label = "contentAlpha"
     )
 
-    val contentOffset by animateDpAsState(
+    val contentOffsetState = animateDpAsState(
         targetValue = if (isStartupAnimationRunning) 0.dp else 40.dp,
         animationSpec = tween(
-            durationMillis = 500,
-            delayMillis = 250,
+            durationMillis = 750,
+            delayMillis = 350,
             easing = FastOutSlowInEasing
         ),
         label = "contentOffset"
@@ -103,19 +103,23 @@ fun HomeScreen(
     ) {
         DeviceHeroCard(
             deviceInfo = deviceInfo,
-            imageOffset = imageOffset,
-            contentAlpha = contentAlpha,
-            contentOffset = contentOffset
+            imageOffset = { imageOffsetState.value },
+            contentAlpha = { contentAlphaState.value },
+            contentOffset = { contentOffsetState.value }
         )
 
         DeviceSpecsCard(
             deviceSpecs = deviceSpecs,
             isLoading = isSpecsLoading,
             modifier = Modifier.graphicsLayer {
-                alpha = contentAlpha
-                translationY = contentOffset.toPx()
+                alpha = contentAlphaState.value
+                translationY = contentOffsetState.value.toPx()
             }
         )
+
+        if (authState is AuthState.SignedIn) {
+            // Nothing here for now, but keeping alpha logic for future sections
+        }
 
         if (authState is AuthState.Loading) {
             Box(
@@ -123,8 +127,8 @@ fun HomeScreen(
                     .fillMaxWidth()
                     .padding(vertical = 16.dp)
                     .graphicsLayer {
-                        alpha = contentAlpha
-                        translationY = contentOffset.toPx()
+                        alpha = contentAlphaState.value
+                        translationY = contentOffsetState.value.toPx()
                     },
                 contentAlignment = Alignment.Center
             ) {
@@ -136,8 +140,8 @@ fun HomeScreen(
             SignInPromptCard(
                 onSignInClick = onSignInClick,
                 modifier = Modifier.graphicsLayer {
-                    alpha = contentAlpha
-                    translationY = contentOffset.toPx()
+                    alpha = contentAlphaState.value
+                    translationY = contentOffsetState.value.toPx()
                 }
             )
         }

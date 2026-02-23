@@ -159,10 +159,10 @@ private fun SpecFooter() {
                 textDecoration = androidx.compose.ui.text.style.TextDecoration.Underline
             ),
             modifier = Modifier
-                .padding(start = 8.dp)
                 .clickable {
                     uriHandler.openUri("https://www.gsmarena.com")
                 }
+                .padding(start = 8.dp)
         )
     }
 }
