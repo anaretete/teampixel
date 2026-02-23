@@ -1,0 +1,2854 @@
+[
+  {
+    "name": "Pixel 6",
+    "os_at_launch": "Android 12",
+    "display": {
+      "features": [],
+      "size_inches": 6.4,
+      "aspect_ratio": "20:9",
+      "ppi": 411,
+      "panel_type": "FHD+ (1080 x 2400) OLED at 411 ppi",
+      "refresh_rate": "Smooth Display (up to 90 Hz2)"
+    },
+    "dimensions": {
+      "height_mm": 158.6,
+      "width_mm": 74.8,
+      "depth_mm": 8.9
+    },
+    "battery": {
+      "capacity_min_mah": 4524,
+      "capacity_typical_mah": 4614
+    },
+    "hardware": {
+      "storage_options": [
+        "128 GB",
+        "256 GB"
+      ],
+      "ram": "8 GB LPDDR5 RAM",
+      "processor": "Google Tensor",
+      "security_chip": "Titan M2TM security coprocessor"
+    },
+    "cameras": {
+      "rear": [
+        {
+          "description": "50 MP Octa PD Quad Bayer wide camera",
+          "pixel_width": "1.2 \u03bcm pixel width",
+          "aperture": "\u0192/1.85 aperture",
+          "fov": "82\u00b0 field of view"
+        },
+        {
+          "description": "12 MP ultrawide camera7",
+          "pixel_width": "1.25 \u03bcm pixel width",
+          "aperture": "\u0192/2.2 aperture",
+          "fov": "114 field of view7"
+        }
+      ],
+      "front": [
+        {
+          "description": "8 MP",
+          "pixel_width": "1.12 \u03bcm pixel width",
+          "aperture": "\u0192/2.0 aperture",
+          "fov": "84\u00b0 wide field of view"
+        }
+      ],
+      "features": []
+    },
+    "connectivity": {
+      "wifi": [
+        "Wi-Fi 6 (802.11ax) and 6E (6GHz) with 2.4G+5GHz+6GHz, HE160, 2X2 MIMO",
+        "Pixel 6 is Wi-Fi 6E capable (Wi-Fi 6E is not enabled in Taiwan, Japan, and Singapore)"
+      ],
+      "bluetooth": "Bluetooth\u00ae v5.2 with dual antennas for enhanced quality and connection",
+      "nfc": true,
+      "uwb": false
+    },
+    "sensors": [
+      "Proximity sensor",
+      "Ambient light sensor",
+      "Accelerometer",
+      "Gyrometer",
+      "Magnetometer",
+      "Barometer"
+    ],
+    "audio": [
+      "Stereo recording",
+      "Stereo speakers",
+      "3 microphones",
+      "Noise suppression"
+    ],
+    "durability": {
+      "ip_rating": "IP68",
+      "glass": "Edgeless Corning\u00ae Gorilla\u00ae Glass 6 back with tactile alloy frame"
+    },
+    "weight_g": 207.0
+  },
+  {
+    "name": "Pixel 6 Pro",
+    "os_at_launch": "Android 12",
+    "display": {
+      "features": [],
+      "size_inches": 6.7,
+      "aspect_ratio": "19.5:9",
+      "ppi": 512,
+      "panel_type": "QHD+ (1440 x 3120) LTPO OLED at 512 ppi",
+      "refresh_rate": "Smooth Display (up to 120 Hz2)"
+    },
+    "dimensions": {
+      "height_mm": 163.9,
+      "width_mm": 75.9,
+      "depth_mm": 8.9
+    },
+    "battery": {
+      "capacity_min_mah": 4905,
+      "capacity_typical_mah": 5003
+    },
+    "hardware": {
+      "storage_options": [
+        "128 GB",
+        "256 GB",
+        "512 GB"
+      ],
+      "ram": "12 GB LPDDR5 RAM",
+      "processor": "Google Tensor",
+      "security_chip": "Titan M2TM security coprocessor"
+    },
+    "cameras": {
+      "rear": [
+        {
+          "description": "50 MP Octa PD Quad Bayer wide camera",
+          "pixel_width": "1.2 \u03bcm pixel width",
+          "aperture": "\u0192/1.85 aperture",
+          "fov": "82\u00b0 field of view"
+        },
+        {
+          "description": "12 MP ultrawide camera6",
+          "pixel_width": "1.25 \u03bcm pixel width",
+          "aperture": "\u0192/2.2 aperture",
+          "fov": "114 field of view6"
+        },
+        {
+          "description": "48 MP telephoto camera",
+          "pixel_width": "0.8 \u03bcm pixel width",
+          "aperture": "\u0192/3.5 aperture",
+          "fov": "23.5\u00b0 field of view"
+        }
+      ],
+      "front": [
+        {
+          "description": "11.1 MP6",
+          "pixel_width": "1.22 \u03bcm pixel width",
+          "aperture": "\u0192/2.2 aperture",
+          "fov": "94\u00b0 ultrawide field of view6"
+        }
+      ],
+      "features": []
+    },
+    "connectivity": {
+      "wifi": [
+        "Wi-Fi 6 (802.11ax) and 6E (6GHz) with 2.4G+5GHz+6GHz, HE160, 2X2 MIMO",
+        "Pixel 6 Pro is Wi-Fi 6E capable (Wi-Fi 6E is not enabled in Taiwan, Japan, and Singapore)"
+      ],
+      "bluetooth": "Bluetooth\u00ae v5.2 with dual antennas for enhanced quality and connection",
+      "nfc": true,
+      "uwb": true
+    },
+    "sensors": [
+      "Proximity sensor",
+      "Ambient light sensor",
+      "Accelerometer",
+      "Gyrometer",
+      "Magnetometer",
+      "Barometer"
+    ],
+    "audio": [
+      "Stereo recording",
+      "Stereo speakers",
+      "3 microphones",
+      "Noise suppression"
+    ],
+    "durability": {
+      "ip_rating": "IP68",
+      "glass": "Edgeless Corning\u00ae Gorilla\u00ae Glass Victus\u2122 back with polished alloy frame"
+    },
+    "weight_g": 210.0
+  },
+  {
+    "name": "Pixel 6a",
+    "os_at_launch": "Android 12",
+    "display": {
+      "features": [],
+      "size_inches": 6.134,
+      "aspect_ratio": "20:9",
+      "ppi": 429,
+      "panel_type": "FHD + (1080 x 2400) OLED at 429 ppi",
+      "refresh_rate": "Smooth Display (up to 60 Hz)"
+    },
+    "dimensions": {
+      "height_mm": 152.2,
+      "width_mm": 71.8,
+      "depth_mm": 8.9
+    },
+    "battery": {
+      "capacity_min_mah": 4306,
+      "capacity_typical_mah": 4410
+    },
+    "hardware": {
+      "storage_options": [
+        "128 GB"
+      ],
+      "ram": "6 GB LPDDR5 RAM",
+      "processor": "Google Tensor",
+      "security_chip": "Titan M2TM security coprocessor"
+    },
+    "cameras": {
+      "rear": [
+        {
+          "description": "12.2 MP dual pixel wide camera",
+          "pixel_width": "1.4 \u03bcm pixel width",
+          "aperture": "\u0192/1.7 aperture",
+          "fov": "77\u00b0 field of view"
+        },
+        {
+          "description": "12 MP ultrawide camera6",
+          "pixel_width": "1.25 \u03bcm pixel width",
+          "aperture": "\u0192/2.2 aperture",
+          "fov": "114\u00b0 field of view6"
+        }
+      ],
+      "front": [
+        {
+          "description": "8 MP",
+          "pixel_width": "1.22 \u03bcm pixel width",
+          "aperture": "\u0192/2.0 aperture",
+          "fov": "84\u00b0 wide field of view"
+        }
+      ],
+      "features": []
+    },
+    "connectivity": {
+      "wifi": [
+        "Wi-Fi 6 (802.11ax) and 6E (6GHz) with 2.4G+5GHz+6GHz, HE160, 2X2 MIMO",
+        "Pixel 6a is Wi-Fi 6E capable (Wi-Fi 6E is not enabled in Taiwan, Japan, and Singapore)"
+      ],
+      "bluetooth": "Bluetooth\u00ae v5.2 with dual antennas for enhanced quality and connection",
+      "nfc": true,
+      "uwb": false
+    },
+    "sensors": [
+      "Proximity sensor",
+      "Ambient light sensor",
+      "Accelerometer",
+      "Gyrometer",
+      "Magnetometer",
+      "Barometer"
+    ],
+    "audio": [
+      "Stereo recording",
+      "Stereo speakers",
+      "2 microphones",
+      "Noise suppression"
+    ],
+    "durability": {
+      "ip_rating": "IP67",
+      "glass": "Corning\u00ae Gorilla\u00ae Glass 3\u2122 cover glass"
+    },
+    "weight_g": 178.0
+  },
+  {
+    "name": "Pixel 7",
+    "os_at_launch": "Android 13",
+    "display": {
+      "features": [],
+      "size_inches": 6.3,
+      "aspect_ratio": "20:9",
+      "ppi": 416,
+      "panel_type": "FHD+ (1080 x 2400) OLED at 416 PPI"
+    },
+    "dimensions": {
+      "height_mm": 155.6,
+      "width_mm": 73.2,
+      "depth_mm": 8.7
+    },
+    "battery": {
+      "capacity_min_mah": 4270,
+      "capacity_typical_mah": 4355
+    },
+    "hardware": {
+      "storage_options": [
+        "128 GB",
+        "256 GB"
+      ],
+      "ram": "8 GB LPDDR5 RAM",
+      "processor": "Google Tensor G2",
+      "security_chip": "Titan M2TM security coprocessor"
+    },
+    "cameras": {
+      "rear": [
+        {
+          "description": "50 MP Octa PD Quad Bayer wide camera",
+          "pixel_width": "1.2 \u03bcm pixel width",
+          "aperture": "\u0192/1.85 aperture",
+          "fov": "82\u00b0 field of view"
+        },
+        {
+          "description": "12 MP ultrawide camera11",
+          "pixel_width": "1.25 \u03bcm pixel width",
+          "aperture": "\u0192/2.2 aperture",
+          "fov": "114\u00b0 field of view11"
+        }
+      ],
+      "front": [
+        {
+          "description": "10.8 MP",
+          "pixel_width": "1.22 \u03bcm pixel width",
+          "aperture": "\u0192/2.2 aperture",
+          "fov": "92.8\u00b0 ultrawide field of view11"
+        }
+      ],
+      "features": []
+    },
+    "connectivity": {
+      "wifi": [
+        "US (PR), CA, UK, EU, AU: Wi-Fi 6E (802.11ax) with 2.4GHz+5GHz+6GHz, HE160, MIMO",
+        "TW, JP, SG, IN: Wi-Fi 6 (802.11ax) with 2.4GHz+5GHz, HE160, MIMO"
+      ],
+      "bluetooth": "Bluetooth\u00ae v5.2 with dual antennas for enhanced quality and connection",
+      "nfc": true,
+      "uwb": false
+    },
+    "sensors": [
+      "Proximity sensor",
+      "Ambient light sensor",
+      "Accelerometer",
+      "Gyrometer",
+      "Magnetometer",
+      "Barometer"
+    ],
+    "audio": [
+      "Stereo recording",
+      "Stereo speakers",
+      "3 microphones",
+      "Noise suppression"
+    ],
+    "durability": {
+      "ip_rating": "IP68",
+      "glass": "Edgeless Corning\u00ae Gorilla\u00ae Glass Victus\u2122 back with matte aluminum frame"
+    },
+    "weight_g": 197.0
+  },
+  {
+    "name": "Pixel 7 pro",
+    "os_at_launch": "Android 13",
+    "display": {
+      "features": [],
+      "size_inches": 6.7,
+      "aspect_ratio": "19.5:9",
+      "ppi": 512,
+      "panel_type": "QHD+ (1440 x 3120) LTPO OLED at 512 PPI"
+    },
+    "dimensions": {
+      "height_mm": 162.9,
+      "width_mm": 76.6,
+      "depth_mm": 8.9
+    },
+    "battery": {
+      "capacity_min_mah": 4926,
+      "capacity_typical_mah": 5000
+    },
+    "hardware": {
+      "storage_options": [
+        "128 GB",
+        "256 GB",
+        "512 GB"
+      ],
+      "ram": "12 GB LPDDR5 RAM",
+      "processor": "Google Tensor G2",
+      "security_chip": "Titan M2TM security coprocessor"
+    },
+    "cameras": {
+      "rear": [
+        {
+          "description": "50 MP Octa PD Quad Bayer wide camera",
+          "pixel_width": "1.2 \u03bcm pixel width",
+          "aperture": "\u0192/1.85 aperture",
+          "fov": "82\u00b0 field of view"
+        },
+        {
+          "description": "12 MP ultrawide camera10 with autofocus",
+          "pixel_width": "1.25 \u03bcm pixel width",
+          "aperture": "\u0192/2.2 aperture",
+          "fov": "125.8\u00b0 field of view10"
+        },
+        {
+          "description": "48 MP Quad Bayer PD telephoto camera",
+          "pixel_width": "0.7 \u03bcm pixel width",
+          "aperture": "\u0192/3.5 aperture",
+          "fov": "20.6\u00b0 field of view"
+        }
+      ],
+      "front": [
+        {
+          "description": "10.8 MP",
+          "pixel_width": "1.22 \u03bcm pixel width",
+          "aperture": "\u0192/2.2 aperture",
+          "fov": "92.8\u00b0 ultrawide field of view10"
+        }
+      ],
+      "features": []
+    },
+    "connectivity": {
+      "wifi": [
+        "US (PR), CA, UK, EU, AU: Wi-Fi 6E (802.11ax) with 2.4GHz+5GHz+6GHz, HE160, MIMO",
+        "TW, JP, SG, IN: Wi-Fi 6 (802.11ax) with 2.4GHz+5GHz, HE160, MIMO"
+      ],
+      "bluetooth": "Bluetooth\u00ae v5.2 with dual antennas for enhanced quality and connection",
+      "nfc": true,
+      "uwb": true
+    },
+    "sensors": [
+      "Proximity sensor",
+      "Ambient light sensor",
+      "Accelerometer",
+      "Gyrometer",
+      "Magnetometer",
+      "Barometer"
+    ],
+    "audio": [
+      "Stereo recording",
+      "Stereo speakers",
+      "3 microphones",
+      "Noise suppression"
+    ],
+    "durability": {
+      "ip_rating": "IP68",
+      "glass": "Edgeless Corning\u00ae Gorilla\u00ae Glass Victus\u2122 back with polished aluminum frame"
+    },
+    "weight_g": 212.0
+  },
+  {
+    "name": "Pixel 7a",
+    "os_at_launch": "Android 13",
+    "display": {
+      "features": [],
+      "size_inches": 6.1,
+      "refresh_rate": "Smooth Display2 (up to 90 Hz)",
+      "aspect_ratio": "20:9",
+      "ppi": 429,
+      "panel_type": "FHD+ (1080 x 2400) OLED at 429 PPI"
+    },
+    "dimensions": {
+      "height_mm": 152.0,
+      "width_mm": 72.9,
+      "depth_mm": 9.0
+    },
+    "battery": {
+      "capacity_min_mah": 4300,
+      "capacity_typical_mah": 4385
+    },
+    "hardware": {
+      "storage_options": [
+        "128 GB"
+      ],
+      "ram": "8 GB LPDDR5 RAM",
+      "processor": "Google Tensor G2",
+      "security_chip": "Titan M2TM security coprocessor"
+    },
+    "cameras": {
+      "rear": [
+        {
+          "description": "64 MP Quad PD Quad Bayer wide camera",
+          "pixel_width": "0.8 \u03bcm pixel width",
+          "aperture": "\u0192/1.89 aperture",
+          "fov": "80\u00b0 field of view11"
+        },
+        {
+          "description": "13 MP ultrawide camera11",
+          "pixel_width": "1.12 \u03bcm pixel width",
+          "aperture": "\u0192/2.2 aperture",
+          "fov": "120\u00b0 field of view11"
+        }
+      ],
+      "front": [
+        {
+          "description": "13 MP",
+          "pixel_width": "1.12 \u03bcm pixel width",
+          "aperture": "\u0192/2.2 aperture",
+          "fov": "95\u00b0 ultrawide field of view11"
+        }
+      ],
+      "features": []
+    },
+    "connectivity": {
+      "wifi": [
+        "Wi-Fi 6E (802.11ax) with 2.4GHz+5GHz+6GHz, HE80, MIMO",
+        "Wi-Fi 6 (802.11ax) with 2.4GHz+5GHz, HE80, MIMO"
+      ],
+      "bluetooth": "The Bluetooth\u00ae word mark and logos are registered trademarks owned by Bluetooth SIG, Inc.",
+      "nfc": true,
+      "uwb": false
+    },
+    "sensors": [
+      "Accelerometer",
+      "Ambient light sensor",
+      "Barometer",
+      "Gyrometer",
+      "Magnetometer",
+      "Proximity sensor"
+    ],
+    "audio": [
+      "Stereo recording",
+      "Stereo speakers",
+      "2 microphones",
+      "Noise suppression"
+    ],
+    "durability": {
+      "ip_rating": "IP67",
+      "glass": "Scratch-resistant Corning\u00ae Gorilla\u00ae Glass 3\u2122 cover glass"
+    },
+    "weight_g": 193.5
+  },
+  {
+    "name": "Pixel Fold",
+    "os_at_launch": "Android 13",
+    "display": {
+      "features": [],
+      "size_inches": 7.6,
+      "aspect_ratio": "6:5",
+      "ppi": 380,
+      "panel_type": "2208 x 1840 OLED at 380 PPI",
+      "refresh_rate": "Smooth Display (up to 120 Hz)2"
+    },
+    "dimensions": {
+      "height_mm": 139.7,
+      "width_mm": 158.7,
+      "depth_mm": 5.8
+    },
+    "battery": {
+      "capacity_min_mah": 4727,
+      "capacity_typical_mah": 4821
+    },
+    "hardware": {
+      "storage_options": [
+        "512 GB",
+        "256 GB"
+      ],
+      "ram": "12 GB LPDDR5 RAM",
+      "processor": "Multi-layer hardware security: Tensor security core, certified Titan M2\u2122 security chip, and Trusty (Trusted Execution Environment)",
+      "security_chip": "Multi-layer hardware security: Tensor security core, certified Titan M2\u2122 security chip, and Trusty (Trusted Execution Environment)"
+    },
+    "cameras": {
+      "rear": [
+        {
+          "description": "48 MP Quad PD with OIS + CLAF",
+          "pixel_width": "0.8 \u03bcm pixel width",
+          "aperture": "\u0192/1.7 aperture",
+          "fov": "82\u00b0 field of view11"
+        },
+        {
+          "description": "10.8 MP ultrawide camera",
+          "pixel_width": "1.25 \u03bcm pixel width",
+          "aperture": "\u0192/2.2 aperture",
+          "fov": "121.1\u00b0 field of view11"
+        },
+        {
+          "description": "10.8 MP dual PD telephoto camera",
+          "pixel_width": "1.22 \u03bcm pixel width",
+          "aperture": "\u0192/3.05 aperture",
+          "fov": "21.9\u00b0 field of view11"
+        }
+      ],
+      "front": [
+        {
+          "description": "9.5 MP Dual PD11",
+          "pixel_width": "1.22 \u03bcm pixel width",
+          "aperture": "\u0192/2.2 aperture",
+          "fov": "84\u00b0 field of view11"
+        },
+        {
+          "description": "8 MP",
+          "pixel_width": "1.12 \u03bcm pixel width",
+          "aperture": "\u0192/2.0 aperture",
+          "fov": "84\u00b0 field of view11"
+        }
+      ],
+      "features": []
+    },
+    "connectivity": {
+      "wifi": [],
+      "bluetooth": "",
+      "nfc": false,
+      "uwb": false
+    },
+    "sensors": [
+      "Proximity sensor",
+      "Ambient light sensor",
+      "Accelerometer",
+      "Gyrometer",
+      "Magnetometer",
+      "Barometer",
+      "Hall effect"
+    ],
+    "audio": [
+      "Stereo speakers",
+      "3 microphones",
+      "Noise suppression"
+    ],
+    "durability": {
+      "ip_rating": "",
+      "glass": "Corning\u00ae Gorilla\u00ae Glass Victus\u2122 back with polished aluminum frame"
+    }
+  },
+  {
+    "name": "Pixel 8",
+    "os_at_launch": "",
+    "display": {
+      "features": [],
+      "size_inches": 6.2,
+      "aspect_ratio": "20:9",
+      "ppi": 428,
+      "panel_type": "(1080 x 2400) OLED at 428 PPI",
+      "refresh_rate": "Smooth Display (60\u2013120 Hz2)"
+    },
+    "dimensions": {
+      "height_mm": 150.5,
+      "width_mm": 70.8,
+      "depth_mm": 8.9
+    },
+    "battery": {
+      "capacity_min_mah": 4485,
+      "capacity_typical_mah": 4575
+    },
+    "hardware": {
+      "storage_options": [
+        "128 GB",
+        "256 GB"
+      ],
+      "ram": "8 GB LPDDR5X RAM",
+      "processor": "Multi-layer hardware security: Tensor security core, Titan M2TM security chip, and Trusty (Trusted Execution Environment)",
+      "security_chip": "Multi-layer hardware security: Tensor security core, Titan M2TM security chip, and Trusty (Trusted Execution Environment)"
+    },
+    "cameras": {
+      "rear": [
+        {
+          "description": "50 MP Octa PD wide camera",
+          "pixel_width": "1.2 \u03bcm pixel width",
+          "aperture": "\u0192/1.68 aperture",
+          "fov": "82\u00b0 field of view13"
+        },
+        {
+          "description": "12 MP ultrawide camera with autofocus13",
+          "pixel_width": "1.25 \u03bcm pixel width",
+          "aperture": "\u0192/2.2 aperture",
+          "fov": "125.8\u00b0 field of view13"
+        }
+      ],
+      "front": [
+        {
+          "description": "10.5 MP Dual PD selfie camera",
+          "pixel_width": "1.22 \u03bcm pixel width",
+          "aperture": "\u0192/2.2 aperture",
+          "fov": "95\u00b0 ultrawide field of view13"
+        }
+      ],
+      "features": []
+    },
+    "connectivity": {
+      "wifi": [],
+      "bluetooth": "",
+      "nfc": false,
+      "uwb": false
+    },
+    "sensors": [
+      "Proximity sensor",
+      "Ambient light sensor",
+      "Accelerometer",
+      "Gyrometer",
+      "Magnetometer",
+      "Barometer"
+    ],
+    "audio": [
+      "Stereo recording",
+      "Stereo speakers",
+      "3 microphones",
+      "Noise suppression"
+    ],
+    "durability": {
+      "ip_rating": "IP68",
+      "glass": "Edgeless Corning\u00ae Gorilla\u00ae Glass Victus\u00ae back with matte aluminum frame."
+    },
+    "weight_g": 187.0
+  },
+  {
+    "name": "Pixel 8 pro",
+    "os_at_launch": "",
+    "display": {
+      "features": [],
+      "size_inches": 6.7,
+      "aspect_ratio": "20:9",
+      "ppi": 489,
+      "panel_type": "(1344 x 2992) LTPO OLED at 489 PPI",
+      "refresh_rate": "Smooth Display (1\u2013120 Hz2)"
+    },
+    "dimensions": {
+      "height_mm": 162.6,
+      "width_mm": 76.5,
+      "depth_mm": 8.8
+    },
+    "battery": {
+      "capacity_min_mah": 4950,
+      "capacity_typical_mah": 5050
+    },
+    "hardware": {
+      "storage_options": [
+        "128 GB",
+        "256 GB",
+        "512 GB"
+      ],
+      "ram": "12 GB LPDDR5X RAM",
+      "processor": "Multi-layer hardware security: Tensor security core, Titan M2TM security chip, and Trusty (Trusted Execution Environment)",
+      "security_chip": "Multi-layer hardware security: Tensor security core, Titan M2TM security chip, and Trusty (Trusted Execution Environment)"
+    },
+    "cameras": {
+      "rear": [
+        {
+          "description": "50 MP Octa PD wide camera",
+          "pixel_width": "1.2 \u03bcm pixel width",
+          "aperture": "\u0192/1.68 aperture",
+          "fov": "82\u00b0 field of view13"
+        },
+        {
+          "description": "48 MP Quad PD ultrawide camera with autofocus13",
+          "pixel_width": "0.8 \u03bcm pixel width",
+          "aperture": "\u0192/1.95 aperture",
+          "fov": "125.5\u00b0 field of view13"
+        },
+        {
+          "description": "48 MP Quad PD telephoto camera",
+          "pixel_width": "0.7 \u03bcm pixel width",
+          "aperture": "\u0192/2.8 aperture",
+          "fov": "21.8\u00b0 field of view"
+        }
+      ],
+      "front": [
+        {
+          "description": "10.5 MP Dual PD selfie camera",
+          "pixel_width": "1.22 \u03bcm pixel width",
+          "aperture": "\u0192/2.2 aperture",
+          "fov": "95\u00b0 ultrawide field of view13"
+        }
+      ],
+      "features": []
+    },
+    "connectivity": {
+      "wifi": [],
+      "bluetooth": "",
+      "nfc": false,
+      "uwb": false
+    },
+    "sensors": [
+      "Proximity sensor",
+      "Ambient light sensor",
+      "Accelerometer",
+      "Gyrometer",
+      "Magnetometer",
+      "Barometer",
+      "Temperature sensor"
+    ],
+    "audio": [
+      "Stereo recording",
+      "Stereo speakers",
+      "3 microphones",
+      "Noise suppression"
+    ],
+    "durability": {
+      "ip_rating": "IP68",
+      "glass": "Edgeless Corning\u00ae Gorilla\u00ae Glass Victus\u00ae 2 matte back with polished aluminum frame."
+    },
+    "weight_g": 213.0
+  },
+  {
+    "name": "Pixel 8a",
+    "os_at_launch": "",
+    "display": {
+      "features": [],
+      "size_inches": 6.1,
+      "aspect_ratio": "20:9",
+      "ppi": 430,
+      "panel_type": "1080 x 2400 OLED at 430 PPI",
+      "refresh_rate": "Smooth Display2 (up to 120 Hz)"
+    },
+    "dimensions": {
+      "height_mm": 152.1,
+      "width_mm": 72.7,
+      "depth_mm": 8.9
+    },
+    "battery": {
+      "capacity_min_mah": 4492,
+      "capacity_typical_mah": 4492
+    },
+    "hardware": {
+      "storage_options": [
+        "128 GB",
+        "256 GB"
+      ],
+      "ram": "8 GB LPDDR5x RAM",
+      "processor": "Multi-layer hardware security: Tensor security core, Titan M2TM security chip, and Trusty (trusted execution environment)",
+      "security_chip": "Multi-layer hardware security: Tensor security core, Titan M2TM security chip, and Trusty (trusted execution environment)"
+    },
+    "cameras": {
+      "rear": [
+        {
+          "description": "64 MP Quad PD wide camera",
+          "pixel_width": "0.8 \u03bcm pixel width",
+          "aperture": "\u0192/1.89 aperture",
+          "fov": "80\u00b0 field of view10"
+        },
+        {
+          "description": "13 MP ultrawide camera10",
+          "pixel_width": "1.12 \u03bcm pixel width",
+          "aperture": "\u0192/2.2 aperture",
+          "fov": "120\u00b0 field of view10"
+        }
+      ],
+      "front": [
+        {
+          "description": "13 MP",
+          "pixel_width": "1.12 \u03bcm pixel width",
+          "aperture": "\u0192/2.2 aperture",
+          "fov": "96.5\u00b0 ultrawide field of view10"
+        }
+      ],
+      "features": []
+    },
+    "connectivity": {
+      "wifi": [],
+      "bluetooth": "",
+      "nfc": false,
+      "uwb": false
+    },
+    "sensors": [
+      "Proximity sensor",
+      "Ambient light sensor",
+      "Accelerometer",
+      "Gyrometer",
+      "Magnetometer",
+      "Barometer"
+    ],
+    "audio": [
+      "Stereo recording",
+      "Stereo speakers",
+      "2 microphones",
+      "Noise suppression"
+    ],
+    "durability": {
+      "ip_rating": "IP67",
+      "glass": "Scratch-resistant Corning\u00ae Gorilla\u00ae Glass 3 cover glass"
+    },
+    "weight_g": 189.0
+  },
+  {
+    "name": "Pixel 9",
+    "os_at_launch": "",
+    "display": {
+      "features": [],
+      "size_inches": 6.3,
+      "aspect_ratio": "20:9",
+      "ppi": 422,
+      "panel_type": "1080 x 2424 OLED at 422 PPI",
+      "refresh_rate": "Smooth Display (60-120Hz)2"
+    },
+    "dimensions": {
+      "height_mm": 152.8,
+      "width_mm": 72.0,
+      "depth_mm": 8.5
+    },
+    "battery": {
+      "capacity_min_mah": 4558,
+      "capacity_typical_mah": 4700
+    },
+    "hardware": {
+      "storage_options": [],
+      "ram": "12 GB RAM",
+      "processor": "Multi-layer hardware security: Tensor security core, certified Titan M2\u2122 security chip, and Trusty (Trusted Execution Environment)",
+      "security_chip": "Multi-layer hardware security: Tensor security core, certified Titan M2\u2122 security chip, and Trusty (Trusted Execution Environment)"
+    },
+    "cameras": {
+      "rear": [
+        {
+          "description": "50 MP wide"
+        },
+        {
+          "description": "48 MP ultrawide with Macro Focus"
+        },
+        {
+          "description": "50 MP Octa PD wide camera",
+          "aperture": "\u0192/1.68 aperture",
+          "fov": "82\u00b0 field of view12"
+        },
+        {
+          "description": "48 MP Quad PD ultrawide camera with autofocus",
+          "aperture": "\u0192/1.7 aperture",
+          "fov": "123\u00b0 field of view12"
+        }
+      ],
+      "front": [
+        {
+          "description": "10.5 MP Dual PD selfie camera with autofocus",
+          "aperture": "\u0192/2.2 aperture",
+          "fov": "95\u00b0 ultrawide field of view12"
+        }
+      ],
+      "features": []
+    },
+    "connectivity": {
+      "wifi": [],
+      "bluetooth": "",
+      "nfc": false,
+      "uwb": false
+    },
+    "sensors": [
+      "Proximity sensor",
+      "Ambient light sensor",
+      "Accelerometer",
+      "Gyrometer",
+      "Magnetometer",
+      "Barometer"
+    ],
+    "audio": [
+      "Stereo recording",
+      "Stereo speakers",
+      "3 microphones",
+      "Noise suppression"
+    ],
+    "durability": {
+      "ip_rating": "IP68",
+      "glass": "Corning\u00ae Gorilla\u00ae Glass Victus\u00ae 2 polished back with satin finish metal frame"
+    },
+    "weight_g": 198.0
+  },
+  {
+    "name": "Pixel 9 pro",
+    "os_at_launch": "",
+    "display": {
+      "features": [],
+      "size_inches": 6.3,
+      "panel_type": "1280 x 2856 LTPO OLED at 495 PPI",
+      "aspect_ratio": "20:9",
+      "ppi": 495,
+      "refresh_rate": "Smooth Display (1-120Hz)2"
+    },
+    "dimensions": {
+      "height_mm": 152.8,
+      "width_mm": 72.0,
+      "depth_mm": 8.5
+    },
+    "battery": {
+      "capacity_min_mah": 4558,
+      "capacity_typical_mah": 4700
+    },
+    "hardware": {
+      "storage_options": [],
+      "ram": "16 GB RAM",
+      "processor": "Multi-layer hardware security: Tensor security core, certified Titan M2\u2122 security chip, and Trusty (Trusted Execution Environment)",
+      "security_chip": "Multi-layer hardware security: Tensor security core, certified Titan M2\u2122 security chip, and Trusty (Trusted Execution Environment)"
+    },
+    "cameras": {
+      "rear": [
+        {
+          "description": "50 MP wide"
+        },
+        {
+          "description": "48 MP ultrawide with Macro Focus"
+        },
+        {
+          "description": "48 MP 5x telephoto lens"
+        },
+        {
+          "description": "50 MP Octa PD wide camera",
+          "aperture": "\u0192/1.68 aperture",
+          "fov": "82\u00b0 field of view12"
+        },
+        {
+          "description": "48 MP Quad PD ultrawide camera with autofocus",
+          "aperture": "\u0192/1.7 aperture",
+          "fov": "123\u00b0 field of view12"
+        },
+        {
+          "description": "48 MP Quad PD telephoto camera",
+          "aperture": "\u0192/2.8 aperture",
+          "fov": "22\u00b0 field of view12"
+        }
+      ],
+      "front": [
+        {
+          "description": "42 MP Dual PD selfie camera with autofocus",
+          "aperture": "\u0192/2.2 aperture",
+          "fov": "103\u00b0 ultrawide field of view12"
+        },
+        {
+          "description": "High-Res (up to 50 MP)"
+        }
+      ],
+      "features": []
+    },
+    "connectivity": {
+      "wifi": [],
+      "bluetooth": "",
+      "nfc": false,
+      "uwb": false
+    },
+    "sensors": [
+      "Proximity sensor",
+      "Ambient light sensor",
+      "Accelerometer",
+      "Gyrometer",
+      "Magnetometer",
+      "Barometer",
+      "Temperature sensor"
+    ],
+    "audio": [
+      "Stereo recording",
+      "Stereo speakers",
+      "3 microphones",
+      "Noise suppression"
+    ],
+    "durability": {
+      "ip_rating": "IP68",
+      "glass": "Corning\u00ae Gorilla\u00ae Glass Victus\u00ae 2 silky matte back with polished finish metal frame"
+    },
+    "weight_g": 199.0
+  },
+  {
+    "name": "Pixel 9 pro xl",
+    "os_at_launch": "",
+    "display": {
+      "features": [],
+      "size_inches": 6.8,
+      "panel_type": "1344 x 2992 LTPO OLED at 486 PPI",
+      "aspect_ratio": "20:9",
+      "ppi": 486,
+      "refresh_rate": "Smooth Display (1-120Hz)2"
+    },
+    "dimensions": {
+      "height_mm": 162.8,
+      "width_mm": 76.6,
+      "depth_mm": 8.5
+    },
+    "battery": {
+      "capacity_min_mah": 5060,
+      "capacity_typical_mah": 5060
+    },
+    "hardware": {
+      "storage_options": [],
+      "ram": "16 GB RAM",
+      "processor": "Multi-layer hardware security: Tensor security core, certified Titan M2\u2122 security chip, and Trusty (Trusted Execution Environment)",
+      "security_chip": "Multi-layer hardware security: Tensor security core, certified Titan M2\u2122 security chip, and Trusty (Trusted Execution Environment)"
+    },
+    "cameras": {
+      "rear": [
+        {
+          "description": "50 MP wide"
+        },
+        {
+          "description": "48 MP ultrawide with Macro Focus"
+        },
+        {
+          "description": "48 MP 5x telephoto lens"
+        },
+        {
+          "description": "50 MP Octa PD wide camera",
+          "aperture": "\u0192/1.68 aperture",
+          "fov": "82\u00b0 field of view12"
+        },
+        {
+          "description": "48 MP Quad PD ultrawide camera with autofocus",
+          "aperture": "\u0192/1.7 aperture",
+          "fov": "123\u00b0 field of view12"
+        },
+        {
+          "description": "48 MP Quad PD telephoto camera",
+          "aperture": "\u0192/2.8 aperture",
+          "fov": "22\u00b0 field of view12"
+        }
+      ],
+      "front": [
+        {
+          "description": "42 MP Dual PD selfie camera with autofocus",
+          "aperture": "\u0192/2.2 aperture",
+          "fov": "103\u00b0 ultrawide field of view12"
+        },
+        {
+          "description": "High-Res (up to 50 MP)"
+        }
+      ],
+      "features": []
+    },
+    "connectivity": {
+      "wifi": [],
+      "bluetooth": "",
+      "nfc": false,
+      "uwb": false
+    },
+    "sensors": [
+      "Proximity sensor",
+      "Ambient light sensor",
+      "Accelerometer",
+      "Gyrometer",
+      "Magnetometer",
+      "Barometer",
+      "Temperature sensor"
+    ],
+    "audio": [
+      "Stereo recording",
+      "Stereo speakers",
+      "3 microphones",
+      "Noise suppression"
+    ],
+    "durability": {
+      "ip_rating": "IP68",
+      "glass": "Corning\u00ae Gorilla\u00ae Glass Victus\u00ae 2 silky matte back with polished finish metal frame"
+    },
+    "weight_g": 221.0
+  },
+  {
+    "name": "Pixel 9 pro fold",
+    "os_at_launch": "",
+    "display": {
+      "features": [],
+      "size_inches": 8.0,
+      "aspect_ratio": "20:9",
+      "ppi": 373,
+      "panel_type": "2076 x 2152 OLED at 373 PPI",
+      "refresh_rate": "Smooth Display (1-120 Hz)2"
+    },
+    "dimensions": {
+      "height_mm": 155.2,
+      "width_mm": 150.2,
+      "depth_mm": 5.1
+    },
+    "battery": {
+      "capacity_min_mah": 4,
+      "capacity_typical_mah": 4
+    },
+    "hardware": {
+      "storage_options": [],
+      "ram": "16 GB RAM",
+      "processor": "Multi-layer hardware security: Tensor security core, certified Titan M2\u2122 security chip, and Trusty (Trusted Execution Environment)",
+      "security_chip": "Multi-layer hardware security: Tensor security core, certified Titan M2\u2122 security chip, and Trusty (Trusted Execution Environment)"
+    },
+    "cameras": {
+      "rear": [
+        {
+          "description": "48 MP wide"
+        },
+        {
+          "description": "10.5 MP ultrawide with Macro Focus"
+        },
+        {
+          "description": "10.8 MP 5x telephoto lens"
+        },
+        {
+          "description": "48 MP Quad PD wide camera",
+          "aperture": "\u0192/1.7 aperture",
+          "fov": "82\u00b0 field of view11"
+        },
+        {
+          "description": "10.5 MP Dual PD ultrawide camera with autofocus",
+          "aperture": "\u0192/2.2 aperture",
+          "fov": "127\u00b0 field of view11"
+        },
+        {
+          "description": "10.8 MP Dual PD telephoto camera",
+          "aperture": "\u0192/3.1 aperture",
+          "fov": "23\u00b0 field of view11"
+        }
+      ],
+      "front": [
+        {
+          "description": "10 MP Dual PD",
+          "aperture": "\u0192/2.2 aperture",
+          "fov": "87\u00b0 field of view11"
+        },
+        {
+          "description": "10 MP Dual PD",
+          "aperture": "\u0192/2.2 aperture",
+          "fov": "87\u00b0 field of view11"
+        }
+      ],
+      "features": []
+    },
+    "connectivity": {
+      "wifi": [],
+      "bluetooth": "",
+      "nfc": false,
+      "uwb": false
+    },
+    "sensors": [
+      "Proximity sensor",
+      "Ambient light sensor",
+      "Accelerometer",
+      "Gyrometer",
+      "Magnetometer",
+      "Barometer",
+      "Hall effect"
+    ],
+    "audio": [
+      "Stereo recording",
+      "Stereo speakers",
+      "3 microphones",
+      "Noise suppression"
+    ],
+    "durability": {
+      "ip_rating": "",
+      "glass": "Corning\u00ae Gorilla\u00ae Glass Victus\u00ae 2 silky matte back with satin metal frame"
+    },
+    "weight_g": 257.0
+  },
+  {
+    "name": "Pixel 9a",
+    "os_at_launch": "",
+    "display": {
+      "features": [],
+      "size_inches": 6.3,
+      "aspect_ratio": "20:9",
+      "ppi": 2,
+      "panel_type": "1080 x 2424 pOLED at 422.2 PPI",
+      "refresh_rate": "Smooth Display (60-120Hz)2"
+    },
+    "dimensions": {
+      "height_mm": 154.7,
+      "width_mm": 73.3,
+      "depth_mm": 8.9
+    },
+    "battery": {
+      "capacity_min_mah": 5100,
+      "capacity_typical_mah": 5100
+    },
+    "hardware": {
+      "storage_options": [],
+      "ram": "8 GB RAM",
+      "processor": "Multi-layer hardware security: Tensor security core, certified Titan M2 security chip, and Trusty (Trusted Execution Environment)",
+      "security_chip": "Multi-layer hardware security: Tensor security core, certified Titan M2 security chip, and Trusty (Trusted Execution Environment)"
+    },
+    "cameras": {
+      "rear": [
+        {
+          "description": "Dual rear camera system: 48 MP wide and 13 MP ultrawide"
+        },
+        {
+          "description": "48 MP Quad PD Dual Pixel with OIS and CLAF",
+          "aperture": "\u0192/1.7 aperture",
+          "fov": "82\u00b0 field of view"
+        },
+        {
+          "description": "13 MP ultrawide camera",
+          "aperture": "\u0192/2.2 aperture",
+          "fov": "120\u00b0 field of view10"
+        }
+      ],
+      "front": [
+        {
+          "description": "13 MP selfie camera",
+          "aperture": "\u0192/2.2 aperture",
+          "fov": "96.1\u00b0 ultrawide field of view10"
+        }
+      ],
+      "features": []
+    },
+    "connectivity": {
+      "wifi": [],
+      "bluetooth": "",
+      "nfc": false,
+      "uwb": false
+    },
+    "sensors": [
+      "Proximity sensor",
+      "Ambient light sensor",
+      "Accelerometer",
+      "Gyrometer",
+      "Magnetometer",
+      "Barometer"
+    ],
+    "audio": [
+      "Stereo recording",
+      "Stereo speakers",
+      "2 microphones"
+    ],
+    "durability": {
+      "ip_rating": "IP68",
+      "glass": ""
+    },
+    "weight_g": 185.9
+  },
+  {
+    "name": "Pixel 10",
+    "os_at_launch": "",
+    "display": {
+      "features": [],
+      "size_inches": 6.3,
+      "aspect_ratio": "20:9",
+      "ppi": 422,
+      "panel_type": "1080 x 2424 OLED at 422 PPI",
+      "refresh_rate": "Smooth Display (60-120Hz)2"
+    },
+    "dimensions": {
+      "height_mm": 152.8,
+      "width_mm": 72.0,
+      "depth_mm": 8.6
+    },
+    "battery": {
+      "capacity_typical_mah": 4970
+    },
+    "hardware": {
+      "storage_options": [],
+      "ram": "12 GB RAM",
+      "processor": "Multi-layer hardware security: Tensor security core, certified Titan M2 security chip, and Trusty (Trusted Execution Environment)",
+      "security_chip": "Multi-layer hardware security: Tensor security core, certified Titan M2 security chip, and Trusty (Trusted Execution Environment)"
+    },
+    "cameras": {
+      "rear": [
+        {
+          "description": "48 MP ultrawide with Macro Focus"
+        },
+        {
+          "description": "13 MP ultrawide"
+        },
+        {
+          "description": "10.8 MP 5x telephoto lens"
+        },
+        {
+          "description": "48 MP Quad PD wide camera12",
+          "aperture": "\u0192/1.70 aperture",
+          "fov": "82\u00b0 field of view13"
+        },
+        {
+          "description": "13 MP Quad PD ultrawide camera12",
+          "aperture": "\u0192/2.2 aperture",
+          "fov": "120\u00b0 field of view13"
+        },
+        {
+          "description": "10.8 MP Dual PD telephoto camera with optical image stabilization12",
+          "aperture": "\u0192/3.1 aperture",
+          "fov": "23\u00b0 field of view13"
+        }
+      ],
+      "front": [
+        {
+          "description": "10.5 MP Dual PD selfie camera with autofocus",
+          "aperture": "\u0192/2.2 aperture",
+          "fov": "95\u00b0 ultrawide field of view13"
+        }
+      ],
+      "features": []
+    },
+    "connectivity": {
+      "wifi": [],
+      "bluetooth": "",
+      "nfc": false,
+      "uwb": false
+    },
+    "sensors": [
+      "Proximity sensor",
+      "Ambient light sensor",
+      "Accelerometer",
+      "Gyrometer",
+      "Magnetometer",
+      "Barometer"
+    ],
+    "audio": [
+      "Stereo recording",
+      "Stereo speakers",
+      "3 microphones",
+      "Noise suppression"
+    ],
+    "durability": {
+      "ip_rating": "IP68",
+      "glass": "Corning\u00ae Gorilla\u00ae Glass Victus\u00ae 2 polished back with satin finish spacecraft-grade aluminum frame"
+    },
+    "weight_g": 204.0
+  },
+  {
+    "name": "Pixel 10 pro",
+    "os_at_launch": "",
+    "display": {
+      "features": [],
+      "size_inches": 6.3,
+      "aspect_ratio": "20:9",
+      "ppi": 495,
+      "panel_type": "1280 x 2856 LTPO OLED at 495 PPI",
+      "refresh_rate": "Smooth Display (1-120 Hz)2"
+    },
+    "dimensions": {
+      "height_mm": 152.8,
+      "width_mm": 72.0,
+      "depth_mm": 8.6
+    },
+    "battery": {
+      "capacity_typical_mah": 4870
+    },
+    "hardware": {
+      "storage_options": [],
+      "ram": "16 GB RAM",
+      "processor": "Multi-layer hardware security: Tensor security core, certified Titan M2 security chip, and Trusty (Trusted Execution Environment)",
+      "security_chip": "Multi-layer hardware security: Tensor security core, certified Titan M2 security chip, and Trusty (Trusted Execution Environment)"
+    },
+    "cameras": {
+      "rear": [
+        {
+          "description": "50 MP wide"
+        },
+        {
+          "description": "48 MP ultrawide with Macro Focus"
+        },
+        {
+          "description": "48 MP 5x telephoto lens"
+        },
+        {
+          "description": "50 MP Octa PD wide camera12",
+          "aperture": "\u0192/1.68 aperture",
+          "fov": "82\u00b0 field of view13"
+        },
+        {
+          "description": "48 MP Quad PD ultrawide camera with autofocus12",
+          "aperture": "\u0192/1.7 aperture",
+          "fov": "123\u00b0 field of view13"
+        },
+        {
+          "description": "48 MP Quad PD telephoto camera with optical image stabilization12",
+          "aperture": "\u0192/2.8 aperture",
+          "fov": "22\u00b0 field of view13"
+        }
+      ],
+      "front": [
+        {
+          "description": "42 MP Dual PD selfie camera with autofocus12",
+          "aperture": "\u0192/2.2 aperture",
+          "fov": "103\u00b0 ultrawide field of view13"
+        },
+        {
+          "description": "High-Res (up to 50 MP)"
+        },
+        {
+          "description": "High-Res Portrait Mode (50 MP)12"
+        }
+      ],
+      "features": []
+    },
+    "connectivity": {
+      "wifi": [],
+      "bluetooth": "",
+      "nfc": false,
+      "uwb": false
+    },
+    "sensors": [
+      "Proximity sensor",
+      "Ambient light sensor",
+      "Accelerometer",
+      "Gyrometer",
+      "Magnetometer",
+      "Barometer",
+      "Temperature sensor"
+    ],
+    "audio": [
+      "Stereo recording",
+      "Stereo speakers",
+      "3 microphones",
+      "Noise suppression"
+    ],
+    "durability": {
+      "ip_rating": "IP68",
+      "glass": "Corning\u00ae Gorilla\u00ae Glass Victus\u00ae 2 silky matte back with polished finish spacecraft-grade aluminum frame"
+    },
+    "weight_g": 207.0
+  },
+  {
+    "name": "Pixel 10 pro xl",
+    "os_at_launch": "",
+    "display": {
+      "features": [],
+      "size_inches": 6.8,
+      "aspect_ratio": "20:9",
+      "ppi": 486,
+      "panel_type": "1344 x 2992 LTPO OLED at 486 PPI",
+      "refresh_rate": "Smooth Display (1-120 Hz)2"
+    },
+    "dimensions": {
+      "height_mm": 162.8,
+      "width_mm": 76.6,
+      "depth_mm": 8.5
+    },
+    "battery": {
+      "capacity_typical_mah": 5200
+    },
+    "hardware": {
+      "storage_options": [],
+      "ram": "16 GB RAM",
+      "processor": "Multi-layer hardware security: Tensor security core, certified Titan M2 security chip, and Trusty (Trusted Execution Environment)",
+      "security_chip": "Multi-layer hardware security: Tensor security core, certified Titan M2 security chip, and Trusty (Trusted Execution Environment)"
+    },
+    "cameras": {
+      "rear": [
+        {
+          "description": "50 MP wide"
+        },
+        {
+          "description": "48 MP ultrawide with Macro Focus"
+        },
+        {
+          "description": "48 MP 5x telephoto lens"
+        },
+        {
+          "description": "50 MP Octa PD wide camera12",
+          "aperture": "\u0192/1.68 aperture",
+          "fov": "82\u00b0 field of view13"
+        },
+        {
+          "description": "48 MP Quad PD ultrawide camera with autofocus12",
+          "aperture": "\u0192/1.7 aperture",
+          "fov": "123\u00b0 field of view13"
+        },
+        {
+          "description": "48 MP Quad PD telephoto camera with optical image stabilization12",
+          "aperture": "\u0192/2.8 aperture",
+          "fov": "22\u00b0 field of view13"
+        }
+      ],
+      "front": [
+        {
+          "description": "42 MP Dual PD selfie camera with autofocus12",
+          "aperture": "\u0192/2.2 aperture",
+          "fov": "103\u00b0 ultrawide field of view13"
+        },
+        {
+          "description": "High-Res (up to 50 MP)13"
+        },
+        {
+          "description": "High-Res Portrait Mode (50 MP)13"
+        }
+      ],
+      "features": []
+    },
+    "connectivity": {
+      "wifi": [],
+      "bluetooth": "",
+      "nfc": false,
+      "uwb": false
+    },
+    "sensors": [
+      "Proximity sensor",
+      "Ambient light sensor",
+      "Accelerometer",
+      "Gyrometer",
+      "Magnetometer",
+      "Barometer",
+      "Temperature sensor"
+    ],
+    "audio": [
+      "Stereo recording",
+      "Stereo speakers",
+      "3 microphones",
+      "Noise suppression"
+    ],
+    "durability": {
+      "ip_rating": "IP68",
+      "glass": "Corning\u00ae Gorilla\u00ae Glass Victus\u00ae 2 silky matte back with polished finish spacecraft-grade aluminum frame"
+    },
+    "weight_g": 232.0
+  },
+  {
+    "name": "Pixel 10 pro fold",
+    "os_at_launch": "",
+    "display": {
+      "features": [],
+      "size_inches": 6.3,
+      "aspect_ratio": "20:9",
+      "ppi": 2,
+      "panel_type": "1080 x 2424 pOLED at 422.2 PPI",
+      "refresh_rate": "Smooth Display (60-120Hz)2"
+    },
+    "dimensions": {
+      "height_mm": 153.9,
+      "width_mm": 73.0,
+      "depth_mm": 9.0
+    },
+    "battery": {
+      "capacity_typical_mah": 5100,
+      "capacity_min_mah": 5100
+    },
+    "hardware": {
+      "storage_options": [],
+      "ram": "8 GB RAM",
+      "processor": "Multi-layer hardware security: Tensor security core, certified Titan M2 security chip, and Trusty (Trusted Execution Environment)",
+      "security_chip": "Multi-layer hardware security: Tensor security core, certified Titan M2 security chip, and Trusty (Trusted Execution Environment)"
+    },
+    "cameras": {
+      "rear": [
+        {
+          "description": "48 MP wide"
+        },
+        {
+          "description": "10.5 MP ultrawide with Macro Focus"
+        },
+        {
+          "description": "10.8 MP 5x telephoto lens"
+        },
+        {
+          "description": "48 MP Quad PD wide camera13",
+          "aperture": "\u0192/1.70 aperture",
+          "fov": "82\u00b0 field of view14"
+        },
+        {
+          "description": "10.5 MP Dual PD ultrawide camera with autofocus13",
+          "aperture": "\u0192/2.2 aperture",
+          "fov": "127\u00b0 field of view14"
+        },
+        {
+          "description": "10.8 MP Dual PD telephoto camera with optical image stabilization13",
+          "aperture": "\u0192/3.1 aperture",
+          "fov": "23\u00b0 field of view14"
+        },
+        {
+          "description": "48 MP wide"
+        },
+        {
+          "description": "13 MP ultrawide"
+        },
+        {
+          "description": "48 MP Quad PD Dual Pixel wide camera12",
+          "aperture": "\u0192/1.7 aperture",
+          "fov": "82\u00b0 field of view13"
+        },
+        {
+          "description": "13 MP ultrawide camera12",
+          "aperture": "\u0192/2.2 aperture",
+          "fov": "120\u00b0 field of view13"
+        }
+      ],
+      "front": [
+        {
+          "description": "10 MP Dual PD selfie camera",
+          "aperture": "\u0192/2.2 aperture",
+          "fov": "87\u00b0 ultrawide field of view14"
+        },
+        {
+          "description": "10 MP Dual PD",
+          "aperture": "\u0192/2.2 aperture",
+          "fov": "87\u00b0 field of view14"
+        },
+        {
+          "description": "13 MP selfie camera12",
+          "aperture": "\u0192/2.2 aperture",
+          "fov": "96.1\u00b0 ultrawide field of view13"
+        }
+      ],
+      "features": []
+    },
+    "connectivity": {
+      "wifi": [],
+      "bluetooth": "",
+      "nfc": false,
+      "uwb": false
+    },
+    "sensors": [
+      "Proximity sensor",
+      "Ambient light sensor",
+      "Accelerometer",
+      "Gyrometer",
+      "Magnetometer",
+      "Barometer",
+      "Hall effect",
+      "Proximity sensor",
+      "Ambient light sensor",
+      "Accelerometer",
+      "Gyrometer",
+      "Magnetometer",
+      "Barometer"
+    ],
+    "audio": [
+      "Stereo recording",
+      "Stereo speakers",
+      "3 microphones",
+      "Noise suppression",
+      "Stereo recording",
+      "Stereo speakers",
+      "2 microphones",
+      "Noise suppression"
+    ],
+    "durability": {
+      "ip_rating": "IP68",
+      "glass": "Corning\u00ae Gorilla\u00ae Glass 7i cover glass"
+    },
+    "weight_g": 183.0
+  },
+  {
+    "name": "Pixel 5a 5G",
+    "os_at_launch": "Android 11",
+    "display": {
+      "features": []
+    },
+    "dimensions": {
+      "height_mm": 156.2,
+      "width_mm": 73.2,
+      "depth_mm": 8.8
+    },
+    "battery": {
+      "capacity_min_mah": 4620,
+      "capacity_typical_mah": 4680
+    },
+    "hardware": {
+      "storage_options": [
+        "128 GB"
+      ],
+      "ram": "6 GB LPDDR4x RAM",
+      "processor": "Qualcomm\u00ae4 Snapdragon\u2122 765G | 2.4 GHz + 2.2 GHz + 1.8 GHz, 64-bit Octa-Core | Adreno 620",
+      "security_chip": "Titan\u2122 M Security Module"
+    },
+    "cameras": {
+      "rear": [
+        {
+          "description": "12.2 MP dual-pixel"
+        },
+        {
+          "description": "1.4 \u03bcm pixel width",
+          "aperture": "\u0192/1.7 aperture"
+        },
+        {
+          "description": "77\u00b0 field of view"
+        },
+        {
+          "description": "16 MP ultrawide5"
+        },
+        {
+          "description": "1.0 \u03bcm pixel width",
+          "aperture": "\u0192/2.2 aperture"
+        },
+        {
+          "description": "118.7\u00b0 field of view"
+        },
+        {
+          "description": "1080p @ 30 FPS, 60 FPS, 120 FPS, 240 FPS"
+        },
+        {
+          "description": "4K @ 30 FPS, 60 FPS"
+        }
+      ],
+      "front": [
+        {
+          "description": "8 MP"
+        },
+        {
+          "description": "1.12 \u03bcm pixel width",
+          "aperture": "\u0192/2.0 aperture"
+        },
+        {
+          "description": "83\u00b0 field of view"
+        },
+        {
+          "description": "1080p @ 30 FPS"
+        }
+      ],
+      "features": []
+    },
+    "connectivity": {
+      "wifi": [
+        "Wi-Fi 2.4 GHz + 5 GHz 802.11a/b/g/n/ac 2x2 MIMO"
+      ],
+      "nfc": true,
+      "uwb": false,
+      "bluetooth": "Bluetooth\u00ae8 v5.0 + LE, A2DP (HD codecs: AptX, AptX HD, LDAC, AAC)"
+    },
+    "sensors": [
+      "Proximity/Ambient light sensor",
+      "Accelerometer/Gyrometer",
+      "Magnetometer",
+      "Pixel Imprint\u2122 \u2013 back-mounted fingerprint sensor for fast unlocking",
+      "Barometer"
+    ],
+    "audio": [
+      "Stereo speakers",
+      "2 microphones",
+      "Noise suppression"
+    ],
+    "durability": {
+      "glass": "Corning\u00ae Gorilla\u00ae Glass 3 cover glass",
+      "ip_rating": "IP67"
+    },
+    "weight_g": 183.0
+  },
+  {
+    "name": "Pixel 5",
+    "os_at_launch": "Android 11",
+    "display": {
+      "features": []
+    },
+    "dimensions": {
+      "height_mm": 144.7,
+      "width_mm": 70.4,
+      "depth_mm": 8.0
+    },
+    "battery": {
+      "capacity_min_mah": 4000,
+      "capacity_typical_mah": 4080
+    },
+    "hardware": {
+      "storage_options": [
+        "128 GB"
+      ],
+      "ram": "8 GB LPDDR4x RAM",
+      "processor": "Qualcomm\u00ae5 Snapdragon\u2122 765G | 2.4 GHz + 2.2 GHz + 1.8 GHz, 64-bit Octa-Core | Adreno 620",
+      "security_chip": "TitanTM M Security Module"
+    },
+    "cameras": {
+      "rear": [
+        {
+          "description": "12.2 MP dual-pixel"
+        },
+        {
+          "description": "1.4 \u03bcm pixel width",
+          "aperture": "\u0192/1.7 aperture"
+        },
+        {
+          "description": "77\u00b0 field of view"
+        },
+        {
+          "description": "16 MP ultrawide6"
+        },
+        {
+          "description": "1.0 \u03bcm pixel width",
+          "aperture": "\u0192/2.2 aperture"
+        },
+        {
+          "description": "118.7\u00b0 field of view6"
+        },
+        {
+          "description": "1080p @ 30 FPS, 60 FPS, 120 FPS, 240 FPS"
+        },
+        {
+          "description": "4K @ 30 FPS, 60 FPS"
+        }
+      ],
+      "front": [
+        {
+          "description": "8 MP"
+        },
+        {
+          "description": "1.12 \u03bcm pixel width",
+          "aperture": "\u0192/2.0 aperture"
+        },
+        {
+          "description": "83\u00b0 field of view"
+        },
+        {
+          "description": "1080p @ 30 FPS"
+        }
+      ],
+      "features": []
+    },
+    "connectivity": {
+      "wifi": [
+        "Wi-Fi 2.4 GHz + 5 GHz 802.11a/b/g/n/ac 2x2 MIMO"
+      ],
+      "nfc": true,
+      "uwb": false,
+      "bluetooth": "Bluetooth\u00ae11 5.0 + LE, A2DP (HD codecs: AptX, AptX HD, LDAC, AAC)"
+    },
+    "sensors": [
+      "Proximity/Ambient light sensor",
+      "Accelerometer/Gyrometer",
+      "Magnetometer",
+      "Pixel Imprint\u2122 \u2013 back-mounted fingerprint sensor for fast unlocking",
+      "Barometer",
+      "Spectral and flicker sensor"
+    ],
+    "audio": [
+      "Stereo speakers",
+      "3 microphones",
+      "Noise suppression"
+    ],
+    "durability": {
+      "glass": "Corning\u00ae Gorilla\u00ae Glass 6 cover glass",
+      "ip_rating": "IP68"
+    },
+    "weight_g": 151.0
+  },
+  {
+    "name": "Pixel 4a 5G",
+    "os_at_launch": "Android 11",
+    "display": {
+      "features": []
+    },
+    "dimensions": {
+      "height_mm": 153.9,
+      "width_mm": 74.0,
+      "depth_mm": 8.5
+    },
+    "battery": {
+      "capacity_min_mah": 3800,
+      "capacity_typical_mah": 3885
+    },
+    "hardware": {
+      "storage_options": [
+        "128 GB"
+      ],
+      "ram": "6 GB LPDDR4x RAM",
+      "processor": "Qualcomm\u00ae4 SnapdragonTM 765G | 2.4 GHz + 2.2 GHz, 64-bit Octa-Core | Adreno 620",
+      "security_chip": "TitanTM M Security Module"
+    },
+    "cameras": {
+      "rear": [
+        {
+          "description": "12.2 MP dual-pixel"
+        },
+        {
+          "description": "1.4 \u03bcm pixel width",
+          "aperture": "\u0192/1.7 aperture"
+        },
+        {
+          "description": "77\u00b0 field of view"
+        },
+        {
+          "description": "16 MP ultrawide5"
+        },
+        {
+          "description": "1.0 \u03bcm pixel width",
+          "aperture": "\u0192/2.2 aperture"
+        },
+        {
+          "description": "118.7\u00b0 field of view5"
+        },
+        {
+          "description": "1080p @ 30 FPS, 60 FPS, 120 FPS, 240 FPS"
+        },
+        {
+          "description": "4K @ 30 FPS, 60 FPS"
+        }
+      ],
+      "front": [
+        {
+          "description": "8 MP"
+        },
+        {
+          "description": "1.12 \u03bcm pixel width",
+          "aperture": "\u0192/2.0 aperture"
+        },
+        {
+          "description": "83\u00b0 field of view"
+        },
+        {
+          "description": "1080p @ 30 FPS"
+        }
+      ],
+      "features": []
+    },
+    "connectivity": {
+      "wifi": [
+        "Wi-Fi 2.4 GHz + 5 GHz 802.11 a/b/g/n/ac 2x2 MIMO"
+      ],
+      "nfc": true,
+      "uwb": false,
+      "bluetooth": "Bluetooth\u00ae8 5.0 + LE, A2DP (HD codecs: AptX, AptX HD, LDAC, AAC)"
+    },
+    "sensors": [
+      "Proximity/Ambient light sensor",
+      "Accelerometer/Gyrometer",
+      "Magnetometer",
+      "Pixel ImprintTM \u2013 back-mounted fingerprint sensor for fast unlocking",
+      "Barometer",
+      "Spectral and flicker sensor"
+    ],
+    "audio": [
+      "Stereo speakers",
+      "2 microphones",
+      "Noise suppression"
+    ],
+    "durability": {
+      "glass": "Corning\u00ae Gorilla\u00ae Glass 3 cover glass"
+    },
+    "weight_g": 0.0
+  },
+  {
+    "name": "Pixel 4a",
+    "os_at_launch": "Android 101",
+    "display": {
+      "features": []
+    },
+    "dimensions": {
+      "height_mm": 144.0,
+      "width_mm": 69.4,
+      "depth_mm": 8.2
+    },
+    "battery": {
+      "capacity_typical_mah": 3140
+    },
+    "hardware": {
+      "storage_options": [
+        "128 GB"
+      ],
+      "ram": "6 GB LPDDR4x RAM",
+      "processor": "Qualcomm\u00ae5 SnapdragonTM 730G | 2.2 GHz + 1.8 GHz, 64-bit Octa-Core | Adreno 618",
+      "security_chip": "Titan M Security Module"
+    },
+    "cameras": {
+      "rear": [
+        {
+          "description": "12.2 MP dual-pixel"
+        },
+        {
+          "description": "1.4 \u03bcm pixel width",
+          "aperture": "\u0192/1.7 aperture"
+        },
+        {
+          "description": "77\u00b0 field of view"
+        },
+        {
+          "description": "1080p @ 30FPS, 60FPS, 120FPS"
+        },
+        {
+          "description": "720p @ 30FPS, 60FPS, 240FPS"
+        },
+        {
+          "description": "4K @ 30FPS"
+        }
+      ],
+      "front": [
+        {
+          "description": "8 MP"
+        },
+        {
+          "description": "1.12 \u03bcm pixel width",
+          "aperture": "\u0192/2.0 aperture"
+        },
+        {
+          "description": "84\u00b0 field of view"
+        },
+        {
+          "description": "1080p @ 30FPS"
+        },
+        {
+          "description": "720p @ 30FPS"
+        },
+        {
+          "description": "480p @ 30FPS"
+        }
+      ],
+      "features": []
+    },
+    "connectivity": {
+      "wifi": [
+        "Wi-Fi 2.4 GHz + 5 GHz 802.11 a/b/g/n/ac 2x2 MIMO"
+      ],
+      "nfc": true,
+      "uwb": false,
+      "bluetooth": "Bluetooth\u00ae9 5.0 + LE, A2DP (HD codecs: AptX, AptX HD, LDAC, AAC)"
+    },
+    "sensors": [
+      "Proximity/Ambient light sensor",
+      "Accelerometer/Gyrometer",
+      "Magnetometer",
+      "Pixel ImprintTM \u2013 back-mounted fingerprint sensor for fast unlocking",
+      "Barometer",
+      "Android Sensor Hub"
+    ],
+    "audio": [
+      "Stereo speakers",
+      "2 microphones",
+      "Noise suppression"
+    ],
+    "durability": {
+      "glass": "Corning\u00ae Gorilla\u00ae Glass 3 cover glass"
+    },
+    "weight_g": 143.0
+  },
+  {
+    "name": "Pixel 4",
+    "os_at_launch": "Android 10 (Q)",
+    "display": {
+      "features": []
+    },
+    "dimensions": {},
+    "battery": {
+      "capacity_typical_mah": 2800
+    },
+    "hardware": {
+      "storage_options": [
+        "6 GB",
+        "64 GB",
+        "128 GB"
+      ],
+      "processor": "Qualcomm Snapdragon 855 | 2.84 GHz + 1.78 GHz, 64-bit Octa-Core | Adreno 640",
+      "security_chip": "Titan M Security Module5"
+    },
+    "cameras": {
+      "rear": [
+        {
+          "description": "16 MP"
+        },
+        {
+          "description": "1.0 \u03bcm pixel width",
+          "aperture": "\u0192/2.4 aperture"
+        },
+        {
+          "description": "52\u00b0 field of view"
+        },
+        {
+          "description": "12.2 MP"
+        },
+        {
+          "description": "1.4 \u03bcm pixel width",
+          "aperture": "\u0192/1.7 aperture"
+        },
+        {
+          "description": "77\u00b0 field of view"
+        },
+        {
+          "description": "1080p @ 30 FPS, 60 FPS, 120 FPS"
+        },
+        {
+          "description": "720p @ 240 FPS"
+        },
+        {
+          "description": "4K @ 30 FPS"
+        }
+      ],
+      "front": [
+        {
+          "description": "8 MP"
+        },
+        {
+          "description": "1.22 \u03bcm pixel width",
+          "aperture": "\u0192/2.0 aperture"
+        },
+        {
+          "description": "90\u00b0 field of view"
+        },
+        {
+          "description": "2 NIR (near-infrared) cameras"
+        },
+        {
+          "description": "1080p @ 30 FPS"
+        }
+      ],
+      "features": []
+    },
+    "connectivity": {
+      "wifi": [
+        "Wi-Fi 2.4 GHz + 5 GHz 802.11 a/b/g/n/ac 2x2 MIMO"
+      ],
+      "nfc": true,
+      "uwb": false,
+      "bluetooth": "Bluetooth 5.0 + LE (HD codecs: AptX, AptX HD, LDAC)"
+    },
+    "sensors": [
+      "Active Edge\u2122",
+      "Proximity / Ambient light sensor",
+      "Accelerometer / Gyrometer",
+      "Magnetometer",
+      "Barometer",
+      "Android Sensor Hub",
+      "Sharp and textured haptics",
+      "Microphones",
+      "Motion Sense\u21226"
+    ],
+    "audio": [
+      "Stereo speakers",
+      "3 microphones",
+      "Noise suppression"
+    ],
+    "durability": {
+      "glass": "Soft touch or polished glass (Corning\u00ae Gorilla\u00ae Glass 5) on the back"
+    },
+    "weight_g": 162.0
+  },
+  {
+    "name": "Pixel 4 XL",
+    "os_at_launch": "Android 10 (Q)",
+    "display": {
+      "features": []
+    },
+    "dimensions": {},
+    "battery": {
+      "capacity_typical_mah": 3700
+    },
+    "hardware": {
+      "storage_options": [
+        "6 GB",
+        "64 GB",
+        "128 GB"
+      ],
+      "processor": "Qualcomm Snapdragon 855 | 2.84 GHz + 1.78 GHz, 64-bit Octa-Core | Adreno 640",
+      "security_chip": "Titan M Security Module5"
+    },
+    "cameras": {
+      "rear": [
+        {
+          "description": "16 MP"
+        },
+        {
+          "description": "1.0 \u03bcm pixel width",
+          "aperture": "\u0192/2.4 aperture"
+        },
+        {
+          "description": "52\u00b0 field of view"
+        },
+        {
+          "description": "12.2 MP"
+        },
+        {
+          "description": "1.4 \u03bcm pixel width",
+          "aperture": "\u0192/1.7 aperture"
+        },
+        {
+          "description": "77\u00b0 field of view"
+        },
+        {
+          "description": "1080p @ 30 FPS, 60 FPS, 120 FPS"
+        },
+        {
+          "description": "720p @ 240 FPS"
+        },
+        {
+          "description": "4K @ 30 FPS"
+        }
+      ],
+      "front": [
+        {
+          "description": "8 MP"
+        },
+        {
+          "description": "1.22 \u03bcm pixel width",
+          "aperture": "\u0192/2.0 aperture"
+        },
+        {
+          "description": "90\u00b0 field of view"
+        },
+        {
+          "description": "2 NIR (near-infrared) cameras"
+        },
+        {
+          "description": "1080p @ 30 FPS"
+        }
+      ],
+      "features": []
+    },
+    "connectivity": {
+      "wifi": [
+        "Wi-Fi 2.4 GHz + 5 GHz 802.11 a/b/g/n/ac 2x2 MIMO"
+      ],
+      "nfc": true,
+      "uwb": false,
+      "bluetooth": "Bluetooth 5.0 + LE (HD codecs: AptX, AptX HD, LDAC)"
+    },
+    "sensors": [
+      "Active Edge\u2122",
+      "Proximity / Ambient light sensor",
+      "Accelerometer / Gyrometer",
+      "Magnetometer",
+      "Barometer",
+      "Android Sensor Hub",
+      "Sharp and textured haptics",
+      "Microphones",
+      "Motion Sense\u21226"
+    ],
+    "audio": [
+      "Stereo speakers",
+      "3 microphones",
+      "Noise suppression"
+    ],
+    "durability": {
+      "glass": "Soft touch or polished glass (Corning\u00ae Gorilla\u00ae Glass 5) on the back"
+    },
+    "weight_g": 193.0
+  },
+  {
+    "name": "Pixel 3xCA",
+    "os_at_launch": "Android 9 (Pie)1",
+    "display": {
+      "features": []
+    },
+    "dimensions": {},
+    "battery": {},
+    "hardware": {
+      "storage_options": [],
+      "processor": "Qualcomm\u00ae Snapdragon\u2122 670 | 2.0Ghz + 1.7Ghz, 64Bit Octa-core | Adreno 615",
+      "security_chip": "Titan M Security module"
+    },
+    "cameras": {
+      "rear": [
+        {
+          "description": "12.2MP dual-pixel"
+        },
+        {
+          "description": "1.4\u03bcm pixel width",
+          "fov": "Field of view: 76\u00b0"
+        },
+        {
+          "description": "1080p @ 30fps, 60fps, 120fps"
+        },
+        {
+          "description": "720p @ 30fps, 60fps, 240fps"
+        },
+        {
+          "description": "4K @ 30fps"
+        }
+      ],
+      "front": [
+        {
+          "description": "8MP"
+        },
+        {
+          "description": "1.12\u03bcm pixel width",
+          "aperture": "\u0192/2.0 aperture",
+          "fov": "Field of view: 84\u00b0"
+        },
+        {
+          "description": "1080p @ 30fps"
+        },
+        {
+          "description": "720p @ 30fps"
+        },
+        {
+          "description": "480p @ 30fps"
+        }
+      ],
+      "features": []
+    },
+    "connectivity": {
+      "wifi": [],
+      "nfc": false,
+      "uwb": false
+    },
+    "sensors": [
+      "Active Edge\u212211",
+      "Pixel Imprint: Back-mounted fingerprint sensor for fast unlocking",
+      "Proximity / Ambient light sensor",
+      "Accelerometer / Gyrometer",
+      "Magnetometer",
+      "Barometer",
+      "Android Sensor Hub",
+      "Haptics",
+      "Ports",
+      "USB-C\u2122 USB 2.0",
+      "Single Nano SIM",
+      "3.5mm audio jack",
+      "USB Type-C and USB-C are trademarks of USB Implementers Forum."
+    ],
+    "audio": [
+      "Stereo speakers",
+      "2 mics",
+      "Noise suppression",
+      "Audio",
+      "Bluetooth 5.0 + LE",
+      "Wireless HD audio with Qualcomm\u00ae AptX\u2122 and AptX HD\u2122 audio codecs supported",
+      "3.5mm audio jack"
+    ],
+    "durability": {},
+    "weight_g": 0.0
+  },
+  {
+    "name": "Pixel 3a XL",
+    "os_at_launch": "Android 9 (Pie)1",
+    "display": {
+      "features": []
+    },
+    "dimensions": {},
+    "battery": {},
+    "hardware": {
+      "storage_options": [],
+      "processor": "Qualcomm\u00ae Snapdragon\u2122 670 | 2.0Ghz + 1.7Ghz, 64Bit Octa-core | Adreno 615",
+      "security_chip": "Titan M Security module"
+    },
+    "cameras": {
+      "rear": [
+        {
+          "description": "12.2MP dual-pixel"
+        },
+        {
+          "description": "1.4\u03bcm pixel width",
+          "fov": "Field of view: 76\u00b0"
+        },
+        {
+          "description": "1080p @ 30fps, 60fps, 120fps"
+        },
+        {
+          "description": "720p @ 30fps, 60fps, 240fps"
+        },
+        {
+          "description": "4K @ 30fps"
+        }
+      ],
+      "front": [
+        {
+          "description": "8MP"
+        },
+        {
+          "description": "1.12\u03bcm pixel width",
+          "aperture": "\u0192/2.0 aperture",
+          "fov": "Field of view: 84\u00b0"
+        },
+        {
+          "description": "1080p @ 30fps"
+        },
+        {
+          "description": "720p @ 30fps"
+        },
+        {
+          "description": "480p @ 30fps"
+        }
+      ],
+      "features": []
+    },
+    "connectivity": {
+      "wifi": [],
+      "nfc": false,
+      "uwb": false
+    },
+    "sensors": [
+      "Active Edge\u212211",
+      "Pixel Imprint: Back-mounted fingerprint sensor for fast unlocking",
+      "Proximity / Ambient light sensor",
+      "Accelerometer / Gyrometer",
+      "Magnetometer",
+      "Barometer",
+      "Android Sensor Hub",
+      "Haptics",
+      "Ports",
+      "USB-C\u2122 USB 2.0",
+      "Single Nano SIM",
+      "3.5mm audio jack",
+      "USB Type-C and USB-C are trademarks of USB Implementers Forum."
+    ],
+    "audio": [
+      "Stereo speakers",
+      "2 mics",
+      "Noise suppression",
+      "Audio",
+      "Bluetooth 5.0 + LE",
+      "Wireless HD audio with Qualcomm\u00ae AptX\u2122 and AptX HD\u2122 audio codecs supported",
+      "3.5mm audio jack"
+    ],
+    "durability": {},
+    "weight_g": 0.0
+  },
+  {
+    "name": "Pixel 3",
+    "os_at_launch": "Android 9 (Pie)1",
+    "display": {
+      "features": []
+    },
+    "dimensions": {},
+    "battery": {},
+    "hardware": {
+      "storage_options": [],
+      "processor": "Qualcomm\u00ae Snapdragon\u2122 845 | 2.5Ghz + 1.6Ghz, 64Bit Octa-core | Adreno 630",
+      "security_chip": "Titan M Security module"
+    },
+    "cameras": {
+      "rear": [
+        {
+          "description": "12.2MP"
+        },
+        {
+          "description": "1.4\u03bcm",
+          "fov": "Field of view: 76\u00b0"
+        },
+        {
+          "description": "1080p @ 30fps, 120fps"
+        },
+        {
+          "description": "720p @ 30fps, 60fps, 240fps"
+        },
+        {
+          "description": "4K @ 30fps"
+        }
+      ],
+      "front": [
+        {
+          "description": "8MP wide-angle and normal cameras",
+          "aperture": "Normal: \u0192/1.8 aperture, field of view 75\u00b0, autofocus with phase detection",
+          "fov": "Normal: \u0192/1.8 aperture, field of view 75\u00b0, autofocus with phase detection"
+        },
+        {
+          "description": "1080p @ 30fps"
+        },
+        {
+          "description": "720p @ 30fps"
+        },
+        {
+          "description": "480p @ 30fps"
+        }
+      ],
+      "features": []
+    },
+    "connectivity": {
+      "wifi": [],
+      "nfc": false,
+      "uwb": false
+    },
+    "sensors": [
+      "Active Edge\u2122",
+      "Proximity / Ambient light sensor",
+      "Accelerometer / Gyrometer",
+      "Magnetometer",
+      "Pixel Imprint: Back-mounted fingerprint sensor for fast unlocking",
+      "Barometer",
+      "Android Sensor Hub",
+      "Advanced x-axis haptics for sharper/defined response",
+      "Ports",
+      "USB Type-C\u2122 USB",
+      "3.1 Gen 1",
+      "Single Nano SIM",
+      "USB Type-C and USB-C are trademarks of USB Implementers Forum."
+    ],
+    "audio": [
+      "Dual front-firing speakers",
+      "3 mics",
+      "Noise suppression",
+      "Bluetooth 5.0 + LE",
+      "Wireless HD audio with LDAC, Qualcomm\u00ae AptX\u2122 and AptX HD\u2122 audio codecs supported",
+      "USB-C\u2122 port to use with your Pixel USB-C earbuds",
+      "(See what comes in the box with Pixel 3.)",
+      "Headphone adapter to connect a 3.5mm jack to your Pixel"
+    ],
+    "durability": {
+      "glass": "Corning\u00ae Gorilla\u00ae Glass 5"
+    },
+    "weight_g": 0.0
+  },
+  {
+    "name": "Pixel 3 XL",
+    "os_at_launch": "Android 9 (Pie)1",
+    "display": {
+      "features": []
+    },
+    "dimensions": {},
+    "battery": {},
+    "hardware": {
+      "storage_options": [],
+      "processor": "Qualcomm\u00ae Snapdragon\u2122 845 | 2.5Ghz + 1.6Ghz, 64Bit Octa-core | Adreno 630",
+      "security_chip": "Titan M Security module"
+    },
+    "cameras": {
+      "rear": [
+        {
+          "description": "12.2MP"
+        },
+        {
+          "description": "1.4\u03bcm",
+          "fov": "Field of view: 76\u00b0"
+        },
+        {
+          "description": "1080p @ 30fps, 120fps"
+        },
+        {
+          "description": "720p @ 30fps, 60fps, 240fps"
+        },
+        {
+          "description": "4K @ 30fps"
+        }
+      ],
+      "front": [
+        {
+          "description": "8MP wide-angle and normal cameras",
+          "aperture": "Normal: \u0192/1.8 aperture, field of view 75\u00b0, autofocus with phase detection",
+          "fov": "Normal: \u0192/1.8 aperture, field of view 75\u00b0, autofocus with phase detection"
+        },
+        {
+          "description": "1080p @ 30fps"
+        },
+        {
+          "description": "720p @ 30fps"
+        },
+        {
+          "description": "480p @ 30fps"
+        }
+      ],
+      "features": []
+    },
+    "connectivity": {
+      "wifi": [],
+      "nfc": false,
+      "uwb": false
+    },
+    "sensors": [
+      "Active Edge\u2122",
+      "Proximity / Ambient light sensor",
+      "Accelerometer / Gyrometer",
+      "Magnetometer",
+      "Pixel Imprint: Back-mounted fingerprint sensor for fast unlocking",
+      "Barometer",
+      "Android Sensor Hub",
+      "Advanced x-axis haptics for sharper/defined response",
+      "Ports",
+      "USB Type-C\u2122 USB",
+      "3.1 Gen 1",
+      "Single Nano SIM",
+      "USB Type-C and USB-C are trademarks of USB Implementers Forum."
+    ],
+    "audio": [
+      "Dual front-firing speakers",
+      "3 mics",
+      "Noise suppression",
+      "Bluetooth 5.0 + LE",
+      "Wireless HD audio with LDAC, Qualcomm\u00ae AptX\u2122 and AptX HD\u2122 audio codecs supported",
+      "USB-C\u2122 port to use with your Pixel USB-C earbuds",
+      "(See what comes in the box with Pixel 3.)",
+      "Headphone adapter to connect a 3.5mm jack to your Pixel"
+    ],
+    "durability": {
+      "glass": "Corning\u00ae Gorilla\u00ae Glass 5"
+    },
+    "weight_g": 0.0
+  },
+  {
+    "name": "Pixel 2",
+    "os_at_launch": "Android 8.0.0 (Oreo)1",
+    "display": {
+      "features": []
+    },
+    "dimensions": {},
+    "battery": {},
+    "hardware": {
+      "storage_options": [],
+      "processor": "Qualcomm\u00ae Snapdragon\u2122 835 | 2.35Ghz + 1.9Ghz, 64Bit Octa-Core | Adreno 540"
+    },
+    "cameras": {
+      "rear": [
+        {
+          "description": "12.2MP"
+        },
+        {
+          "description": "1.4\u03bcm"
+        },
+        {
+          "description": "1080p @ 30fps, 60fps, 120fps"
+        },
+        {
+          "description": "720p @ 30fps, 60fps, 240fps"
+        },
+        {
+          "description": "4K @ 30fps"
+        }
+      ],
+      "front": [
+        {
+          "description": "8MP"
+        },
+        {
+          "description": "1.4\u03bcm"
+        },
+        {
+          "description": "1080p @ 30fps"
+        },
+        {
+          "description": "720p @ 30fps"
+        },
+        {
+          "description": "480p @ 30fps"
+        }
+      ],
+      "features": []
+    },
+    "connectivity": {
+      "wifi": [],
+      "nfc": false,
+      "uwb": false
+    },
+    "sensors": [
+      "Active Edge\u2122",
+      "Proximity / Ambient light sensor",
+      "Accelerometer / Gyrometer",
+      "Magnetometer",
+      "Pixel Imprint: Back-mounted fingerprint sensor for fast unlocking",
+      "Barometer",
+      "Hall effect sensor",
+      "Android Sensor Hub",
+      "Advanced x-axis haptics for sharper/defined response",
+      "Ports",
+      "USB-C\u2122",
+      "3.1 Gen 1",
+      "Single Nano SIM",
+      "USB Type-C and USB-C are trademarks of USB Implementers Forum."
+    ],
+    "audio": [
+      "Stereo front-firing speakers",
+      "Bluetooth 5.0 + LE",
+      "Wireless HD audio with LDAC, Qualcomm\u00ae AptX\u2122 and AptX HD\u2122 audio codecs supported",
+      "USB-C\u2122 port to use with your own USB-C digital headphones",
+      "(See a list of some headphones that work with Pixel 2.)",
+      "Headphone Adapter to connect a 3.5mm jack to your Pixel",
+      "3 mics",
+      "Noise suppression"
+    ],
+    "durability": {
+      "glass": "Corning\u00ae Gorilla\u00ae Glass 5"
+    },
+    "weight_g": 0.0
+  },
+  {
+    "name": "Pixel 2 XL",
+    "os_at_launch": "Android 7.1, Nougat",
+    "display": {
+      "features": []
+    },
+    "dimensions": {},
+    "battery": {},
+    "hardware": {
+      "storage_options": [],
+      "processor": "Qualcomm\u00ae Snapdragon\u2122 835 | 2.35Ghz + 1.9Ghz, 64Bit Octa-Core | Adreno 540 | Qualcomm\u00ae Snapdragon\u2122 821  2.15Ghz + 1.6Ghz, 64Bit Quad-Core processor | Adreno\u2122 530 GPU | Qualcomm\u00ae Snapdragon\u2122 821  2.15Ghz + 1.6Ghz, 64Bit Quad-Core processor | Adreno\u2122 530 GPU"
+    },
+    "cameras": {
+      "rear": [
+        {
+          "description": "12.2MP"
+        },
+        {
+          "description": "1.4\u03bcm"
+        },
+        {
+          "description": "1080p @ 30fps, 60fps, 120fps"
+        },
+        {
+          "description": "720p @ 30fps, 60fps, 240fps"
+        },
+        {
+          "description": "4K @ 30fps"
+        },
+        {
+          "description": "12.3 MP"
+        },
+        {
+          "description": "4K (30fps) video capture"
+        },
+        {
+          "description": "12.3 MP"
+        },
+        {
+          "description": "4K (30fps) video capture"
+        }
+      ],
+      "front": [
+        {
+          "description": "8MP"
+        },
+        {
+          "description": "1.4\u03bcm"
+        },
+        {
+          "description": "1080p @ 30fps"
+        },
+        {
+          "description": "720p @ 30fps"
+        },
+        {
+          "description": "480p @ 30fps"
+        },
+        {
+          "description": "8 MP"
+        },
+        {
+          "description": "8 MP"
+        }
+      ],
+      "features": []
+    },
+    "connectivity": {
+      "wifi": [],
+      "nfc": false,
+      "uwb": false
+    },
+    "sensors": [
+      "Active EdgeTM",
+      "Proximity / Ambient light sensor",
+      "Accelerometer / Gyrometer",
+      "Magnetometer",
+      "Pixel Imprint: Back-mounted fingerprint sensor for fast unlocking",
+      "Barometer",
+      "Hall effect sensor",
+      "Android Sensor Hub",
+      "Advanced x-axis haptics for sharper/defined response",
+      "Ports",
+      "USB-C\u2122",
+      "3.1 Gen 1",
+      "Single Nano SIM",
+      "USB Type-C and USB-C are trademarks of USB Implementers Forum.",
+      "Pixel Imprint",
+      "Accelerometer/Gyroscope",
+      "Magnetometer",
+      "Barometer",
+      "Proximity sensor/Ambient light sensor",
+      "Hall sensor",
+      "Android Sensor Hub",
+      "Network",
+      "World-wide network/carrier compatibility6 with:",
+      "US/CA/PR only:",
+      "GSM: Quad-band GSM",
+      "UMTS/WCDMA: B1/2/4/5/8",
+      "CDMA: BC0/BC1/BC10",
+      "TDS-CDMA: N/A",
+      "FDD LTE: B 1/2/3/4/5/7/8/12/13/17/20/25/26/28/29/30",
+      "TDD LTE: B 41",
+      "LTE 2xCA: B2+B2, B2+B4, B2+B5, B2+B12, B2+B13, B2+B17, B2+B29, B2+B30, B4+B4, B4+B5, B4+B7, B4+B12, B4+B13, B4+B17, B4+B29, B4+B30, B5+B30, B7+B7, B12+B30, B25+B25, B29+B30, B41+B41",
+      "LTE 3xCA: B2+B2+B12, B2+B2+B13, B2+B4+B4, B2+B4+B5, B2+B4+B12, B2+B4+B13, B2+B4+B29, B2+B5+B30, B2+B12+B30, B2+B29+B30, B4+B4+B12, B4+B4+B13, B4+B5+B30, B4+ B7+ B12, B4+B12+B30, B4+B29+B30, B41+B41+B41",
+      "Rest of world:",
+      "GSM: Quad-band GSM",
+      "UMTS/WCDMA: B 1/2/4/5/6/8/9/19",
+      "CDMA: BC0",
+      "TDS-CDMA: B 34/39",
+      "FDD LTE: B1/2/3/4/5/7/8/12/13/17/18/19/20/21/26/28/32/",
+      "TDD LTE: B 38/39/40/41",
+      "LTE 2xCA: B1+B3, B1+B5,  B1+B7, B1+B8, B1+B18, B1+B19, B1+B20, B1+B21, B1+B26, B1+B41, B3+B3, B3+B5, B3+B7, B3+B8, B3+B19, B3+B20, B3+B28, B5+B7, B7+B7, B7+B8, B7+B20, B7+B28, B19+B21, B20+B32, B38+B38, B39+B39, B39+B41, B40+B40, B41+B41",
+      "LTE 3xCA: B1+B3+B3, B1+B3+B5, B1+B3+B8, B1+B3+B20, B1+B5+B7, B1+B19+B21, B1+B41+B41, B3+B3+B5, B3+B3+B7, B3+B3+B8, B3+B7+B7, B3+B7+B8, B3+B7+B20, B3+B7+B28, B7+B7+B28",
+      "Ports",
+      "USB Type-C",
+      "Nano SIM slot",
+      "3.5 mm audio jack",
+      "USB 3.1",
+      "Pixel Imprint",
+      "Accelerometer/Gyroscope",
+      "Magnetometer",
+      "Barometer",
+      "Proximity sensor/Ambient light sensor",
+      "Hall sensor",
+      "Android Sensor Hub",
+      "Network",
+      "World-wide network/carrier compatibility6 with:",
+      "US/CA/PR only:",
+      "GSM: Quad-band GSM",
+      "UMTS/WCDMA: B1/2/4/5/8",
+      "CDMA: BC0/BC1/BC10",
+      "TDS-CDMA: N/A",
+      "FDD LTE: B 1/2/3/4/5/7/8/12/13/17/20/25/26/28/29/30",
+      "TDD LTE: B 41",
+      "LTE 2xCA: B2+B2, B2+B4, B2+B5, B2+B12, B2+B13, B2+B17, B2+B29, B2+B30, B4+B4, B4+B5, B4+B7, B4+B12, B4+B13, B4+B17, B4+B29, B4+B30, B5+B30, B7+B7, B12+B30, B25+B25, B29+B30, B41+B41",
+      "LTE 3xCA: B2+B2+B12, B2+B2+B13, B2+B4+B4, B2+B4+B5, B2+B4+B12, B2+B4+B13, B2+B4+B29, B2+B5+B30, B2+B12+B30, B2+B29+B30, B4+B4+B12, B4+B4+B13, B4+B5+B30, B4+ B7+ B12, B4+B12+B30, B4+B29+B30, B41+B41+B41",
+      "Rest of world:",
+      "GSM: Quad-band GSM",
+      "UMTS/WCDMA: B 1/2/4/5/6/8/9/19",
+      "CDMA: BC0",
+      "TDS-CDMA: B 34/39",
+      "FDD LTE: B1/2/3/4/5/7/8/12/13/17/18/19/20/21/26/28/32/",
+      "TDD LTE: B 38/39/40/41",
+      "LTE 2xCA: B1+B3, B1+B5, B1+B7, B1+B8, B1+B18, B1+B19, B1+B20, B1+B21, B1+B26, B1+B41, B3+B3, B3+B5, B3+B7, B3+B8, B3+B19, B3+B20, B3+B28, B5+B7, B7+B7, B7+B8, B7+B20, B7+B28, B19+B21, B20+B32, B38+B38, B39+B39, B39+B41, B40+B40, B41+B41",
+      "LTE 3xCA: B1+B3+B3, B1+B3+B5, B1+B3+B8, B1+B3+B20, B1+B5+B7, B1+B19+B21, B1+B41+B41, B3+B3+B5, B3+B3+B7, B3+B3+B8, B3+B7+B7, B3+B7+B8, B3+B7+B20, B3+B7+B28, B7+B7+B28",
+      "Ports",
+      "USB Type-C",
+      "Nano SIM slot",
+      "3.5 mm audio jack",
+      "USB 3.1"
+    ],
+    "audio": [
+      "Stereo front-firing speakers",
+      "Bluetooth 5.0 + LE",
+      "Wireless HD audio with LDAC, Qualcomm\u00ae AptX\u2122 and AptX HD\u2122 audio codecs supported",
+      "USB-C\u2122 port to use with your own USB-C digital headphones",
+      "(See a list of some headphones that work with Pixel 2.)",
+      "Headphone Adapter to connect a 3.5mm jack to your Pixel",
+      "3 mics",
+      "Noise suppression"
+    ],
+    "durability": {
+      "glass": "Anodized aluminum; Corning\u00ae Gorilla\u00ae Glass 4"
+    },
+    "weight_g": 0.0
+  }
+]

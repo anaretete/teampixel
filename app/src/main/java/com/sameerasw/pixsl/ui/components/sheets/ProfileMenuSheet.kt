@@ -37,6 +37,8 @@ fun ProfileMenuSheet(
     authState: AuthState,
     pitchBlackTheme: Boolean,
     onPitchBlackThemeChange: (Boolean) -> Unit,
+    useGSMArena: Boolean,
+    onUseGSMArenaChange: (Boolean) -> Unit,
     onAboutClick: () -> Unit,
     onDismissRequest: () -> Unit,
     onSignOutClick: () -> Unit,
@@ -137,6 +139,16 @@ fun ProfileMenuSheet(
                     onCheckedChange = {
                         HapticUtil.performVirtualKeyHaptic(view)
                         onPitchBlackThemeChange(it)
+                    }
+                )
+
+                ProfileMenuToggleItem(
+                    icon = R.drawable.ic_launcher_foreground, // Fallback icon, or pick a better one if available
+                    label = stringResource(R.string.label_use_gsmarena),
+                    checked = useGSMArena,
+                    onCheckedChange = {
+                        HapticUtil.performVirtualKeyHaptic(view)
+                        onUseGSMArenaChange(it)
                     }
                 )
 

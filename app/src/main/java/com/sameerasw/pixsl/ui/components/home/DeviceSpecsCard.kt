@@ -45,7 +45,9 @@ fun DeviceSpecsCard(
                 )
             }
 
-            SpecFooter()
+            if (deviceSpecs.imageUrls.isNotEmpty()) {
+                SpecFooter(deviceSpecs)
+            }
 
         } else {
             // Fallback or empty state
@@ -138,7 +140,7 @@ private fun SpecHeader(title: String) {
 
 
 @Composable
-private fun SpecFooter() {
+private fun SpecFooter(deviceSpecs: com.sameerasw.pixsl.data.model.DeviceSpecs?) {
     Row(
         modifier = Modifier
             .background(

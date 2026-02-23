@@ -32,6 +32,9 @@ class MainViewModel : ViewModel() {
     private val _pitchBlackTheme = MutableStateFlow(settings.getBoolean("pitch_black_theme", false))
     val pitchBlackTheme: StateFlow<Boolean> = _pitchBlackTheme.asStateFlow()
 
+    private val _useGSMArena = MutableStateFlow(settings.getBoolean("use_gsm_arena", false))
+    val useGSMArena: StateFlow<Boolean> = _useGSMArena.asStateFlow()
+
     private val _authState = MutableStateFlow<AuthState>(AuthState.Loading)
     val authState: StateFlow<AuthState> = _authState.asStateFlow()
 
@@ -50,6 +53,13 @@ class MainViewModel : ViewModel() {
     fun setPitchBlackTheme(enabled: Boolean) {
         settings.putBoolean("pitch_black_theme", enabled)
         _pitchBlackTheme.value = enabled
+    }
+
+    fun setUseGSMArena(enabled: Boolean, context: Context) {
+        settings.putBoolean("use_gsm_arena", enabled)
+        _useGSMArena.value = enabled
+        // Refresh specs when changed
+        loadDeviceSpecs(context, forceRefresh = true)
     }
 
     private fun checkCurrentSession() {
@@ -192,14 +202,15 @@ class MainViewModel : ViewModel() {
         }
     }
 
-    fun loadDeviceSpecs(context: Context) {
-        val cachedSpecsJson = settings.getStringOrNull("cached_device_specs")
+    fun loadDeviceSpecs(context: Context, forceRefresh: Boolean = false) {
+        val cachedSpecsJson = if (forceRefresh) null else settings.getStringOrNull("cached_device_specs")
         if (cachedSpecsJson != null) {
             try {
                 val specs = Json.decodeFromString<DeviceSpecs>(cachedSpecsJson)
                 _deviceSpecs.value = specs
-                // If it was an old cache without images, continue to fetch fresh data
-                if (specs.imageUrls.isNotEmpty()) {
+                val isGsmArenaCache = specs.imageUrls.isNotEmpty()
+                // Only use cache if it matches the current preference
+                if (isGsmArenaCache == useGSMArena.value) {
                     return
                 }
             } catch (e: Exception) {
@@ -210,9 +221,15 @@ class MainViewModel : ViewModel() {
         viewModelScope.launch {
             _isSpecsLoading.value = true
             val deviceInfo = DeviceUtils.getDeviceInfo(context)
+            
             val specs = withContext(Dispatchers.IO) {
-                GSMArenaService.fetchSpecs(deviceInfo.brand, deviceInfo.model)
+                if (useGSMArena.value) {
+                    com.sameerasw.pixsl.utils.GSMArenaService.fetchSpecs(deviceInfo.brand, deviceInfo.model)
+                } else {
+                    com.sameerasw.pixsl.utils.LocalSpecService.getLocalSpecs(context, deviceInfo.model)
+                }
             }
+            
             if (specs != null) {
                 _deviceSpecs.value = specs
                 settings.putString("cached_device_specs", Json.encodeToString(specs))

@@ -77,4 +77,6 @@
     <string name="app_tasks">Tasks</string>
     <string name="app_zero">Zero</string>
     <string name="app_essentials">Essentials</string>
+    <string name="label_use_gsmarena">Use GSMArena for specs</string>
+    <string name="desc_use_gsmarena">Fetch real-time data from GSMArena instead of local storage.</string>
 </resources>

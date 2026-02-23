@@ -119,6 +119,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             val viewModel: MainViewModel = androidx.lifecycle.viewmodel.compose.viewModel()
             val pitchBlackTheme by viewModel.pitchBlackTheme.collectAsState()
+            val useGSMArena by viewModel.useGSMArena.collectAsState()
 
             PixeLKTheme(pitchBlackTheme = pitchBlackTheme) {
                 val authState by viewModel.authState.collectAsState()
@@ -199,6 +200,8 @@ class MainActivity : ComponentActivity() {
                                     authState = authState,
                                     pitchBlackTheme = pitchBlackTheme,
                                     onPitchBlackThemeChange = { viewModel.setPitchBlackTheme(it) },
+                                    useGSMArena = useGSMArena,
+                                    onUseGSMArenaChange = { viewModel.setUseGSMArena(it, context) },
                                     onAboutClick = { showAboutSheet = true },
                                     onDismissRequest = { showProfileMenu = false },
                                     onSignOutClick = { viewModel.signOut() },
