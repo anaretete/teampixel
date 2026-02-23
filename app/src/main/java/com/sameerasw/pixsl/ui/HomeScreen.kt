@@ -164,6 +164,8 @@ fun HomeScreenPreview() {
                 availableStorage = 256000000000L,
                 totalRam = 12000000000L,
                 availableRam = 12000000000L,
+                osCodename = "Vanilla Ice Cream",
+                securityPatch = "2024-05-05"
             ),
             hasRunStartupAnimation = true,
             onAnimationRun = {},

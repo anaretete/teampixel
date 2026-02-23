@@ -23,7 +23,9 @@ data class DeviceInfo(
     val totalStorage: Long,
     val availableStorage: Long,
     val totalRam: Long,
-    val availableRam: Long
+    val availableRam: Long,
+    val securityPatch: String = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) Build.VERSION.SECURITY_PATCH else "Unknown",
+    val osCodename: String = Build.VERSION.CODENAME
 )
 
 object DeviceUtils {
@@ -50,7 +52,9 @@ object DeviceUtils {
             totalStorage = totalStorage,
             availableStorage = availableStorage,
             totalRam = memoryInfo.totalMem,
-            availableRam = memoryInfo.availMem
+            availableRam = memoryInfo.availMem,
+            securityPatch = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) Build.VERSION.SECURITY_PATCH else "Unknown",
+            osCodename = Build.VERSION.CODENAME
         )
     }
 
@@ -63,6 +67,24 @@ object DeviceUtils {
             size / Math.pow(1024.0, digitGroups.toDouble()),
             units[digitGroups]
         )
+    }
+
+    fun getOSName(sdkInt: Int, defaultCodename: String): String {
+        return when (sdkInt) {
+            37 -> "CinnamonBun"
+            36 -> "Baklava"
+            35 -> "Vanilla Ice Cream"
+            34 -> "Upside Down Cake"
+            33 -> "Tiramisu"
+            32 -> "Snow Cone v2"
+            31 -> "Snow Cone"
+            30 -> "R"
+            29 -> "Q"
+            28 -> "Pie"
+            27 -> "Oreo"
+            26 -> "Oreo"
+            else -> defaultCodename.takeIf { it != "REL" } ?: "Android"
+        }
     }
 
     fun formatHardwareSize(sizeBytes: Long): String {
@@ -79,6 +101,18 @@ object DeviceUtils {
             "${roundedGb / 1024} TB"
         } else {
             "$roundedGb GB"
+        }
+    }
+
+    fun formatSecurityPatch(patchString: String): String {
+        if (patchString == "Unknown" || patchString.isBlank()) return patchString
+        return try {
+            val parser = java.text.SimpleDateFormat("yyyy-MM-dd", java.util.Locale.getDefault())
+            val formatter = java.text.SimpleDateFormat("d MMMM, yyyy", java.util.Locale.getDefault())
+            val date = parser.parse(patchString)
+            if (date != null) formatter.format(date) else patchString
+        } catch (e: Exception) {
+            patchString
         }
     }
 }

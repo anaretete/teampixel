@@ -105,7 +105,7 @@ fun DeviceHeroCard(
     ) {
 
 
-        Column(
+        Row(
             modifier = Modifier
                 .background(
                     MaterialTheme.colorScheme.surfaceContainerHighest,
@@ -113,19 +113,34 @@ fun DeviceHeroCard(
                 )
                 .fillMaxWidth()
                 .padding(16.dp),
-            horizontalAlignment = Alignment.CenterHorizontally
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.Center
         ) {
-            // Android Version: Android 15 (35)
-            Text(
-                text = "Android ${deviceInfo.androidVersion} (${deviceInfo.sdkInt})",
-                style = MaterialTheme.typography.labelLarge,
-                fontWeight = FontWeight.Medium,
-                color = MaterialTheme.colorScheme.primary
-            )
-
-//            Spacer(modifier = Modifier.height(16.dp))
-
-
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.spacedBy(16.dp)
+            ) {
+                Icon(
+                    painter = painterResource(id = R.drawable.rounded_android_24),
+                    contentDescription = null,
+                    tint = MaterialTheme.colorScheme.primary,
+                    modifier = Modifier.size(32.dp)
+                )
+                Column(horizontalAlignment = Alignment.Start) {
+                    Text(
+                        text = "Android ${deviceInfo.androidVersion} (${DeviceUtils.getOSName(deviceInfo.sdkInt, deviceInfo.osCodename)})",
+                        style = MaterialTheme.typography.bodyLarge,
+                        fontWeight = FontWeight.Bold,
+                        color = MaterialTheme.colorScheme.primary
+                    )
+                    Text(
+                        text = "API ${deviceInfo.sdkInt} • Patch: ${DeviceUtils.formatSecurityPatch(deviceInfo.securityPatch)}",
+                        style = MaterialTheme.typography.labelMedium,
+                        fontWeight = FontWeight.Medium,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                    )
+                }
+            }
         }
 
         Column(
