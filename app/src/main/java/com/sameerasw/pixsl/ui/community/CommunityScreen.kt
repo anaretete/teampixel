@@ -11,8 +11,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -69,7 +67,7 @@ fun CommunityScreen(
                 modifier = Modifier.padding(bottom = contentPadding.calculateBottomPadding() + 48.dp)
             ) {
                 Icon(
-                    Icons.Default.Add,
+                    painter = androidx.compose.ui.res.painterResource(id = R.drawable.rounded_add_24),
                     contentDescription = stringResource(R.string.content_desc_add_post)
                 )
             }

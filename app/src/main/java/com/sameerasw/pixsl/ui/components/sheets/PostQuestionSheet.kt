@@ -11,10 +11,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Close
-import androidx.compose.material.icons.outlined.Image
-import androidx.compose.material.icons.outlined.PhotoLibrary
 import androidx.compose.material3.Button
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -35,6 +31,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalView
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
@@ -130,7 +127,7 @@ fun PostQuestionSheet(
                             modifier = Modifier.align(Alignment.TopStart)
                         ) {
                             Icon(
-                                imageVector = Icons.Default.Close,
+                                painter = painterResource(id = R.drawable.rounded_close_24),
                                 contentDescription = stringResource(R.string.content_desc_remove_media),
                                 tint = MaterialTheme.colorScheme.error
                             )
@@ -156,7 +153,7 @@ fun PostQuestionSheet(
                     }
                 ) {
                     Icon(
-                        imageVector = Icons.Outlined.Image,
+                        painter = painterResource(id = R.drawable.rounded_image_24),
                         contentDescription = stringResource(R.string.content_desc_add_media),
                         tint = MaterialTheme.colorScheme.primary
                     )
@@ -183,7 +180,7 @@ fun PostQuestionSheet(
                     featureTitle = R.string.feat_media_upload_title,
                     permissions = listOf(
                         PermissionItem(
-                            icon = Icons.Outlined.PhotoLibrary,
+                            iconRes = R.drawable.rounded_photo_library_24,
                             title = stringResource(R.string.perm_title_media),
                             dependentFeatures = listOf(R.string.feat_media_upload_title),
                             isGranted = false,

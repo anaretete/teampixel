@@ -54,7 +54,8 @@ android {
 
     buildTypes {
         release {
-            isMinifyEnabled = false
+            isMinifyEnabled = true
+            isShrinkResources = true
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
@@ -120,8 +121,6 @@ dependencies {
     
     // Ensure the core KMP library matches the JNI version
     implementation("fr.acinq.secp256k1:secp256k1-kmp:0.22.0")
-    // Material Icons Extended for UI icons
-    implementation("androidx.compose.material:material-icons-extended:1.7.0")
 
     // JSoup for HTML scraping
     implementation("org.jsoup:jsoup:1.17.2")

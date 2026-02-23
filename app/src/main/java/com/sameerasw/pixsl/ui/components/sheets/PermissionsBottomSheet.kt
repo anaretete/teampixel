@@ -9,7 +9,6 @@ import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.sameerasw.pixsl.R
@@ -17,7 +16,7 @@ import com.sameerasw.pixsl.ui.components.cards.PermissionCard
 import com.sameerasw.pixsl.ui.components.containers.RoundedCardContainer
 
 data class PermissionItem(
-    val icon: ImageVector,
+    val iconRes: Int,
     val title: Any,
     val dependentFeatures: List<Any> = emptyList(),
     val actionLabel: Any? = null,
@@ -56,7 +55,7 @@ fun PermissionsBottomSheet(
             RoundedCardContainer {
                 permissions.forEach { perm ->
                     PermissionCard(
-                        icon = perm.icon,
+                        iconRes = perm.iconRes,
                         title = perm.title,
                         dependentFeatures = perm.dependentFeatures,
                         actionLabel = perm.actionLabel ?: R.string.perm_action_enable,

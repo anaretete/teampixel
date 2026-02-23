@@ -11,10 +11,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.AddComment
-import androidx.compose.material.icons.filled.ArrowBack
-import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.HorizontalDivider
@@ -32,6 +28,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -80,7 +77,7 @@ fun PostDetailScreen(
                 navigationIcon = {
                     IconButton(onClick = onNavigateBack) {
                         Icon(
-                            Icons.Default.ArrowBack,
+                            painter = painterResource(id = R.drawable.rounded_arrow_back_24),
                             contentDescription = stringResource(R.string.action_back)
                         )
                     }
@@ -92,7 +89,7 @@ fun PostDetailScreen(
                             onNavigateBack()
                         }) {
                             Icon(
-                                imageVector = Icons.Default.Delete,
+                                painter = painterResource(id = R.drawable.rounded_delete_24),
                                 contentDescription = stringResource(R.string.content_desc_delete_post),
                                 tint = MaterialTheme.colorScheme.error
                             )
@@ -104,7 +101,7 @@ fun PostDetailScreen(
         floatingActionButton = {
             FloatingActionButton(onClick = { showReplySheet = true }) {
                 Icon(
-                    Icons.Default.AddComment,
+                    painter = painterResource(id = R.drawable.rounded_mode_comment_24),
                     contentDescription = stringResource(R.string.label_reply)
                 )
             }

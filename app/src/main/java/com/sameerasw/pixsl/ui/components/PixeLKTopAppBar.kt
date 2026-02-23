@@ -5,10 +5,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.ArrowBack
-import androidx.compose.material.icons.automirrored.filled.ExitToApp
-import androidx.compose.material.icons.filled.Person
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
 import androidx.compose.material3.Icon
@@ -28,6 +24,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalView
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
@@ -97,22 +94,22 @@ fun PixeLKTopAppBar(
     val navigationIconContent: @Composable () -> Unit = {
         if (hasBack) {
             val view = LocalView.current
-            IconButton(
-                onClick = {
-                    HapticUtil.performVirtualKeyHaptic(view)
-                    onBackClick?.invoke()
-                },
-                colors = IconButtonDefaults.iconButtonColors(
-                    containerColor = MaterialTheme.colorScheme.surfaceBright
-                ),
-                modifier = Modifier.size(48.dp)
-            ) {
-                Icon(
-                    imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                    contentDescription = stringResource(R.string.action_back),
-                    modifier = Modifier.size(32.dp)
-                )
-            }
+                IconButton(
+                    onClick = {
+                        HapticUtil.performVirtualKeyHaptic(view)
+                        onBackClick?.invoke()
+                    },
+                    colors = IconButtonDefaults.iconButtonColors(
+                        containerColor = MaterialTheme.colorScheme.surfaceBright
+                    ),
+                    modifier = Modifier.size(48.dp)
+                ) {
+                    Icon(
+                        painter = painterResource(id = R.drawable.rounded_arrow_back_24),
+                        contentDescription = stringResource(R.string.action_back),
+                        modifier = Modifier.size(32.dp)
+                    )
+                }
         }
     }
 
@@ -167,7 +164,7 @@ fun PixeLKTopAppBar(
                         onClick = { },
                         leadingIcon = {
                             Icon(
-                                imageVector = Icons.Default.Person,
+                                painter = painterResource(id = R.drawable.rounded_person_24),
                                 contentDescription = null,
                                 modifier = Modifier.size(24.dp)
                             )
@@ -182,7 +179,7 @@ fun PixeLKTopAppBar(
                         },
                         leadingIcon = {
                             Icon(
-                                imageVector = Icons.AutoMirrored.Filled.ExitToApp,
+                                painter = painterResource(id = R.drawable.rounded_logout_24),
                                 contentDescription = null,
                                 modifier = Modifier.size(24.dp)
                             )

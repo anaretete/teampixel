@@ -19,3 +19,18 @@
 # If you keep the line number information, uncomment this to
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
+
+# Supabase & Ktor rules to prevent over-minification of network/auth logic
+-keep class io.ktor.** { *; }
+-keep class io.github.jan.** { *; }
+
+# Kotlin Serialization rules to preserve serializable fields and naming
+-keepattributes *Annotation*, EnclosingMethod, InnerClasses
+-keepclassmembers class ** {
+    @kotlinx.serialization.SerialName <fields>;
+}
+
+# Keep project data models and specific serialization interfaces
+-keep class com.sameerasw.pixsl.data.model.** { *; }
+-keep class com.sameerasw.pixsl.data.Profile { *; }
+-keep interface kotlinx.serialization.KSerializer { *; }

@@ -10,15 +10,6 @@ import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Bolt
-import androidx.compose.material.icons.filled.CheckCircle
-import androidx.compose.material.icons.filled.Favorite
-import androidx.compose.material.icons.filled.Repeat
-import androidx.compose.material.icons.outlined.ChatBubbleOutline
-import androidx.compose.material.icons.outlined.ElectricBolt
-import androidx.compose.material.icons.outlined.FavoriteBorder
-import androidx.compose.material.icons.outlined.Repeat
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
@@ -30,6 +21,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalView
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
@@ -81,7 +73,7 @@ fun PostCard(
                     if (post.profile?.isExpert == true) {
                         Spacer(modifier = Modifier.width(4.dp))
                         Icon(
-                            imageVector = Icons.Default.CheckCircle,
+                            painter = painterResource(id = R.drawable.rounded_check_circle_24),
                             contentDescription = stringResource(R.string.label_expert),
                             tint = MaterialTheme.colorScheme.primary,
                             modifier = Modifier.size(16.dp)
@@ -139,7 +131,7 @@ fun PostCard(
                     modifier = Modifier.size(36.dp)
                 ) {
                     Icon(
-                        imageVector = Icons.Outlined.ChatBubbleOutline,
+                        painter = painterResource(id = R.drawable.rounded_chat_bubble_24),
                         contentDescription = stringResource(R.string.label_reply),
                         modifier = Modifier.size(20.dp),
                         tint = MaterialTheme.colorScheme.onSurfaceVariant
@@ -158,7 +150,9 @@ fun PostCard(
                 ) {
                     Row(verticalAlignment = Alignment.CenterVertically) {
                         Icon(
-                            imageVector = if (isReposted) Icons.Default.Repeat else Icons.Outlined.Repeat,
+                            painter = painterResource(
+                                id = if (isReposted) R.drawable.rounded_repeat_on_24 else R.drawable.rounded_repeat_24
+                            ),
                             contentDescription = stringResource(R.string.label_repost),
                             modifier = Modifier.size(20.dp),
                             tint = if (isReposted) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurfaceVariant
@@ -186,7 +180,9 @@ fun PostCard(
                 ) {
                     Row(verticalAlignment = Alignment.CenterVertically) {
                         Icon(
-                            imageVector = if (zapAmount > 0) Icons.Default.Bolt else Icons.Outlined.ElectricBolt,
+                            painter = painterResource(
+                                id = if (zapAmount > 0) R.drawable.round_bolt_24 else R.drawable.rounded_bolt_24
+                            ),
                             contentDescription = stringResource(R.string.label_zap),
                             modifier = Modifier.size(20.dp),
                             tint = if (zapAmount > 0) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurfaceVariant
@@ -214,7 +210,9 @@ fun PostCard(
                 ) {
                     Row(verticalAlignment = Alignment.CenterVertically) {
                         Icon(
-                            imageVector = if (isLiked) Icons.Default.Favorite else Icons.Outlined.FavoriteBorder,
+                            painter = painterResource(
+                                id = if (isLiked) R.drawable.round_favorite_24 else R.drawable.rounded_favorite_24
+                            ),
                             contentDescription = stringResource(R.string.label_like),
                             modifier = Modifier.size(20.dp),
                             tint = if (isLiked) MaterialTheme.colorScheme.error else MaterialTheme.colorScheme.onSurfaceVariant

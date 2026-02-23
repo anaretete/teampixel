@@ -9,12 +9,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.ExitToApp
-import androidx.compose.material.icons.filled.ChevronRight
-import androidx.compose.material.icons.filled.DarkMode
-import androidx.compose.material.icons.filled.Info
-import androidx.compose.material.icons.filled.Person
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -26,8 +20,8 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalView
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -99,7 +93,7 @@ fun ProfileMenuSheet(
             ) {
                 if (signedInState != null) {
                     ProfileMenuItem(
-                        icon = Icons.Default.Person,
+                        icon = R.drawable.rounded_person_24,
                         label = stringResource(R.string.action_profile),
                         onClick = {
                             HapticUtil.performUIHaptic(view)
@@ -109,7 +103,7 @@ fun ProfileMenuSheet(
                     )
 
                     ProfileMenuItem(
-                        icon = Icons.AutoMirrored.Filled.ExitToApp,
+                        icon = R.drawable.rounded_logout_24,
                         label = stringResource(R.string.action_sign_out),
                         labelColor = MaterialTheme.colorScheme.error,
                         iconColor = MaterialTheme.colorScheme.error,
@@ -121,7 +115,7 @@ fun ProfileMenuSheet(
                     )
                 } else {
                     ProfileMenuItem(
-                        icon = Icons.Default.Person,
+                        icon = R.drawable.rounded_person_24,
                         label = stringResource(R.string.action_sign_in),
                         onClick = {
                             HapticUtil.performUIHaptic(view)
@@ -137,7 +131,7 @@ fun ProfileMenuSheet(
                 spacing = 2.dp
             ) {
                 ProfileMenuToggleItem(
-                    icon = Icons.Default.DarkMode,
+                    icon = R.drawable.rounded_dark_mode_24,
                     label = stringResource(R.string.label_pitch_black_theme),
                     checked = pitchBlackTheme,
                     onCheckedChange = {
@@ -147,7 +141,7 @@ fun ProfileMenuSheet(
                 )
 
                 ProfileMenuItem(
-                    icon = Icons.Default.Info,
+                    icon = R.drawable.rounded_info_24,
                     label = stringResource(R.string.label_about),
                     onClick = {
                         HapticUtil.performUIHaptic(view)
@@ -162,7 +156,7 @@ fun ProfileMenuSheet(
 
 @Composable
 private fun ProfileMenuItem(
-    icon: ImageVector,
+    icon: Int,
     label: String,
     labelColor: androidx.compose.ui.graphics.Color = MaterialTheme.colorScheme.onSurface,
     iconColor: androidx.compose.ui.graphics.Color = MaterialTheme.colorScheme.primary,
@@ -185,7 +179,7 @@ private fun ProfileMenuItem(
             horizontalArrangement = Arrangement.spacedBy(16.dp)
         ) {
             Icon(
-                imageVector = icon,
+                painter = painterResource(id = icon),
                 contentDescription = null,
                 tint = iconColor,
                 modifier = Modifier.size(24.dp)
@@ -198,7 +192,7 @@ private fun ProfileMenuItem(
                 modifier = Modifier.weight(1f)
             )
             Icon(
-                imageVector = Icons.Default.ChevronRight,
+                painter = painterResource(id = R.drawable.rounded_chevron_forward_24),
                 contentDescription = null,
                 tint = MaterialTheme.colorScheme.onSurfaceVariant,
                 modifier = Modifier.size(20.dp)
@@ -209,7 +203,7 @@ private fun ProfileMenuItem(
 
 @Composable
 private fun ProfileMenuToggleItem(
-    icon: ImageVector,
+    icon: Int,
     label: String,
     checked: Boolean,
     onCheckedChange: (Boolean) -> Unit,
@@ -232,7 +226,7 @@ private fun ProfileMenuToggleItem(
             horizontalArrangement = Arrangement.spacedBy(16.dp)
         ) {
             Icon(
-                imageVector = icon,
+                painter = painterResource(id = icon),
                 contentDescription = null,
                 tint = iconColor,
                 modifier = Modifier.size(24.dp)

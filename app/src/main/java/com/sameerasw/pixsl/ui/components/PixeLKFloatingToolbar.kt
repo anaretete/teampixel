@@ -22,8 +22,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material.icons.automirrored.filled.ArrowBack
-import androidx.compose.material.icons.filled.Share
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
 import androidx.compose.material3.FloatingToolbarDefaults
@@ -45,6 +43,7 @@ import androidx.compose.ui.draw.drawWithCache
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.drawscope.translate
 import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -190,7 +189,7 @@ fun PixeLKActionToolbar(
             ) {
                 // Back Button
                 ToolbarActionButton(
-                    icon = androidx.compose.material.icons.Icons.AutoMirrored.Filled.ArrowBack,
+                    icon = R.drawable.rounded_arrow_back_24,
                     contentDescription = stringResource(R.string.action_back),
                     onClick = {
                         com.sameerasw.pixsl.utils.HapticUtil.performUIHaptic(view)
@@ -202,7 +201,7 @@ fun PixeLKActionToolbar(
                 // Share Button
                 if (onShareClick != null) {
                     ToolbarActionButton(
-                        icon = androidx.compose.material.icons.Icons.Default.Share,
+                        icon = R.drawable.rounded_share_24,
                         contentDescription = stringResource(R.string.action_share),
                         onClick = {
                             com.sameerasw.pixsl.utils.HapticUtil.performUIHaptic(view)
@@ -217,7 +216,7 @@ fun PixeLKActionToolbar(
 
 @Composable
 private fun ToolbarActionButton(
-    icon: androidx.compose.ui.graphics.vector.ImageVector,
+    icon: Int,
     contentDescription: String?,
     onClick: () -> Unit,
     modifier: Modifier = Modifier
@@ -231,7 +230,7 @@ private fun ToolbarActionButton(
         contentAlignment = Alignment.Center
     ) {
         Icon(
-            imageVector = icon,
+            painter = painterResource(id = icon),
             contentDescription = contentDescription,
             tint = MaterialTheme.colorScheme.primary,
             modifier = Modifier.size(24.dp)

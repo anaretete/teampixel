@@ -9,8 +9,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.ArrowForward
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -22,8 +20,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalView
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.sameerasw.pixsl.R
@@ -31,7 +29,7 @@ import com.sameerasw.pixsl.utils.HapticUtil
 
 @Composable
 fun PermissionCard(
-    icon: ImageVector,
+    iconRes: Int,
     title: Any,
     dependentFeatures: List<Any>,
     actionLabel: Any = R.string.perm_action_grant,
@@ -55,7 +53,7 @@ fun PermissionCard(
         ) {
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Icon(
-                    imageVector = icon,
+                    painter = painterResource(id = iconRes),
                     contentDescription = null,
                     tint = if (isGranted) grantedGreen else MaterialTheme.colorScheme.primary,
                     modifier = Modifier.size(32.dp)
@@ -121,7 +119,7 @@ fun PermissionCard(
                     Text(resolvedActionLabel)
                     Spacer(modifier = Modifier.weight(1f))
                     Icon(
-                        imageVector = Icons.AutoMirrored.Filled.ArrowForward,
+                        painter = painterResource(id = R.drawable.rounded_arrow_forward_24),
                         contentDescription = null,
                         modifier = Modifier.size(18.dp)
                     )
