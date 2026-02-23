@@ -34,3 +34,6 @@
 -keep class com.sameerasw.pixsl.data.model.** { *; }
 -keep class com.sameerasw.pixsl.data.Profile { *; }
 -keep interface kotlinx.serialization.KSerializer { *; }
+
+# Ktor tries to use JMX for debugger detection, which is unavailable on Android
+-dontwarn java.lang.management.**
