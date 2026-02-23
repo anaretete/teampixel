@@ -25,7 +25,7 @@
     <string name="label_device_manufacturer">Manufacturer</string>
     <string name="label_device_board">Board</string>
     <string name="label_device_storage">Storage</string>
-    <string name="label_device_ram">RAM</string>
+    <string name="label_device_ram">Memory</string>
     <string name="label_device_placeholder">Device Image Placeholder</string>
     <string name="tab_home">#TeamPixel</string>
     <string name="tab_pixel">Your Pixel</string>

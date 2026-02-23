@@ -64,4 +64,21 @@ object DeviceUtils {
             units[digitGroups]
         )
     }
+
+    fun formatHardwareSize(sizeBytes: Long): String {
+        if (sizeBytes <= 0) return "Unknown"
+        val rawGb = sizeBytes / (1024.0 * 1024.0 * 1024.0)
+        
+        // Known standard hardware sizes in GB
+        val standardSizes = listOf(1, 2, 3, 4, 6, 8, 10, 12, 16, 18, 24, 32, 64, 128, 256, 512, 1024, 2048)
+        
+        // Find the closest standard size that is greater than or equal to our raw GB (allowing a 10% delta for OS reservations)
+        val roundedGb = standardSizes.firstOrNull { it >= rawGb * 0.9 } ?: Math.ceil(rawGb).toInt()
+        
+        return if (roundedGb >= 1024 && roundedGb % 1024 == 0) {
+            "${roundedGb / 1024} TB"
+        } else {
+            "$roundedGb GB"
+        }
+    }
 }
