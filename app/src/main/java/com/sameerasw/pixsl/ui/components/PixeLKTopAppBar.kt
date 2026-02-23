@@ -94,22 +94,22 @@ fun PixeLKTopAppBar(
     val navigationIconContent: @Composable () -> Unit = {
         if (hasBack) {
             val view = LocalView.current
-                IconButton(
-                    onClick = {
-                        HapticUtil.performVirtualKeyHaptic(view)
-                        onBackClick?.invoke()
-                    },
-                    colors = IconButtonDefaults.iconButtonColors(
-                        containerColor = MaterialTheme.colorScheme.surfaceBright
-                    ),
-                    modifier = Modifier.size(48.dp)
-                ) {
-                    Icon(
-                        painter = painterResource(id = R.drawable.rounded_arrow_back_24),
-                        contentDescription = stringResource(R.string.action_back),
-                        modifier = Modifier.size(32.dp)
-                    )
-                }
+            IconButton(
+                onClick = {
+                    HapticUtil.performVirtualKeyHaptic(view)
+                    onBackClick?.invoke()
+                },
+                colors = IconButtonDefaults.iconButtonColors(
+                    containerColor = MaterialTheme.colorScheme.surfaceBright
+                ),
+                modifier = Modifier.size(48.dp)
+            ) {
+                Icon(
+                    painter = painterResource(id = R.drawable.rounded_arrow_back_24),
+                    contentDescription = stringResource(R.string.action_back),
+                    modifier = Modifier.size(32.dp)
+                )
+            }
         }
     }
 

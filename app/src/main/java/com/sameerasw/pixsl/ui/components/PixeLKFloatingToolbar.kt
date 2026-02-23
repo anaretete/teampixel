@@ -265,7 +265,7 @@ private fun ToolbarItem(
         Box {
             if (isHomeTab && deviceInfo != null) {
                 Icon(
-                    painter = androidx.compose.ui.res.painterResource(
+                    painter = painterResource(
                         id = DeviceImageMapper.getDeviceDrawable(
                             deviceInfo.model
                         )
@@ -303,7 +303,7 @@ private fun ToolbarItem(
                 )
             } else {
                 Icon(
-                    painter = androidx.compose.ui.res.painterResource(id = iconRes),
+                    painter = painterResource(id = iconRes),
                     contentDescription = label,
                     tint = if (isSelected) MaterialTheme.colorScheme.primary
                     else MaterialTheme.colorScheme.background,
