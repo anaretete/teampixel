@@ -17,5 +17,6 @@ data class DeviceSpecCategory(
 @Serializable
 data class DeviceSpecs(
     val deviceName: String,
-    val detailSpec: List<DeviceSpecCategory>
+    val detailSpec: List<DeviceSpecCategory>,
+    val imageUrls: List<String> = emptyList()
 )

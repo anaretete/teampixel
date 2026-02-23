@@ -195,8 +195,12 @@ class MainViewModel : ViewModel() {
         val cachedSpecsJson = settings.getStringOrNull("cached_device_specs")
         if (cachedSpecsJson != null) {
             try {
-                _deviceSpecs.value = Json.decodeFromString<DeviceSpecs>(cachedSpecsJson)
-                return
+                val specs = Json.decodeFromString<DeviceSpecs>(cachedSpecsJson)
+                _deviceSpecs.value = specs
+                // If it was an old cache without images, continue to fetch fresh data
+                if (specs.imageUrls.isNotEmpty()) {
+                    return
+                }
             } catch (e: Exception) {
                 settings.remove("cached_device_specs")
             }

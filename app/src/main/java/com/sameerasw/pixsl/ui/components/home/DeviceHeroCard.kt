@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
@@ -22,23 +23,35 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.pager.HorizontalPager
+import androidx.compose.foundation.pager.rememberPagerState
+import coil.compose.AsyncImage
 import com.sameerasw.pixsl.R
+import com.sameerasw.pixsl.data.model.DeviceSpecs
 import com.sameerasw.pixsl.ui.components.containers.RoundedCardContainer
 import com.sameerasw.pixsl.ui.theme.Shapes
+import com.sameerasw.pixsl.ui.theme.shimmer
 
 @Composable
 fun DeviceHeroCard(
     deviceInfo: DeviceInfo,
+    deviceSpecs: DeviceSpecs? = null,
     imageOffset: () -> Dp = { 0.dp },
     contentAlpha: () -> Float = { 1f },
     contentOffset: () -> Dp = { 0.dp },
     modifier: Modifier = Modifier
 ) {
+    val imageUrls = deviceSpecs?.imageUrls ?: emptyList()
+    val pageCount = 1 + imageUrls.size
+    val pagerState = rememberPagerState(pageCount = { pageCount })
+
     Column(
         modifier = Modifier
             .fillMaxWidth()
@@ -55,14 +68,63 @@ fun DeviceHeroCard(
                 .clip(MaterialTheme.shapes.medium),
             contentAlignment = Alignment.Center
         ) {
-            Icon(
-                painter = painterResource(id = DeviceImageMapper.getDeviceDrawable(deviceInfo.model)),
-                contentDescription = null,
-                tint = MaterialTheme.colorScheme.primary,
-                modifier = Modifier
-                    .fillMaxHeight(0.85f)
-                    .fillMaxWidth(0.85f)
-            )
+            HorizontalPager(
+                state = pagerState,
+                modifier = Modifier.fillMaxSize(),
+                verticalAlignment = Alignment.CenterVertically
+            ) { page ->
+                Box(
+                    modifier = Modifier.fillMaxSize(),
+                    contentAlignment = Alignment.Center
+                ) {
+                    if (page == 0) {
+                        // stylized vector
+                        Icon(
+                            painter = painterResource(id = DeviceImageMapper.getDeviceDrawable(deviceInfo.model)),
+                            contentDescription = null,
+                            tint = MaterialTheme.colorScheme.primary,
+                            modifier = Modifier
+                                .fillMaxHeight(0.85f)
+                                .fillMaxWidth(0.85f)
+                        )
+                    } else {
+                        // real image from gsmarena
+                        AsyncImage(
+                            model = imageUrls[page - 1],
+                            contentDescription = "Device Image",
+                            contentScale = ContentScale.Fit,
+                            modifier = Modifier
+                                .fillMaxHeight(0.85f)
+                                .fillMaxWidth(0.85f)
+                                .clip(RoundedCornerShape(24.dp))
+                                .shimmer()
+                        )
+                    }
+                }
+            }
+
+            // Page Indicator dots
+            if (pageCount > 1) {
+                Row(
+                    Modifier
+                        .align(Alignment.BottomCenter)
+                        .padding(bottom = 16.dp),
+                    horizontalArrangement = Arrangement.spacedBy(8.dp)
+                ) {
+                    repeat(pageCount) { iteration ->
+                        val color = if (pagerState.currentPage == iteration) 
+                            MaterialTheme.colorScheme.primary 
+                        else 
+                            MaterialTheme.colorScheme.primary.copy(alpha = 0.2f)
+                        Box(
+                            modifier = Modifier
+                                .size(8.dp)
+                                .clip(MaterialTheme.shapes.small)
+                                .background(color)
+                        )
+                    }
+                }
+            }
         }
 
         Spacer(modifier = Modifier.height(24.dp))
@@ -135,7 +197,10 @@ fun DeviceHeroCard(
                             fontWeight = FontWeight.Bold,
                             color = MaterialTheme.colorScheme.primary
                         )
-                        if (deviceInfo.buildTag.isNotEmpty()) {
+                        val isBeta = deviceInfo.buildTag.lowercase().contains("beta")
+                        val isCanary = deviceInfo.buildTag.lowercase().contains("canary")
+                        
+                        if (isBeta || isCanary) {
                             Spacer(modifier = Modifier.size(8.dp))
                             Box(
                                 modifier = Modifier
@@ -146,11 +211,7 @@ fun DeviceHeroCard(
                                     .padding(horizontal = 6.dp, vertical = 2.dp)
                             ) {
                                 Text(
-                                    text = when {
-                                        deviceInfo.buildTag.lowercase().contains("beta") -> "BETA"
-                                        deviceInfo.buildTag.lowercase().contains("canary") -> "CANARY"
-                                        else -> deviceInfo.buildTag
-                                    },
+                                    text = if (isCanary) "CANARY" else "BETA",
                                     style = MaterialTheme.typography.labelSmall,
                                     fontWeight = FontWeight.Bold,
                                     color = MaterialTheme.colorScheme.onPrimary

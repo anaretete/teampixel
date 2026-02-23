@@ -103,6 +103,7 @@ fun HomeScreen(
     ) {
         DeviceHeroCard(
             deviceInfo = deviceInfo,
+            deviceSpecs = deviceSpecs,
             imageOffset = { imageOffsetState.value },
             contentAlpha = { contentAlphaState.value },
             contentOffset = { contentOffsetState.value }
